@@ -10,13 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4fca67ab8b203bd42b9c714b5a72033f, type: 3}
-  m_Name: NewCreature
+  m_Name: Airy
   m_EditorClassIdentifier: 
   CreatureType: 0
-  HitPoints: 0
-  Defence: 0
-  Attack: 0
-  Hunger: 0
-  Entertainment: 0
-  Hygiene: 0
-  Animator: {fileID: 0}
+  CreatureName: Airy
+  HitPoints: 5
+  Defence: 5
+  Attack: 5
+  Hunger: 100
+  Entertainment: 100
+  Hygiene: 100
+  Speed: 1
+  AnimationController: {fileID: 9100000, guid: 70ba318e69761a548b6c2dbfef52a5d3, type: 2}

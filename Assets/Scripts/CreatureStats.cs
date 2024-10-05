@@ -1,3 +1,4 @@
+using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -20,6 +21,8 @@ public class CreatureStats : ScriptableObject
 {
     public Type CreatureType;
 
+    public string CreatureName;
+
     public int HitPoints;
 
     public int Defence;
@@ -32,5 +35,7 @@ public class CreatureStats : ScriptableObject
 
     public int Hygiene;
 
-    public Animator Animator;
+    public float Speed;
+
+    public RuntimeAnimatorController AnimationController;
 }
