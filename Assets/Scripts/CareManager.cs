@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CareManager : MonoBehaviour
 {
+    // List of all tiny creatures you own
+
     // Start is called before the first frame update
     void Start()
     {
