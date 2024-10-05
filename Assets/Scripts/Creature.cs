@@ -39,7 +39,7 @@ public class Creature : MonoBehaviour
     void Start()
     {
         var startingStats = ScriptableObjectFinder.FindScriptableObjectByName<CreatureStats>(Name);
-        Type = Enum.GetName(typeof(Type), startingStats.CreatureType);
+        Type = Enum.GetName(typeof(CreatureType), startingStats.CreatureType);
         HitPoints = startingStats.HitPoints;
         MaxHitPoints = startingStats.HitPoints; 
         Defence = startingStats.Defence;
