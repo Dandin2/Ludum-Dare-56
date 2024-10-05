@@ -1,17 +1,18 @@
+using System;
 using UnityEngine;
 
 public class Creature : MonoBehaviour
 {
     public string Name;
 
+    public string Type;
+
     internal int HitPoints;
     internal int MaxHitPoints;
 
     internal int Defence;
-    internal int MaxDefence;
 
     internal int Attack;
-    internal int MaxAttack;
 
     internal int Hunger;
     internal int MaxHunger;
@@ -38,12 +39,11 @@ public class Creature : MonoBehaviour
     void Start()
     {
         var startingStats = ScriptableObjectFinder.FindScriptableObjectByName<CreatureStats>(Name);
+        Type = Enum.GetName(typeof(Type), startingStats.CreatureType);
         HitPoints = startingStats.HitPoints;
         MaxHitPoints = startingStats.HitPoints; 
         Defence = startingStats.Defence;
-        MaxDefence = startingStats.Defence;
         Attack = startingStats.Attack;
-        MaxAttack = startingStats.Attack;
         Hunger = startingStats.Hunger;
         MaxHunger = startingStats.Hunger;
         Entertainment = startingStats.Entertainment;
@@ -56,7 +56,7 @@ public class Creature : MonoBehaviour
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         nextMoveTime = nextMoveTimeIncrementAdjust * 2 - nextMoveTimeIncrement;
-        nextMoveTimeIncrement = Random.Range(nextMoveTimeIncrement - nextMoveTimeIncrementAdjust, nextMoveTimeIncrement + nextMoveTimeIncrementAdjust);
+        nextMoveTimeIncrement = UnityEngine.Random.Range(nextMoveTimeIncrement - nextMoveTimeIncrementAdjust, nextMoveTimeIncrement + nextMoveTimeIncrementAdjust);
     }
 
     // Update is called once per frame
@@ -115,8 +115,8 @@ public class Creature : MonoBehaviour
     /// <returns>A Vector3 representing the new position for the creature to move towards.</returns>
     private Vector3 GetNextRandomPosition()
     {
-        var randomX = Random.Range(-maxXRange, maxXRange);
-        var randomY = Random.Range(-maxYRange, maxYRange);
+        var randomX = UnityEngine.Random.Range(-maxXRange, maxXRange);
+        var randomY = UnityEngine.Random.Range(-maxYRange, maxYRange);
         return new Vector3(randomX, randomY, 0);
     }
 }

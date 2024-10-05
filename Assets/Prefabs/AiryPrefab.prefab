@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6581473320500216848}
   - component: {fileID: 5599530382040254174}
   - component: {fileID: 4917761971554401013}
+  - component: {fileID: -2299835262576146560}
   - component: {fileID: 6571550827818535778}
   - component: {fileID: 533418828365276758}
   m_Layer: 3
@@ -97,7 +98,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 10
   m_Sprite: {fileID: 469643038, guid: 64424093157919a448e341470f193e24, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -122,6 +123,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: Airy
+--- !u!114 &-2299835262576146560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7675345743379837916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 949197c7e48e7a549bd71b4c27ca2837, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!58 &6571550827818535778
 CircleCollider2D:
   m_ObjectHideFlags: 0
