@@ -27,12 +27,12 @@ public class Creature : MonoBehaviour
     private Rigidbody2D rigidBody;
     private Animator animator;
     private SpriteRenderer spriteRenderer;
-    private float nextMoveTime = 0;
+    private float nextMoveTime = 0; // tracks when the next move will be made.
     private float nextMoveTimeIncrement = 15; // time in seconds to make a new move
-    private float nextMoveTimeIncrementAdjust = 5;
-    private Vector3? targetPosition;
-    private float maxXRange = 3.19f;
-    private float maxYRange = 3.79f;
+    private float nextMoveTimeIncrementAdjust = 5; // adjusts next move time so not all creatures move in the same increment.
+    private Vector3? targetPosition; // the target position the creature is trying to get to.
+    private float maxXRange = 3.19f; // max x position of the random generated position
+    private float maxYRange = 3.79f; // max y position of the random generated position
 
     // Start is called before the first frame update
     void Start()
@@ -70,28 +70,49 @@ public class Creature : MonoBehaviour
 
         if (targetPosition.HasValue && rigidBody.velocity == Vector2.zero)
         {
-            animator.SetBool("isWalking", true);
-            var direction = targetPosition.Value - transform.position;
-            rigidBody.AddRelativeForce(direction.normalized * Speed, ForceMode2D.Impulse);
-
-            if (rigidBody.velocity.x >= 0)
-            {
-                spriteRenderer.flipX = false;
-            }
-            else
-            {
-                spriteRenderer.flipX = true;
-            }
+            StartMovement();
         }
 
         if (targetPosition.HasValue && Vector3.Distance(transform.position, targetPosition.Value) < 0.1f && rigidBody.velocity != Vector2.zero)
         {
-            animator.SetBool("isWalking", false);
-            rigidBody.velocity = Vector2.zero;
-            targetPosition = null;
+            StopMovement();
         }
     }
 
+    /// <summary>
+    /// Updates the variables to properly make the creature move.
+    /// </summary>
+    private void StartMovement()
+    {
+        animator.SetBool("isWalking", true);
+        var direction = targetPosition.Value - transform.position;
+        rigidBody.AddRelativeForce(direction.normalized * Speed, ForceMode2D.Impulse);
+
+        if (rigidBody.velocity.x >= 0)
+        {
+            spriteRenderer.flipX = false;
+        }
+        else
+        {
+            spriteRenderer.flipX = true;
+        }
+    }
+
+    /// <summary>
+    /// Updates all the variables to properly make the creature stop moving.
+    /// </summary>
+    private void StopMovement()
+    {
+        animator.SetBool("isWalking", false);
+        rigidBody.velocity = Vector2.zero;
+        targetPosition = null;
+        spriteRenderer.flipX = false;
+    }
+
+    /// <summary>
+    /// Generates a random position within the range.
+    /// </summary>
+    /// <returns>A Vector3 representing the new position for the creature to move towards.</returns>
     private Vector3 GetNextRandomPosition()
     {
         var randomX = Random.Range(-maxXRange, maxXRange);
