@@ -21,4 +21,4 @@ MonoBehaviour:
   Entertainment: 100
   Hygiene: 100
   Speed: 1
-  AnimationController: {fileID: 9100000, guid: 70ba318e69761a548b6c2dbfef52a5d3, type: 2}
+  CreaturePrefab: {fileID: 7675345743379837916, guid: c526b6cc57b5acb41b9f1ba080eee3b6, type: 3}

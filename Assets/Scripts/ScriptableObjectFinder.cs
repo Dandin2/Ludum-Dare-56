@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -18,5 +19,23 @@ public class ScriptableObjectFinder
         }
 
         return null; // No matching ScriptableObject found
+    }
+
+    public static List<CreatureStats> GetAllCreatureStats()
+    {
+        var creatures = new List<CreatureStats>();
+        string[] guids = AssetDatabase.FindAssets("t:CreatureStats");
+
+        foreach (string guid in guids)
+        {
+            string path = AssetDatabase.GUIDToAssetPath(guid);
+            CreatureStats creature = AssetDatabase.LoadAssetAtPath<CreatureStats>(path);
+            if (creature != null)
+            {
+                creatures.Add(creature);
+            }
+        }
+
+        return creatures;
     }
 }

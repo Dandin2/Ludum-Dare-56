@@ -37,5 +37,5 @@ public class CreatureStats : ScriptableObject
 
     public float Speed;
 
-    public RuntimeAnimatorController AnimationController;
+    public GameObject CreaturePrefab;
 }
