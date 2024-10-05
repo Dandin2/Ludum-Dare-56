@@ -19,7 +19,7 @@ public class CreateCreature
 
 public class CreatureStats : ScriptableObject
 {
-    public Type CreatureType;
+    public CreatureType CreatureType;
 
     public string CreatureName;
 
