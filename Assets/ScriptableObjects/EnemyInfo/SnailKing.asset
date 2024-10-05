@@ -9,14 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fca67ab8b203bd42b9c714b5a72033f, type: 3}
-  m_Name: NewCreature
+  m_Script: {fileID: 11500000, guid: 39b2559d12e3e8740a59914add2c6e4e, type: 3}
+  m_Name: SnailKing
   m_EditorClassIdentifier: 
-  CreatureType: 0
-  HitPoints: 0
-  Defence: 0
-  Attack: 0
-  Hunger: 0
-  Entertainment: 0
-  Hygiene: 0
-  Animator: {fileID: 0}
+  type: 1
+  health: 50
+  myAttacks:
+  - {fileID: 11400000, guid: 4551e5b7fa412464ebdfb26c1c3bd458, type: 2}
+  - {fileID: 11400000, guid: 54ec8ea394007a14e8ea5b929947739e, type: 2}
