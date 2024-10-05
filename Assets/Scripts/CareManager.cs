@@ -27,6 +27,10 @@ public class CareManager : MonoBehaviour
             var randomCreatureIndex = Random.Range(0, allPosibleCreatures.Count);
             Instantiate(allPosibleCreatures.ElementAt(randomCreatureIndex));
         }
+
+        // TODO: Calculate Eggs Spawned based on all creatures and their current stats.
+
+        // TODO: Instantiate the spawned eggs at random locations around the fenced in area.
     }
 
     // Update is called once per frame
@@ -39,5 +43,20 @@ public class CareManager : MonoBehaviour
     {
         CreaturePopupPanel.SetActive(false);
         LineRenderer.enabled = false;
+    }
+
+    public void ToggleFoodMenu()
+    {
+
+    }
+
+    public void ToggleToyMenu() 
+    {
+
+    }
+
+    public void ToggleScrubBrush()
+    {
+
     }
 }

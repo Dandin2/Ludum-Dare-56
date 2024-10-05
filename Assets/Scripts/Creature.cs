@@ -32,8 +32,8 @@ public class Creature : MonoBehaviour
     private float nextMoveTimeIncrement = 15; // time in seconds to make a new move
     private float nextMoveTimeIncrementAdjust = 5; // adjusts next move time so not all creatures move in the same increment.
     private Vector3? targetPosition; // the target position the creature is trying to get to.
-    private float maxXRange = 3.19f; // max x position of the random generated position
-    private float maxYRange = 3.79f; // max y position of the random generated position
+    private float maxXRange = 3.18f; // max x position of the random generated position
+    private float maxYRange = 3.78f; // max y position of the random generated position
 
     // Start is called before the first frame update
     void Start()
@@ -57,6 +57,10 @@ public class Creature : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         nextMoveTime = nextMoveTimeIncrementAdjust * 2 - nextMoveTimeIncrement;
         nextMoveTimeIncrement = UnityEngine.Random.Range(nextMoveTimeIncrement - nextMoveTimeIncrementAdjust, nextMoveTimeIncrement + nextMoveTimeIncrementAdjust);
+
+        // TODO: Check if hunger is low enough to spawn the hunger effect around creature.
+        // TODO: Check if entertainment is low enough to spawn the bordom effect around creature.
+        // TODO: Check if hygiene is low enough to spawn the dirty effect around creature.
     }
 
     // Update is called once per frame
@@ -77,6 +81,13 @@ public class Creature : MonoBehaviour
         {
             StopMovement();
         }
+    }
+
+    public void ScrubCreature()
+    {
+        Hygiene += 10;
+        // TODO: spwan soap suds
+        // TODO: check for hygiene past threshhold to despawn dirty effect and destroy it if so.
     }
 
     /// <summary>
