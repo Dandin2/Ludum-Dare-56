@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class EnemyAttackInfo : ScriptableObject
@@ -12,7 +13,14 @@ public class EnemyAttackInfo : ScriptableObject
     public int NumToDamage;
     public float PercentToDamage;
     //public List<CreatureType> PriorityTargets = new List<CreatureType>();
+    public int NumToExhaust;
+    public int NumToReady;//in case you want em to be nice.
 
+    public int SelfHealAmount;
+    public int SelfBlockAmount;
+
+    public GameObject OnEnemiesAnimation;
+    public GameObject OnSelfAnimation;
 }
 
 public class CreateEnemyAttackInfo
