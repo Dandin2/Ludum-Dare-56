@@ -4,9 +4,10 @@ using UnityEngine.UI;
 
 public class CreatureClickHandler : MonoBehaviour
 {
-    private Creature currentCreature;
+    internal Creature currentCreature;
     private SpriteRenderer currentCreatureSpriteRenderer;
     private CareManager manager;
+    private float lastTimeSpawned;
 
     private void Start()
     {
@@ -15,7 +16,7 @@ public class CreatureClickHandler : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButton(0))
         {
             Vector2 ray = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             RaycastHit2D hit = Physics2D.Raycast(ray, Vector2.zero);
@@ -28,6 +29,25 @@ public class CreatureClickHandler : MonoBehaviour
                     currentCreature = creature;
                     currentCreatureSpriteRenderer = creature.GetComponent<SpriteRenderer>();
                     ShowPopup(creature);
+                    if(manager.isUsingScrubBrush && creature.Hygiene != creature.MaxHygiene && creature.gameObject.GetInstanceID() == gameObject.GetInstanceID())
+                    {
+                        if(Time.time > lastTimeSpawned + 5f)
+                        {
+                            lastTimeSpawned = Time.time;
+                            Destroy(Instantiate(manager.bubbleParticles, creature.transform), 5f);
+                        }
+                        creature.partialHygiene += .5f;
+                        if(creature.partialHygiene >= 1)
+                        {
+                            creature.Hygiene += 1;
+                            creature.partialHygiene -= 1;
+                        }
+                        if (creature.Hygiene > creature.MaxHygiene)
+                        {
+                            creature.Hygiene = creature.MaxHygiene;
+                        }
+                        manager.UpdateCreatureInfo(creature);
+                    }
                 }
             }
         }
@@ -41,8 +61,8 @@ public class CreatureClickHandler : MonoBehaviour
     void ShowPopup(Creature creature)
     {
         manager.CreatureImage.sprite = currentCreatureSpriteRenderer.sprite;
-        manager.NameText.text = creature.Name;
-        manager.InfoText.text = $"Type: {creature.Type}\n" +
+        manager.CreatureNameText.text = creature.Name;
+        manager.CreatureInfoText.text = $"Type: {creature.Type}\n" +
                         $"HP: {creature.HitPoints}/{creature.MaxHitPoints}\n" +
                         $"Attack: {creature.Attack}\n" +
                         $"Defence: {creature.Defence}\n" +

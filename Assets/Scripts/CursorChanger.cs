@@ -9,12 +9,19 @@ public class CursorChanger : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        Cursor.SetCursor(pointerCursor, hotSpot, cursorMode);
+        var manager = FindObjectOfType<CareManager>();
+        if (manager.DraggingItem == null && !manager.isUsingScrubBrush)
+        {
+            Cursor.SetCursor(pointerCursor, hotSpot, cursorMode);
+        }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         var manager = FindObjectOfType<CareManager>();
-        Cursor.SetCursor(manager.mainCursor, manager.hotSpot, cursorMode);
+        if (!manager.isUsingScrubBrush)
+        {
+            manager.SetMainCursor();
+        }
     }
 }

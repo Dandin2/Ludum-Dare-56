@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51077048cb5fb8d46a414155bee5d1be, type: 3}
+  m_Name: Ball
+  m_EditorClassIdentifier: 
+  EntertainmentRestore: 10
+  AttractionRadius: 0.6
+  NumberOfUses: 5
+  Description: Its a Ball. Place this to allow your Tiny Creatures to play with it.
+  ToyPrefab: {fileID: 3475907818912968442, guid: 4f126f167df3fb74e9f88529995c38d3, type: 3}

@@ -4,8 +4,13 @@ using UnityEngine;
 public class Creature : MonoBehaviour
 {
     public string Name;
+    public float ThoughtTime = 5f;
 
-    public string Type;
+    public float HungerThreshold = .5f;
+    public float EntertainmentThreshold = .5f;
+    public float HygieneThreshold = .5f;
+
+    internal string Type;
 
     internal int HitPoints;
     internal int MaxHitPoints;
@@ -22,8 +27,15 @@ public class Creature : MonoBehaviour
 
     internal int Hygiene;
     internal int MaxHygiene;
+    internal float partialHygiene;
 
     internal float Speed;
+
+    internal Vector3? targetPosition; // the target position the creature is trying to get to.
+    internal Toy ToyUsing;
+    internal Food FoodUsing;
+    internal bool useItemAvailable;
+    internal bool closeEnoughToItem;
 
     private Rigidbody2D rigidBody;
     private Animator animator;
@@ -31,24 +43,27 @@ public class Creature : MonoBehaviour
     private float nextMoveTime = 0; // tracks when the next move will be made.
     private float nextMoveTimeIncrement = 15; // time in seconds to make a new move
     private float nextMoveTimeIncrementAdjust = 5; // adjusts next move time so not all creatures move in the same increment.
-    private Vector3? targetPosition; // the target position the creature is trying to get to.
-    private float maxXRange = 3.18f; // max x position of the random generated position
-    private float maxYRange = 3.78f; // max y position of the random generated position
+    private CareManager manager;
+
+    private float nextThoughtTime = 0;
+    private float nextMinThoughtTimeIncrement = 10; // min time in seconds to make a new thought
+    private float nextMaxThoughtTimeIncrement = 50; // max time in seconds to make a new thought
 
     // Start is called before the first frame update
     void Start()
     {
+        manager = FindObjectOfType<CareManager>();
         var startingStats = ScriptableObjectFinder.FindScriptableObjectByName<CreatureStats>(Name);
         Type = Enum.GetName(typeof(CreatureType), startingStats.CreatureType);
         HitPoints = startingStats.HitPoints;
         MaxHitPoints = startingStats.HitPoints; 
         Defence = startingStats.Defence;
         Attack = startingStats.Attack;
-        Hunger = startingStats.Hunger;
+        Hunger = startingStats.Hunger - UnityEngine.Random.Range(0, startingStats.Hunger);
         MaxHunger = startingStats.Hunger;
-        Entertainment = startingStats.Entertainment;
+        Entertainment = startingStats.Entertainment - UnityEngine.Random.Range(0, startingStats.Entertainment);
         MaxEntertainment = startingStats.Entertainment;
-        Hygiene = startingStats.Hygiene;
+        Hygiene = startingStats.Hygiene - UnityEngine.Random.Range(0, startingStats.Hygiene);
         MaxHygiene = startingStats.Hygiene;
         Speed = startingStats.Speed;
         transform.position = GetNextRandomPosition();
@@ -58,6 +73,7 @@ public class Creature : MonoBehaviour
         nextMoveTime = nextMoveTimeIncrementAdjust * 2 - nextMoveTimeIncrement;
         nextMoveTimeIncrement = UnityEngine.Random.Range(nextMoveTimeIncrement - nextMoveTimeIncrementAdjust, nextMoveTimeIncrement + nextMoveTimeIncrementAdjust);
 
+        nextThoughtTime += UnityEngine.Random.Range(0, nextMaxThoughtTimeIncrement);
         // TODO: Check if hunger is low enough to spawn the hunger effect around creature.
         // TODO: Check if entertainment is low enough to spawn the bordom effect around creature.
         // TODO: Check if hygiene is low enough to spawn the dirty effect around creature.
@@ -66,21 +82,49 @@ public class Creature : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Time.time >= nextMoveTime)
+        if (ToyUsing != null || FoodUsing != null)
         {
-            nextMoveTime += nextMoveTimeIncrement;
-            targetPosition = GetNextRandomPosition();
+            if (Time.time >= nextMoveTime && closeEnoughToItem)
+            {
+                nextMoveTime += nextMoveTimeIncrement;
+                useItemAvailable = true;
+            }
+
+            if (targetPosition.HasValue && rigidBody.velocity == Vector2.zero)
+            {
+                StartMovement();
+            }
+
+            if (targetPosition.HasValue && Vector3.Distance(transform.position, targetPosition.Value) < 0.2f && rigidBody.velocity != Vector2.zero)
+            {
+                StopMovement();
+                closeEnoughToItem = true;
+            }
+        }
+        else
+        {
+            if (Time.time >= nextMoveTime)
+            {
+                nextMoveTime += nextMoveTimeIncrement;
+                targetPosition = GetNextRandomPosition();
+            }
+
+            if (targetPosition.HasValue && rigidBody.velocity == Vector2.zero)
+            {
+                StartMovement();
+            }
+
+            if (targetPosition.HasValue && Vector3.Distance(transform.position, targetPosition.Value) < 0.1f && rigidBody.velocity != Vector2.zero)
+            {
+                StopMovement();
+            }
         }
 
-        if (targetPosition.HasValue && rigidBody.velocity == Vector2.zero)
+        if (Time.time >= nextThoughtTime)
         {
-            StartMovement();
-        }
-
-        if (targetPosition.HasValue && Vector3.Distance(transform.position, targetPosition.Value) < 0.1f && rigidBody.velocity != Vector2.zero)
-        {
-            StopMovement();
-        }
+            nextThoughtTime += UnityEngine.Random.Range(nextMinThoughtTimeIncrement, nextMaxThoughtTimeIncrement);
+            ShowNextThought();
+        }        
     }
 
     public void ScrubCreature()
@@ -112,7 +156,7 @@ public class Creature : MonoBehaviour
     /// <summary>
     /// Updates all the variables to properly make the creature stop moving.
     /// </summary>
-    private void StopMovement()
+    internal void StopMovement()
     {
         animator.SetBool("isWalking", false);
         rigidBody.velocity = Vector2.zero;
@@ -126,8 +170,32 @@ public class Creature : MonoBehaviour
     /// <returns>A Vector3 representing the new position for the creature to move towards.</returns>
     private Vector3 GetNextRandomPosition()
     {
-        var randomX = UnityEngine.Random.Range(-maxXRange, maxXRange);
-        var randomY = UnityEngine.Random.Range(-maxYRange, maxYRange);
+        var randomX = UnityEngine.Random.Range(-manager.maxXRange, manager.maxXRange);
+        var randomY = UnityEngine.Random.Range(-manager.maxYRange, manager.maxYRange);
         return new Vector3(randomX, randomY, 0);
+    }
+
+    private void ShowNextThought()
+    {
+        var hungerPercent = Hunger / (float)MaxHunger;
+        var hygienePercent = Hygiene / (float)MaxHygiene;
+        var entertainmentPercent = Entertainment / (float)MaxEntertainment;
+
+        // Find the lowest percentage
+        float lowestPercent = Mathf.Min(hungerPercent, hygienePercent, entertainmentPercent);
+
+        // Show the corresponding thought
+        if (lowestPercent == hungerPercent && hungerPercent < HungerThreshold)
+        {
+            Destroy(Instantiate(manager.HungryPrefab, transform), ThoughtTime);
+        }
+        else if (lowestPercent == hygienePercent && hygienePercent < HygieneThreshold)
+        {
+            Destroy(Instantiate(manager.DirtyPrefab, transform), ThoughtTime);
+        }
+        else if (lowestPercent == entertainmentPercent && entertainmentPercent < EntertainmentThreshold)
+        {
+            Destroy(Instantiate(manager.BoredPrefab, transform), ThoughtTime);
+        }
     }
 }

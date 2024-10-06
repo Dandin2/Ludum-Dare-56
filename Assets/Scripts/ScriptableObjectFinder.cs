@@ -38,4 +38,40 @@ public class ScriptableObjectFinder
 
         return creatures;
     }
+
+    public static List<FoodStats> GetAllFoodStats()
+    {
+        var foods = new List<FoodStats>();
+        string[] guids = AssetDatabase.FindAssets("t:FoodStats");
+
+        foreach (string guid in guids)
+        {
+            string path = AssetDatabase.GUIDToAssetPath(guid);
+            FoodStats food = AssetDatabase.LoadAssetAtPath<FoodStats>(path);
+            if (food != null)
+            {
+                foods.Add(food);
+            }
+        }
+
+        return foods;
+    }
+
+    public static List<ToyStats> GetAllToyStats()
+    {
+        var toys = new List<ToyStats>();
+        string[] guids = AssetDatabase.FindAssets("t:ToyStats");
+
+        foreach (string guid in guids)
+        {
+            string path = AssetDatabase.GUIDToAssetPath(guid);
+            ToyStats toy = AssetDatabase.LoadAssetAtPath<ToyStats>(path);
+            if (toy != null)
+            {
+                toys.Add(toy);
+            }
+        }
+
+        return toys;
+    }
 }
