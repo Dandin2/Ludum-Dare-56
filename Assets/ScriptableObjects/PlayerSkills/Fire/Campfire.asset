@@ -10,20 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3fee6bf1265f586428c39f6aaa87b79f, type: 3}
-  m_Name: 1.Gust
+  m_Name: Campfire
   m_EditorClassIdentifier: 
-  SkillName: Gust
-  TextOnHover: 'Lv.1: Deal Air damage. '
-  TextOnUse: You used Gust!
-  requiredType: 3
+  SkillName: Campfire
+  TextOnHover: 'Lv 1: Heal all creatures a small amount.'
+  TextOnUse: You used Campfire!
+  requiredType: 0
   requiredAmount: 5
   effects:
-  - elementType: 3
-    target: 1
-    damage: 11
-    heal: 0
+  - elementType: 5
+    target: 0
+    damage: 0
+    heal: 1
     block: 0
     mods: []
   effectsOnCreatures: []
+  ultimateMeterChange: 0
   OnEnemiesAnimation: {fileID: 0}
   OnSelfAnimation: {fileID: 0}

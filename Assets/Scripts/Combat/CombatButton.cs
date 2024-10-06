@@ -11,6 +11,9 @@ public class CombatButton : MonoBehaviour
     public UIClick Click;
     public GameObject HighlightGO;
 
+    public SpecialSkillInfo SkillOnClick;
+
+
     public void Set(Action onClick, Action onHover, Action onUnHover)
     {
         Click.SetClickAction(() => { onClick?.Invoke(); GetComponentInChildren<Image>().sprite = Unlit; });

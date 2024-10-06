@@ -10,20 +10,34 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3fee6bf1265f586428c39f6aaa87b79f, type: 3}
-  m_Name: 1.Gust
+  m_Name: Fireball
   m_EditorClassIdentifier: 
-  SkillName: Gust
-  TextOnHover: 'Lv.1: Deal Air damage. '
-  TextOnUse: You used Gust!
-  requiredType: 3
-  requiredAmount: 5
+  SkillName: Fireball
+  TextOnHover: 'Lv 2: Deal fire damage to opponent, but lower your creatures happiness
+    a tiny bit.'
+  TextOnUse: You used Fireball!
+  requiredType: 0
+  requiredAmount: 9
   effects:
-  - elementType: 3
+  - elementType: 0
     target: 1
-    damage: 11
+    damage: 31
     heal: 0
     block: 0
     mods: []
-  effectsOnCreatures: []
+  effectsOnCreatures:
+  - type: 5
+    quantity: 9999
+    turns: 0
+    exhaust: 0
+    ready: 0
+    hungerChange: 0
+    hygeneChange: 0
+    happinessChange: -5
+    damageMod: 0
+    hpMod: 0
+    blockMod: 0
+    takeDamage: 0
+  ultimateMeterChange: 0
   OnEnemiesAnimation: {fileID: 0}
   OnSelfAnimation: {fileID: 0}

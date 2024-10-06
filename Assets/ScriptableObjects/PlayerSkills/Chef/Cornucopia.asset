@@ -10,20 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3fee6bf1265f586428c39f6aaa87b79f, type: 3}
-  m_Name: 1.Gust
+  m_Name: Cornucopia
   m_EditorClassIdentifier: 
-  SkillName: Gust
-  TextOnHover: 'Lv.1: Deal Air damage. '
-  TextOnUse: You used Gust!
-  requiredType: 3
-  requiredAmount: 5
-  effects:
-  - elementType: 3
-    target: 1
-    damage: 11
-    heal: 0
-    block: 0
-    mods: []
+  SkillName: Cornucopia
+  TextOnHover: 'Lv 3: Fill your Ultimate meter.'
+  TextOnUse: You used Cornucopia!
+  requiredType: 4
+  requiredAmount: 12
+  effects: []
   effectsOnCreatures: []
+  ultimateMeterChange: 100
   OnEnemiesAnimation: {fileID: 0}
   OnSelfAnimation: {fileID: 0}
