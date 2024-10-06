@@ -8,7 +8,7 @@ public class Food : MonoBehaviour
 
     internal float AttractionRadius;
 
-    public int NumberOfUses;
+    internal int NumberOfUses;
 
     internal string Description;
 

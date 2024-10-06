@@ -146,7 +146,9 @@ public class CareManager : MonoBehaviour
             var worldItem = food.GetComponent<Food>();
             uiItem.GetComponent<Image>().sprite = worldItem.GetComponent<SpriteRenderer>().sprite;
             uiItem.ItemName = worldItem.Name;
-            uiItem.ItemDescription = $"Food: {worldItem.HungerRestore}\n{worldItem.Description}";
+            uiItem.ItemDescription = $"Food: {worldItem.HungerRestore}\n" +
+                                     $"Uses: {worldItem.NumberOfUses}\n" +
+                                     $"{worldItem.Description}";
             UiToGameObjectDictionary.Add(foodUiInstance.GetInstanceID(), food);
         }
         foreach (var toy in ToysOwned)
@@ -156,7 +158,9 @@ public class CareManager : MonoBehaviour
             var worldItem = toy.GetComponent<Toy>();
             uiItem.GetComponent<Image>().sprite = worldItem.GetComponent<SpriteRenderer>().sprite;
             uiItem.ItemName = worldItem.Name;
-            uiItem.ItemDescription = $"Entertainment Value: {worldItem.EntertainmentRestore}\n{worldItem.Description}";
+            uiItem.ItemDescription = $"Entertainment: {worldItem.EntertainmentRestore}\n" +
+                                     $"Uses: {worldItem.NumberOfUses}\n" +
+                                     $"{worldItem.Description}";
             UiToGameObjectDictionary.Add(toyUiInstance.GetInstanceID(), toy);
         }
     }

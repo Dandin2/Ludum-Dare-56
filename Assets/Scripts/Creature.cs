@@ -98,6 +98,7 @@ public class Creature : MonoBehaviour
             if (targetPosition.HasValue && Vector3.Distance(transform.position, targetPosition.Value) < 0.2f && rigidBody.velocity != Vector2.zero)
             {
                 StopMovement();
+                useItemAvailable = true;
                 closeEnoughToItem = true;
             }
         }
