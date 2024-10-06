@@ -20,11 +20,11 @@ public class CombatCreature : MonoBehaviour
         {
             if (type == CreatureType.Air)
                 GetComponent<SpriteRenderer>().color = Color.cyan;
-            if (type == CreatureType.Earth)
+            if (type == CreatureType.Airship)
                 GetComponent<SpriteRenderer>().color = Color.gray;
             if (type == CreatureType.Fire)
                 GetComponent<SpriteRenderer>().color = Color.red;
-            if (type == CreatureType.Plant)
+            if (type == CreatureType.Chef)
                 GetComponent<SpriteRenderer>().color = Color.green;
             if (type == CreatureType.Water)
                 GetComponent<SpriteRenderer>().color = Color.blue;
