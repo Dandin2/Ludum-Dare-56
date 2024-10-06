@@ -270,8 +270,29 @@ public class CareManager : MonoBehaviour
         {
             var groupType = creatureGroup.Key;
             var pairCount = creatureGroup.Count() / 2;
-            var randomVariation = UnityEngine.Random.Range(-1, 2); // Random variation between -1 and 1
-            var eggAmount = Mathf.Max(0, pairCount + randomVariation); // Ensure eggAmount is not negative
+
+            // Calculate average hygiene, hunger, and entertainment values for the group
+            float averageHygiene = (float)creatureGroup.Average(x => x.Hygiene);
+            float averageHunger = (float)creatureGroup.Average(x => x.Hunger);
+            float averageEntertainment = (float)creatureGroup.Average(x => x.Entertainment);
+            // Calculate a multiplier based on the average values
+            float averageValue = (averageHygiene + averageHunger + averageEntertainment) / 3.0f;
+            float multiplier = averageValue / 100.0f; // Assuming values are between 0 and 100
+            int randomVariation;
+            if (averageValue > 66.6f) // High average
+            {
+                randomVariation = UnityEngine.Random.Range(0, 2); // More likely to be +1
+            }
+            else if (averageValue < 33.3f) // Low average
+            {
+                randomVariation = UnityEngine.Random.Range(-1, 1); // More likely to be -1
+            }
+            else // Around 50%
+            {
+                randomVariation = 0;
+            }
+
+            var eggAmount = Mathf.Max(0, (int)((pairCount + randomVariation) * multiplier)); // Ensure eggAmount is not negative
             for (int i = 0; i < eggAmount; i++)
             {
                 SpawnEgg(groupType);
