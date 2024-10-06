@@ -9,9 +9,13 @@ public class SpecialSkillInfo : ScriptableObject
     public string SkillName;
     public string TextOnHover;
     public string TextOnUse;
+    public CreatureType requiredType;
+    public int requiredAmount;
 
     public List<MainEffect> effects;
     public List<CreatureEffect> effectsOnCreatures;
+
+    public int ultimateMeterChange;
 
     public GameObject OnEnemiesAnimation;
     public GameObject OnSelfAnimation;
@@ -23,10 +27,13 @@ public class CreatureEffect
 {
     public CreatureType type;
     public int quantity;
+    public float quantityPercent;
     public int turns;
 
     public bool exhaust;
     public bool ready;
+
+    public int heal;
 
     public int hungerChange;
     public int hygeneChange;

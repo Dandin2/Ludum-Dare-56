@@ -16,6 +16,8 @@ MonoBehaviour:
   TextOnHover: 'Lv 2: Deal Physical damage.  Bonus Air damage for each active Air
     creature.'
   TextOnUse: You used Air Balloon!
+  requiredType: 2
+  requiredAmount: 9
   effects:
   - elementType: 5
     target: 1
