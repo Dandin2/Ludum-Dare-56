@@ -63,12 +63,12 @@ public class CareManager : MonoBehaviour
     {
         Cursor.SetCursor(mainCursor, hotSpot, cursorMode);
 
-        // TODO: Instantiate creatures that the game state has saved.
-        var allPossibleCreatureStats = ScriptableObjectFinder.GetAllCreatureStats();
-        for (int i = 0; i < 10; i++)
+        var creaturesOwned = WorldManager.instance.activeCreatureStats.ToArray();
+        for (int i = 0; i < creaturesOwned.Length; i++)
         {
-            var randomCreatureIndex = UnityEngine.Random.Range(0, allPossibleCreatureStats.Count);
-            var creatureInstance = Instantiate(allPossibleCreatureStats.ElementAt(randomCreatureIndex).CreaturePrefab, GetNextRandomPosition(), Quaternion.identity);
+            var currentCreatureStats = creaturesOwned[i];
+            var creatureStats = ScriptableObjectFinder.FindScriptableObjectByName<CreatureStats>(currentCreatureStats.name);
+            var creatureInstance = Instantiate(creatureStats.CreaturePrefab, GetNextRandomPosition(), Quaternion.identity);
             CreaturesOwned.Add(creatureInstance);
         }
 
@@ -285,6 +285,17 @@ public class CareManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Generates a random position within the range.
+    /// </summary>
+    /// <returns>A Vector3 representing the new position for the egg to be spawned at.</returns>
+    internal Vector3 GetNextRandomPosition()
+    {
+        var randomX = UnityEngine.Random.Range(minXRange, maxXRange);
+        var randomY = UnityEngine.Random.Range(minYRange, maxYRange);
+        return new Vector3(randomX, randomY, 0);
+    }
+
     internal bool IsDroppedWithinFence()
     {
         var mousePosition = Input.mousePosition;
@@ -343,17 +354,5 @@ public class CareManager : MonoBehaviour
     {
         var eggScriptableObject = ScriptableObjectFinder.FindScriptableObjectByName<EggStats>(type+"Egg");
         Instantiate(eggScriptableObject.EggPrefab, GetNextRandomPosition(), Quaternion.identity);
-    }
-
-
-    /// <summary>
-    /// Generates a random position within the range.
-    /// </summary>
-    /// <returns>A Vector3 representing the new position for the egg to be spawned at.</returns>
-    private Vector3 GetNextRandomPosition()
-    {
-        var randomX = UnityEngine.Random.Range(minXRange, maxXRange);
-        var randomY = UnityEngine.Random.Range(minYRange, maxYRange);
-        return new Vector3(randomX, randomY, 0);
     }
 }
