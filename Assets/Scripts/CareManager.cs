@@ -60,7 +60,7 @@ public class CareManager : MonoBehaviour
         for (int i = 0; i < 10; i++)
         {
             var randomCreatureIndex = UnityEngine.Random.Range(0, allPossibleCreatureStats.Count);
-            var creatureInstance = Instantiate(allPossibleCreatureStats.ElementAt(randomCreatureIndex).CreaturePrefab);
+            var creatureInstance = Instantiate(allPossibleCreatureStats.ElementAt(randomCreatureIndex).CreaturePrefab, GetNextRandomPosition(), Quaternion.identity);
             CreaturesOwned.Add(creatureInstance);
         }
 
@@ -89,8 +89,7 @@ public class CareManager : MonoBehaviour
         SetupInventoryImages();
 
         // TODO: Calculate Eggs Spawned based on all creatures and their current stats.
-
-        // TODO: Instantiate the spawned eggs at random locations around the fenced in area.
+        CalculateEggSpawns();
     }
 
     // Update is called once per frame
@@ -235,11 +234,6 @@ public class CareManager : MonoBehaviour
         PlayPopupPanel.SetActive(false);
     }
 
-    private bool IsPointerOverUIElement()
-    {
-        return EventSystem.current.IsPointerOverGameObject();
-    }
-
     internal void UpdateCreatureInfo(Creature creature)
     {
         var currentCreatureSelected = FindObjectOfType<CreatureClickHandler>().currentCreature;
@@ -262,5 +256,44 @@ public class CareManager : MonoBehaviour
             && worldPosition.x > -maxXRange
             && worldPosition.y < maxYRange
             && worldPosition.y > -maxYRange;
+    }
+
+    private bool IsPointerOverUIElement()
+    {
+        return EventSystem.current.IsPointerOverGameObject();
+    }
+
+    private void CalculateEggSpawns()
+    {
+        var groupedCreatureTypes = CreaturesOwned.Select(x => x.GetComponent<Creature>()).GroupBy(x => x.Type);
+        foreach(var creatureGroup in groupedCreatureTypes) 
+        {
+            var groupType = creatureGroup.Key;
+            var pairCount = creatureGroup.Count() / 2;
+            var randomVariation = UnityEngine.Random.Range(-1, 2); // Random variation between -1 and 1
+            var eggAmount = Mathf.Max(0, pairCount + randomVariation); // Ensure eggAmount is not negative
+            for (int i = 0; i < eggAmount; i++)
+            {
+                SpawnEgg(groupType);
+            }
+        }
+    }
+
+    private void SpawnEgg(string type)
+    {
+        var eggScriptableObject = ScriptableObjectFinder.FindScriptableObjectByName<EggStats>(type+"Egg");
+        Instantiate(eggScriptableObject.EggPrefab, GetNextRandomPosition(), Quaternion.identity);
+    }
+
+
+    /// <summary>
+    /// Generates a random position within the range.
+    /// </summary>
+    /// <returns>A Vector3 representing the new position for the egg to be spawned at.</returns>
+    private Vector3 GetNextRandomPosition()
+    {
+        var randomX = UnityEngine.Random.Range(-maxXRange, maxXRange);
+        var randomY = UnityEngine.Random.Range(-maxYRange, maxYRange);
+        return new Vector3(randomX, randomY, 0);
     }
 }

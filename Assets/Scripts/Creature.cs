@@ -4,8 +4,9 @@ using UnityEngine;
 public class Creature : MonoBehaviour
 {
     public string Name;
-    public float ThoughtTime = 5f;
+    public float ThoughtTime = 5f; // How long a thought is shown for. should probably be less than the min thought time incrament.
 
+    // threshholds for a creature caring about each stat being low
     public float HungerThreshold = .5f;
     public float EntertainmentThreshold = .5f;
     public float HygieneThreshold = .5f;
@@ -37,6 +38,8 @@ public class Creature : MonoBehaviour
     internal bool useItemAvailable;
     internal bool closeEnoughToItem;
 
+    internal bool isInitialized = false;
+
     private Rigidbody2D rigidBody;
     private Animator animator;
     private SpriteRenderer spriteRenderer;
@@ -49,14 +52,12 @@ public class Creature : MonoBehaviour
     private float nextMinThoughtTimeIncrement = 10; // min time in seconds to make a new thought
     private float nextMaxThoughtTimeIncrement = 50; // max time in seconds to make a new thought
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-        manager = FindObjectOfType<CareManager>();
         var startingStats = ScriptableObjectFinder.FindScriptableObjectByName<CreatureStats>(Name);
         Type = Enum.GetName(typeof(CreatureType), startingStats.CreatureType);
         HitPoints = startingStats.HitPoints;
-        MaxHitPoints = startingStats.HitPoints; 
+        MaxHitPoints = startingStats.HitPoints;
         Defence = startingStats.Defence;
         Attack = startingStats.Attack;
         Hunger = startingStats.Hunger - UnityEngine.Random.Range(0, startingStats.Hunger);
@@ -66,7 +67,12 @@ public class Creature : MonoBehaviour
         Hygiene = startingStats.Hygiene - UnityEngine.Random.Range(0, startingStats.Hygiene);
         MaxHygiene = startingStats.Hygiene;
         Speed = startingStats.Speed;
-        transform.position = GetNextRandomPosition();
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        manager = FindObjectOfType<CareManager>();
         rigidBody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -74,9 +80,7 @@ public class Creature : MonoBehaviour
         nextMoveTimeIncrement = UnityEngine.Random.Range(nextMoveTimeIncrement - nextMoveTimeIncrementAdjust, nextMoveTimeIncrement + nextMoveTimeIncrementAdjust);
 
         nextThoughtTime += UnityEngine.Random.Range(0, nextMaxThoughtTimeIncrement);
-        // TODO: Check if hunger is low enough to spawn the hunger effect around creature.
-        // TODO: Check if entertainment is low enough to spawn the bordom effect around creature.
-        // TODO: Check if hygiene is low enough to spawn the dirty effect around creature.
+        isInitialized = true;
     }
 
     // Update is called once per frame
@@ -126,13 +130,6 @@ public class Creature : MonoBehaviour
             nextThoughtTime += UnityEngine.Random.Range(nextMinThoughtTimeIncrement, nextMaxThoughtTimeIncrement);
             ShowNextThought();
         }        
-    }
-
-    public void ScrubCreature()
-    {
-        Hygiene += 10;
-        // TODO: spwan soap suds
-        // TODO: check for hygiene past threshhold to despawn dirty effect and destroy it if so.
     }
 
     /// <summary>

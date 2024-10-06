@@ -6,8 +6,8 @@ public enum CreatureType
 {
     Fire,
     Water,
-    Plant,
+    Airship,
     Air,
-    Earth,
+    Chef,
     All
 }
