@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fee6bf1265f586428c39f6aaa87b79f, type: 3}
+  m_Name: 2.Sirocco
+  m_EditorClassIdentifier: 
+  SkillName: Sirocco
+  TextOnHover: 'Lv. 2 : Deal Air damage.  Your Fire creatures deal additional damage.'
+  TextOnUse: You used Sirocco!  Fire Creatures strengthened!
+  effects:
+  - elementType: 3
+    target: 1
+    damage: 25
+    heal: 0
+    block: 0
+    mods: []
+  effectsOnCreatures:
+  - type: 0
+    quantity: 99
+    turns: 0
+    exhaust: 0
+    ready: 0
+    hungerChange: 0
+    hygeneChange: 0
+    happinessChange: 0
+    damageMod: 1
+    hpMod: 0
+    blockMod: 0
+    takeDamage: 0
+  - type: 3
+    quantity: 9
+    turns: 0
+    exhaust: 1
+    ready: 0
+    hungerChange: 0
+    hygeneChange: 0
+    happinessChange: -10
+    damageMod: 1
+    hpMod: 0
+    blockMod: 0
+    takeDamage: 0
+  OnEnemiesAnimation: {fileID: 0}
+  OnSelfAnimation: {fileID: 0}

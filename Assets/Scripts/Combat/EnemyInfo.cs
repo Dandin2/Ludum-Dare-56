@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyInfo : ScriptableObject
 {
+    public string enemyName;
     public EnemyType type;
     public int health;
     public List<EnemyAttackInfo> myAttacks;

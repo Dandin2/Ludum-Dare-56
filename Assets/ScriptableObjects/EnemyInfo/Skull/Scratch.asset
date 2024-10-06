@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Scratch
   m_EditorClassIdentifier: 
   ChanceToUseAttack: 50
+  SkillName: scratch
   WindUpTurns: 0
   WindUpMessage: 
   Damage: 5

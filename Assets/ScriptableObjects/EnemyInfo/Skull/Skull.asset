@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39b2559d12e3e8740a59914add2c6e4e, type: 3}
   m_Name: Skull
   m_EditorClassIdentifier: 
+  enemyName: Floating Skull
   type: 2
   health: 20
   myAttacks:

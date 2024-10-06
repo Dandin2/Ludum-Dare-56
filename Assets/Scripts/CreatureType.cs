@@ -8,5 +8,6 @@ public enum CreatureType
     Water,
     Plant,
     Air,
-    Earth
+    Earth,
+    All
 }

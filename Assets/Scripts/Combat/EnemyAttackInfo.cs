@@ -6,6 +6,7 @@ public class EnemyAttackInfo : ScriptableObject
 {
     //todo: better logic for determining attacks/attack patterns?
     public float ChanceToUseAttack;
+    public string SkillName;
 
     public int WindUpTurns = 0;
     public string WindUpMessage;

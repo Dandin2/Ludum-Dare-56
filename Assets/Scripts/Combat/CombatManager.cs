@@ -67,9 +67,10 @@ public class CombatManager : MonoBehaviour
     public void StartEnemyTurn()
     {
         isPlayerTurn = false;
-        TextDisplay.SetMessage("Enemy prepares an attack!", false, () =>
+        EnemyAttackInfo eai = CombatEnemy.Instance.ChooseSkillToUse();
+        TextDisplay.SetMessage($"{CombatEnemy.Instance.myInfo.enemyName} uses {eai.SkillName}!", false, () =>
         {
-            EnemyAttackInfo eai = CombatEnemy.Instance.TakeTurn();
+            CombatEnemy.Instance.TakeTurn(eai);
             CombatPlayer.Instance.ReceiveEnemyEffect(eai); //if eai doesn't do anything to you, this function will ignore the effect
         }, 2);
     }

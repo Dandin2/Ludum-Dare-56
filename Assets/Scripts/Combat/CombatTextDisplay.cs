@@ -14,7 +14,12 @@ public class CombatTextDisplay : MonoBehaviour
         Text.text = text;
         OnMessageShowComplete = endAction;
         gameObject.SetActive(true);
-        StartCoroutine(WaitThenDisappear(2));
+        StartCoroutine(WaitThenDisappear(duration));
+    }
+
+    public void HideMessage()
+    {
+        gameObject.SetActive(false);
     }
 
     private IEnumerator WaitThenDisappear(float duration)
@@ -25,7 +30,8 @@ public class CombatTextDisplay : MonoBehaviour
         }
         else
         {
-            //wait for a click?
+            //At the moment, just wait for a HideMessageCall
+            yield return new WaitForSeconds(100000);
         }
         OnMessageShowComplete?.Invoke();
         //todo: maybe fade out

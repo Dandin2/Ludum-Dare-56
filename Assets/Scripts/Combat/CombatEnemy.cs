@@ -74,10 +74,8 @@ public class CombatEnemy : MonoBehaviour
         block += percent;
     }
 
-    public EnemyAttackInfo TakeTurn()
+    public EnemyAttackInfo ChooseSkillToUse()
     {
-        block = myInfo.defaultBlock;
-
         float sum = myInfo.myAttacks.Sum(x => x.ChanceToUseAttack);
         float rng = UnityEngine.Random.Range(0, sum);
         float cur = 0;
@@ -94,6 +92,12 @@ public class CombatEnemy : MonoBehaviour
         }
         if (chosen == null)
             chosen = myInfo.myAttacks.Last();
+
+        return chosen;
+    }
+    public EnemyAttackInfo TakeTurn(EnemyAttackInfo chosen)
+    {
+        block = myInfo.defaultBlock;       
 
         if (chosen.OnSelfAnimation != null)
         {
