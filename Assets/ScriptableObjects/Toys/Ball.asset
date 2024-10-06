@@ -15,6 +15,8 @@ MonoBehaviour:
   EntertainmentRestore: 10
   AttractionRadius: 0.6
   NumberOfUses: 5
+  Cost: 50
+  ShopImage: {fileID: 21300000, guid: 056396e2aa544d24e8e954c8a0f302fc, type: 3}
   Description: 'Its a big red ball. Your creatures will have a blast bouncing this
     around. '
   ToyPrefab: {fileID: 3475907818912968442, guid: 4f126f167df3fb74e9f88529995c38d3, type: 3}

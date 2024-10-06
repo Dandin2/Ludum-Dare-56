@@ -15,5 +15,7 @@ MonoBehaviour:
   HungerRestore: 10
   AttractionRadius: 1
   NumberOfUses: 2
+  Cost: 20
+  ShopImage: {fileID: 21300000, guid: 7b77b251e92bfb64ea44517cd8c29dc3, type: 3}
   Description: This is an Apple. Feed your tiny creatures with it.
   FoodPrefab: {fileID: 3475907818912968442, guid: 8eead887720f93a41ac149dbff13cc2d, type: 3}

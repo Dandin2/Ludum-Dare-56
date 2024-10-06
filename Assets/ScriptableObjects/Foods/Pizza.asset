@@ -15,5 +15,7 @@ MonoBehaviour:
   HungerRestore: 50
   AttractionRadius: 1.5
   NumberOfUses: 1
+  Cost: 50
+  ShopImage: {fileID: 21300000, guid: d82f84694198e8b4287523d39dbabace, type: 3}
   Description: Yummy Pizza. Feed your tiny creatures with it.
   FoodPrefab: {fileID: 3475907818912968442, guid: b57cd9aa296845b499677ba97f79ebd5, type: 3}
