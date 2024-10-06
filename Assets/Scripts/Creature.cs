@@ -52,6 +52,8 @@ public class Creature : MonoBehaviour
     private float nextMinThoughtTimeIncrement = 10; // min time in seconds to make a new thought
     private float nextMaxThoughtTimeIncrement = 50; // max time in seconds to make a new thought
 
+    private bool hasRandomStartingValues = false; // flag to test not full starting values for hunger, hygiene, and entertainment.
+
     private void Awake()
     {
         var startingStats = ScriptableObjectFinder.FindScriptableObjectByName<CreatureStats>(Name);
@@ -60,11 +62,11 @@ public class Creature : MonoBehaviour
         MaxHitPoints = startingStats.HitPoints;
         Defence = startingStats.Defence;
         Attack = startingStats.Attack;
-        Hunger = startingStats.Hunger - UnityEngine.Random.Range(0, startingStats.Hunger);
+        Hunger = startingStats.Hunger - (hasRandomStartingValues ? UnityEngine.Random.Range(0, startingStats.Hunger) : 0);
         MaxHunger = startingStats.Hunger;
-        Entertainment = startingStats.Entertainment - UnityEngine.Random.Range(0, startingStats.Entertainment);
+        Entertainment = startingStats.Entertainment - (hasRandomStartingValues ? UnityEngine.Random.Range(0, startingStats.Entertainment) : 0);
         MaxEntertainment = startingStats.Entertainment;
-        Hygiene = startingStats.Hygiene - UnityEngine.Random.Range(0, startingStats.Hygiene);
+        Hygiene = startingStats.Hygiene - (hasRandomStartingValues ? UnityEngine.Random.Range(0, startingStats.Hygiene) : 0);
         MaxHygiene = startingStats.Hygiene;
         Speed = startingStats.Speed;
     }
