@@ -30,6 +30,8 @@ public class Creature : MonoBehaviour
     internal int MaxHygiene;
     internal float partialHygiene;
 
+    internal bool IsExhausted;
+
     internal float Speed;
 
     internal Vector3? targetPosition; // the target position the creature is trying to get to.

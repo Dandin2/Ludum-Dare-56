@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 51077048cb5fb8d46a414155bee5d1be, type: 3}
-  m_Name: Ball
+  m_Name: Train
   m_EditorClassIdentifier: 
-  EntertainmentRestore: 10
-  AttractionRadius: 0.6
-  NumberOfUses: 5
-  Description: 'Its a big red ball. Your creatures will have a blast bouncing this
-    around. '
-  ToyPrefab: {fileID: 3475907818912968442, guid: 4f126f167df3fb74e9f88529995c38d3, type: 3}
+  EntertainmentRestore: 30
+  AttractionRadius: 0.3
+  NumberOfUses: 10
+  Description: Choo Choo! This train is loads of fun. Hard for the the tiny creatures
+    to see it though.
+  ToyPrefab: {fileID: 3475907818912968442, guid: a831e55d170beed478aa285ba496936c, type: 3}

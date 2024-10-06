@@ -77,8 +77,6 @@ public class ActiveCreatureStats
     public int health;
     public int damage;
     public int block;
-    public int specialDamage;
-    public int specialContribution;
     public int hunger;
     public int hygene;
     public int entertainment;
