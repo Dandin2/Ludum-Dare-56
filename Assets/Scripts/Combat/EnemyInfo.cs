@@ -7,6 +7,8 @@ public class EnemyInfo : ScriptableObject
     public EnemyType type;
     public int health;
     public List<EnemyAttackInfo> myAttacks;
+    public int defaultBlock;
+    public GameObject prefab;
 }
 public class CreateEnemyInfo
 {

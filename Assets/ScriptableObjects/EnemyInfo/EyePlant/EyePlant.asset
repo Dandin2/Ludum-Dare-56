@@ -9,12 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a732281c26b1b444afedfd5abdf6e13, type: 3}
-  m_Name: SnailedIt
+  m_Script: {fileID: 11500000, guid: 39b2559d12e3e8740a59914add2c6e4e, type: 3}
+  m_Name: EyePlant
   m_EditorClassIdentifier: 
-  ChanceToUseAttack: 50
-  WindUpTurns: 1
-  WindUpMessage: Preparing to Snail!!!
-  Damage: 10
-  NumToDamage: 10
-  PercentToDamage: 0
+  type: 0
+  health: 0
+  myAttacks: []
+  defaultBlock: 0
+  prefab: {fileID: 960600405851562661, guid: 5b866951ab8730e438eb961ba2185769, type: 3}

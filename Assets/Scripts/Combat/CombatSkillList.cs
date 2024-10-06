@@ -4,16 +4,21 @@ using UnityEngine;
 
 public class CombatSkillList : MonoBehaviour
 {
-    public UIClick AttackButton;
-    public UIClick SpecialButton;
-    public UIClick BlockButton;
-    public UIClick UltimateButton;
+    public CombatButton AttackButton;
+    public CombatButton SpecialButton;
+    public CombatButton BlockButton;
+    public CombatButton UltimateButton;
 
     public void SetOptions()
     {
-        AttackButton.SetClickAction(() => { CombatManager.Instance.AttackEnemy(); });
-        SpecialButton.SetClickAction(() => { CombatManager.Instance.PerformSpecialMove(); });
-        BlockButton.SetClickAction(() => { CombatManager.Instance.Block(); });
-        UltimateButton.SetClickAction(() => { CombatManager.Instance.Ultimate(); });
+        AttackButton.Set(() => { CombatManager.Instance.AttackEnemy();  SetActive(false); });
+        SpecialButton.Set(() => { CombatManager.Instance.PerformSpecialMove(); SetActive(false); });
+        BlockButton.Set(() => { CombatManager.Instance.Block(); SetActive(false); });
+        UltimateButton.Set(() => { CombatManager.Instance.Ultimate(); SetActive(false); });
+    }
+
+    public void SetActive(bool active)
+    {
+        gameObject.SetActive(active);
     }
 }
