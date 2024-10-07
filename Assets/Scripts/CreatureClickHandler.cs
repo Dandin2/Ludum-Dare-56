@@ -31,10 +31,11 @@ public class CreatureClickHandler : MonoBehaviour
                     ShowPopup(creature);
                     if(manager.isUsingScrubBrush && creature.Hygiene != creature.MaxHygiene && creature.gameObject.GetInstanceID() == gameObject.GetInstanceID())
                     {
-                        if(Time.time > lastTimeSpawned + 2f)
+                        if(Time.time > lastTimeSpawned + .5f)
                         {
                             lastTimeSpawned = Time.time;
-                            Destroy(Instantiate(manager.bubbleParticles, creature.transform), 2f);
+                            var bubbles = Instantiate(manager.bubbleParticles, creature.transform);
+                            Destroy(bubbles, .5f);
                         }
                         creature.partialHygiene += .5f;
                         if(creature.partialHygiene >= 1)
