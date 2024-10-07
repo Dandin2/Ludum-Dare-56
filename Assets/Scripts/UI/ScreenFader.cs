@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Fade : MonoBehaviour
+public class ScreenFader : MonoBehaviour
 {
     public void FadeToClear(float time, Action endAction)
     {

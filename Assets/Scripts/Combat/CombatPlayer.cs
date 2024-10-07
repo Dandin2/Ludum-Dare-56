@@ -76,7 +76,7 @@ public class CombatPlayer : MonoBehaviour
 
     public int CalculateDamage()
     {
-        return myCreatures.Sum(x => x.CalculateDamage()) / myCreatures.Count;
+        return (int)(myCreatures.Sum(x => x.CalculateDamage()) / 12.5f); //20 should do about 8 damage.
     }
 
     public void ReceiveEnemyEffect(EnemyAttackInfo attackInfo)

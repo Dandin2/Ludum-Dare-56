@@ -57,11 +57,12 @@ public class CombatEnemy : MonoBehaviour
     public void TakeDamage(int dmg)
     {
         currentHP -= dmg;
-        HealthBar.UpdateHealth(myInfo.health, currentHP, 0, () => { 
-            if (currentHP <= 0) 
-                CombatManager.Instance.Victory(); 
-            else 
-                CombatManager.Instance.PlayerTurnDoneAnimating(); 
+        HealthBar.UpdateHealth(myInfo.health, currentHP, 0, () =>
+        {
+            if (currentHP <= 0)
+                CombatManager.Instance.Victory();
+            else
+                CombatManager.Instance.PlayerTurnDoneAnimating();
         });
         if (currentHP > 0)
             GetComponentInChildren<Animator>().SetTrigger("Hit");
@@ -98,7 +99,10 @@ public class CombatEnemy : MonoBehaviour
         if (totalDamage > 0)
         {
             TakeDamage(totalDamage);
-            CombatManager.Instance.TextDisplay.SetMessage($"It's {(totalResistVuln > 20 ? "super effective!" : "not very effective..")}", false, null, 1);
+            if (totalResistVuln >= 20)
+                CombatManager.Instance.TextDisplay.SetMessage("It's super effective!", false, null, 1);
+            else if(totalResistVuln <= -20)
+                CombatManager.Instance.TextDisplay.SetMessage("It's not very effective...", false, null, 1);
         }
         if (heal > 0)
             Heal(heal);
@@ -114,7 +118,7 @@ public class CombatEnemy : MonoBehaviour
             if (totalDamage <= 0)
                 go.GetComponent<OneTimeAnimation>()?.SetCompleteAction(() => { CombatManager.Instance.PlayerTurnDoneAnimating(); });
         }
-        else if(totalDamage <= 0)
+        else if (totalDamage <= 0)
             CombatManager.Instance.PlayerTurnDoneAnimating();
     }
 

@@ -23,7 +23,7 @@ MonoBehaviour:
   weaknesses:
   - type: 2
     vulnPercent: 20
-  strengths:
   - type: 0
-    resistPercent: 20
+    vulnPercent: 20
+  strengths: []
   prefab: {fileID: 960600405851562661, guid: db866900a36d60547b702ffd29464aaa, type: 3}

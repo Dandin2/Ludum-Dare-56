@@ -3296,6 +3296,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1f0e409464fff44cacbf012176e9f15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CreatureBases: []
   level: 0
   isTesting: 0
 --- !u!4 &460280430
@@ -5639,11 +5640,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37ba2f559b4fd6340942a8e9229035e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Unlit: {fileID: 21300000, guid: 45b6765cf42482e48a41f8ec30ec1ee6, type: 3}
+  Unlit: {fileID: 21300000, guid: 202b540f2280dce45acd13aef8fa8a50, type: 3}
   Highlight: {fileID: 0}
   Click: {fileID: 2007206602}
   HighlightGO: {fileID: 792436904}
-  SkillOnClick: {fileID: 11400000, guid: 231abb096de4f3347983dc95c08bd5c5, type: 2}
+  SkillOnClick: {fileID: 11400000, guid: e634963891cc9bf43934d1d48e804fef, type: 2}
   active: 1
 --- !u!1 &814605612
 GameObject:
@@ -9562,7 +9563,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 202b540f2280dce45acd13aef8fa8a50, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 45b6765cf42482e48a41f8ec30ec1ee6, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -17865,7 +17866,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 45b6765cf42482e48a41f8ec30ec1ee6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 202b540f2280dce45acd13aef8fa8a50, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -18438,11 +18439,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37ba2f559b4fd6340942a8e9229035e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Unlit: {fileID: 21300000, guid: 202b540f2280dce45acd13aef8fa8a50, type: 3}
+  Unlit: {fileID: 21300000, guid: 45b6765cf42482e48a41f8ec30ec1ee6, type: 3}
   Highlight: {fileID: 0}
   Click: {fileID: 1415496396}
   HighlightGO: {fileID: 1061218848}
-  SkillOnClick: {fileID: 11400000, guid: e634963891cc9bf43934d1d48e804fef, type: 2}
+  SkillOnClick: {fileID: 11400000, guid: 231abb096de4f3347983dc95c08bd5c5, type: 2}
   active: 1
 --- !u!1 &2100558909
 GameObject:

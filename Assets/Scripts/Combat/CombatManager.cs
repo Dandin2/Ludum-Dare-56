@@ -12,7 +12,7 @@ public class CombatManager : MonoBehaviour
     public CombatSkillList SkillList;
     public List<CombatEnemyInfo> Enemies;
     public CombatTextDisplay TextDisplay;
-    public Fade Fader;
+    public ScreenFader Fader;
 
     public GameObject InactivePrefab;
 
@@ -174,7 +174,7 @@ public class CombatManager : MonoBehaviour
         combatOver = true;
         TextDisplay.SetMessage("You lose.....", false, () =>
         {
-            Fader.FadeToBlack(2, () => { SceneManager.LoadScene(0); });
+            Fader.FadeToBlack(2, () => { SceneManager.LoadScene(4); });
         }, 4);
     }
 }
