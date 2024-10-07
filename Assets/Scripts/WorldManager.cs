@@ -6,9 +6,12 @@ public class WorldManager : MonoBehaviour
 {
     public static WorldManager instance;
 
+    public List<CreatureStats> CreatureBases;
+
     internal List<ActiveCreatureStats> activeCreatureStats = new List<ActiveCreatureStats>();
 
     internal int GoldAmount;
+    public int level;
 
     public bool isTesting = false;
     // Start is called before the first frame update

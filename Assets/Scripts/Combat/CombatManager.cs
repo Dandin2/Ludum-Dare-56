@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor.Animations;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CombatManager : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class CombatManager : MonoBehaviour
     public CombatSkillList SkillList;
     public List<CombatEnemyInfo> Enemies;
     public CombatTextDisplay TextDisplay;
+    public Fade Fader;
 
     public GameObject InactivePrefab;
 
@@ -30,6 +32,9 @@ public class CombatManager : MonoBehaviour
         }
     }
     private int doneAnimatingCount;
+    private bool combatOver = false;
+
+
     private void Awake()
     {
         if (Instance == null)
@@ -49,10 +54,17 @@ public class CombatManager : MonoBehaviour
 
     public void CombatStart()
     {
-        CombatEnemy.Instance.SetEnemy(Enemies.Where(x => x.myEnemyType == EnemyType.Skull).FirstOrDefault().myInfo);
+        isPlayerTurn = false;
+        CombatEnemyInfo chosen = Enemies[WorldManager.instance.level];
+        CombatEnemy.Instance.SetEnemy(chosen.myInfo);
         CombatPlayer.Instance.SetInitial();
-
-        StartPlayerTurn();
+        Fader.FadeToClear(2, () =>
+        {
+            TextDisplay.SetMessage($"A {chosen.myInfo.enemyName} appeared!", false, () =>
+            {
+                TextDisplay.SetMessage(chosen.myInfo.combatIntroText, false, () => { StartPlayerTurn(); }, 2);
+            }, 3);
+        });
     }
 
     private IEnumerator WaitThenDo(float seconds, Action onComplete)
@@ -63,18 +75,22 @@ public class CombatManager : MonoBehaviour
     }
     public void StartPlayerTurn()
     {
-        isPlayerTurn = true;
+        if (!combatOver)
+            isPlayerTurn = true;
     }
 
     public void StartEnemyTurn()
     {
-        isPlayerTurn = false;
-        EnemyAttackInfo eai = CombatEnemy.Instance.ChooseSkillToUse();
-        TextDisplay.SetMessage($"{CombatEnemy.Instance.myInfo.enemyName} uses {eai.SkillName}!", false, () =>
+        if (!combatOver)
         {
-            CombatEnemy.Instance.TakeTurn(eai);
-            CombatPlayer.Instance.ReceiveEnemyEffect(eai); //if eai doesn't do anything to you, this function will ignore the effect
-        }, 2);
+            isPlayerTurn = false;
+            EnemyAttackInfo eai = CombatEnemy.Instance.ChooseSkillToUse();
+            TextDisplay.SetMessage($"{CombatEnemy.Instance.myInfo.enemyName} uses {eai.SkillName}!", false, () =>
+            {
+                CombatEnemy.Instance.TakeTurn(eai);
+                CombatPlayer.Instance.ReceiveEnemyEffect(eai); //if eai doesn't do anything to you, this function will ignore the effect
+            }, 2);
+        }
     }
 
     public void EnemyTurnDoneAnimating()
@@ -106,15 +122,18 @@ public class CombatManager : MonoBehaviour
     public void Block()
     {
         isPlayerTurn = false;
-
+        CombatPlayer.Instance.Block();
     }
 
     public void PerformPlayerAction(SpecialSkillInfo ssi)
     {
         isPlayerTurn = false;
         doneAnimatingCount = 0;
-        CombatPlayer.Instance.ReceivePlayerEffect(ssi);
-        CombatEnemy.Instance.ReceiveEffect(ssi);
+        TextDisplay.SetMessage(ssi.TextOnUse, false, () =>
+        {
+            CombatPlayer.Instance.ReceivePlayerEffect(ssi);
+            CombatEnemy.Instance.ReceiveEffect(ssi);
+        }, 1);
     }
 
     public void SetAbilityHoverText(SpecialSkillInfo ssi)
@@ -132,6 +151,31 @@ public class CombatManager : MonoBehaviour
     {
         SkillList.SetActive(false);
 
+    }
+
+    public void Victory()
+    {
+        combatOver = true;
+        int goldGain = 500 + (500 * WorldManager.instance.level);
+        TextDisplay.SetMessage("You win!", false, () =>
+        {
+            TextDisplay.SetMessage($"You gain {goldGain} gold!", false, () =>
+            {
+                WorldManager.instance.activeCreatureStats = CombatPlayer.Instance.GetCreatures();
+                WorldManager.instance.GoldAmount += goldGain;
+                WorldManager.instance.level++;
+                SceneManager.LoadScene(2);
+            }, 3);
+        }, 4);
+    }
+
+    public void Defeat()
+    {
+        combatOver = true;
+        TextDisplay.SetMessage("You lose.....", false, () =>
+        {
+            Fader.FadeToBlack(2, () => { SceneManager.LoadScene(0); });
+        }, 4);
     }
 }
 

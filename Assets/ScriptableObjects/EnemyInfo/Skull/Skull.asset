@@ -13,9 +13,17 @@ MonoBehaviour:
   m_Name: Skull
   m_EditorClassIdentifier: 
   enemyName: Floating Skull
+  combatIntroText: '"....."'
   type: 2
-  health: 20
+  health: 100
   myAttacks:
   - {fileID: 11400000, guid: a47bd0dbe7cb8f34b84fd78e3d0da4aa, type: 2}
+  - {fileID: 11400000, guid: 4326b9fca84d59c4fb9ef102c270c9cd, type: 2}
   defaultBlock: 5
+  weaknesses:
+  - type: 2
+    vulnPercent: 20
+  strengths:
+  - type: 0
+    resistPercent: 20
   prefab: {fileID: 960600405851562661, guid: db866900a36d60547b702ffd29464aaa, type: 3}

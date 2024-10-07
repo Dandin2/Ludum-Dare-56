@@ -33,8 +33,8 @@ public class CombatTextDisplay : MonoBehaviour
             //At the moment, just wait for a HideMessageCall
             yield return new WaitForSeconds(100000);
         }
-        OnMessageShowComplete?.Invoke();
         //todo: maybe fade out
         gameObject.SetActive(false);
+        OnMessageShowComplete?.Invoke();
     }
 }

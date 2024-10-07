@@ -12,15 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a732281c26b1b444afedfd5abdf6e13, type: 3}
   m_Name: EyeBeam
   m_EditorClassIdentifier: 
-  ChanceToUseAttack: 0
+  ChanceToUseAttack: 50
+  SkillName: Eye Beam
   WindUpTurns: 0
   WindUpMessage: 
-  Damage: 0
-  NumToDamage: 0
+  Damage: 10
+  NumToDamage: 5
   PercentToDamage: 0
-  NumToExhaust: 0
+  NumToExhaust: 5
   NumToReady: 0
   SelfHealAmount: 0
   SelfBlockAmount: 0
-  OnEnemiesAnimation: {fileID: 0}
+  OnEnemiesAnimation: {fileID: 4288569446507331513, guid: e1f71147e64728e4c9bd855012e1fba4, type: 3}
   OnSelfAnimation: {fileID: 0}
