@@ -73,6 +73,7 @@ public class ShopItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 Instantiate(eggStats.EggPrefab, manager.GetNextRandomPosition(), Quaternion.identity);
             }
             manager.SetupInventoryImages();
+            manager.GoldAmountText.text = WorldManager.instance.GoldAmount.ToString();
         }
     }
 }

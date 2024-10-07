@@ -71,13 +71,15 @@ public class CareManager : MonoBehaviour
     void Start()
     {
         Cursor.SetCursor(mainCursor, hotSpot, cursorMode);
-
+        GoldAmountText.text = WorldManager.instance.GoldAmount.ToString();
         var creaturesOwned = WorldManager.instance.activeCreatureStats.ToArray();
         for (int i = 0; i < creaturesOwned.Length; i++)
         {
             var currentCreatureStats = creaturesOwned[i];
             var creatureStats = ScriptableObjectFinder.FindScriptableObjectByName<CreatureStats>(currentCreatureStats.name);
             var creatureInstance = Instantiate(creatureStats.CreaturePrefab, GetNextRandomPosition(), Quaternion.identity);
+            var creature = creatureInstance.GetComponent<Creature>();
+            creature.SetStats(currentCreatureStats);
             CreaturesOwned.Add(creatureInstance);
         }
 
@@ -193,7 +195,6 @@ public class CareManager : MonoBehaviour
             worldPosition.z = 0f;
             DraggingItem.transform.position = worldPosition;
         }
-        GoldAmountText.text = WorldManager.instance.GoldAmount.ToString();
     }
 
     public void SetupInventoryImages()

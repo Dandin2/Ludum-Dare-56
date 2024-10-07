@@ -40,7 +40,7 @@ public class Egg : MonoBehaviour
             var randomCreature = possibleCreatures[Random.Range(0, possibleCreatures.Length)];
             var go = Instantiate(randomCreature.CreaturePrefab, transform.position, Quaternion.identity);
             creatureSpwaned = go.GetComponent<Creature>();
-            creatureSpwaned.IsHatched = true;
+            creatureSpwaned.SetStats(null);
             manager.CreaturesOwned.Add(go);
             Destroy(gameObject, destructionTime);
         }

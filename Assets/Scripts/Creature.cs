@@ -35,8 +35,6 @@ public class Creature : MonoBehaviour
 
     internal float Speed;
 
-    internal bool IsHatched;
-
     internal Vector3? targetPosition; // the target position the creature is trying to get to.
     internal Toy ToyUsing;
     internal Food FoodUsing;
@@ -56,27 +54,6 @@ public class Creature : MonoBehaviour
     private float nextThoughtTime = 0;
     private float nextMinThoughtTimeIncrement = 10; // min time in seconds to make a new thought
     private float nextMaxThoughtTimeIncrement = 50; // max time in seconds to make a new thought
-
-    private bool hasRandomStartingValues = false; // flag to test not full starting values for hunger, hygiene, and entertainment.
-
-    private void Awake()
-    {
-        hasRandomStartingValues = WorldManager.instance.level <= 1 || IsHatched;
-        var startingStats = ScriptableObjectFinder.FindScriptableObjectByName<CreatureStats>(Name);
-        CreatureType = startingStats.CreatureType;
-        Type = Enum.GetName(typeof(CreatureType), startingStats.CreatureType);
-        HitPoints = startingStats.HitPoints;
-        MaxHitPoints = startingStats.HitPoints;
-        Defence = startingStats.Defence;
-        Attack = startingStats.Attack;
-        Hunger = startingStats.Hunger - (hasRandomStartingValues ? UnityEngine.Random.Range(0, startingStats.Hunger) : 0);
-        MaxHunger = startingStats.Hunger;
-        Entertainment = startingStats.Entertainment - (hasRandomStartingValues ? UnityEngine.Random.Range(0, startingStats.Entertainment) : 0);
-        MaxEntertainment = startingStats.Entertainment;
-        Hygiene = startingStats.Hygiene - (hasRandomStartingValues ? UnityEngine.Random.Range(0, startingStats.Hygiene) : 0);
-        MaxHygiene = startingStats.Hygiene;
-        Speed = startingStats.Speed;
-    }
 
     // Start is called before the first frame update
     void Start()
@@ -139,6 +116,43 @@ public class Creature : MonoBehaviour
             nextThoughtTime += UnityEngine.Random.Range(nextMinThoughtTimeIncrement, nextMaxThoughtTimeIncrement);
             ShowNextThought();
         }        
+    }
+
+    public void SetStats(ActiveCreatureStats currentCreatureStats)
+    {
+        var startingStats = ScriptableObjectFinder.FindScriptableObjectByName<CreatureStats>(Name);
+        if (currentCreatureStats == null)
+        {
+            CreatureType = startingStats.CreatureType;
+            Type = Enum.GetName(typeof(CreatureType), startingStats.CreatureType);
+            HitPoints = startingStats.HitPoints;
+            MaxHitPoints = startingStats.HitPoints;
+            Defence = startingStats.Defence;
+            Attack = startingStats.Attack;
+            Hunger = startingStats.Hunger - UnityEngine.Random.Range(0, startingStats.Hunger);
+            MaxHunger = startingStats.Hunger;
+            Entertainment = startingStats.Entertainment - UnityEngine.Random.Range(0, startingStats.Entertainment);
+            MaxEntertainment = startingStats.Entertainment;
+            Hygiene = startingStats.Hygiene - UnityEngine.Random.Range(0, startingStats.Hygiene);
+            MaxHygiene = startingStats.Hygiene;
+            Speed = startingStats.Speed;
+        }
+        else
+        {
+            CreatureType = currentCreatureStats.myType;
+            Type = Enum.GetName(typeof(CreatureType), currentCreatureStats.myType);
+            HitPoints = currentCreatureStats.health;
+            MaxHitPoints = startingStats.HitPoints;
+            Defence = currentCreatureStats.block;
+            Attack = currentCreatureStats.damage;
+            Hunger = currentCreatureStats.hunger - UnityEngine.Random.Range(0, startingStats.Hunger);
+            MaxHunger = startingStats.Hunger;
+            Entertainment = currentCreatureStats.entertainment - UnityEngine.Random.Range(0, startingStats.Entertainment);
+            MaxEntertainment = startingStats.Entertainment;
+            Hygiene = currentCreatureStats.hygene - UnityEngine.Random.Range(0, startingStats.Hygiene);
+            MaxHygiene = startingStats.Hygiene;
+            Speed = startingStats.Speed;
+        }
     }
 
     /// <summary>
