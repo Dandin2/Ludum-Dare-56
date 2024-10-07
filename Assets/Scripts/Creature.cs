@@ -46,7 +46,7 @@ public class Creature : MonoBehaviour
     private Animator animator;
     private SpriteRenderer spriteRenderer;
     private float nextMoveTime = 0; // tracks when the next move will be made.
-    private float nextMoveTimeIncrement = 15; // time in seconds to make a new move
+    private float nextMoveTimeIncrement = 5; // time in seconds to make a new move
     private float nextMoveTimeIncrementAdjust = 5; // adjusts next move time so not all creatures move in the same increment.
     private CareManager manager;
 
@@ -80,7 +80,7 @@ public class Creature : MonoBehaviour
         rigidBody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        nextMoveTime = nextMoveTimeIncrementAdjust * 2 - nextMoveTimeIncrement;
+        nextMoveTime = Time.time + nextMoveTimeIncrementAdjust;
         nextMoveTimeIncrement = UnityEngine.Random.Range(nextMoveTimeIncrement - nextMoveTimeIncrementAdjust, nextMoveTimeIncrement + nextMoveTimeIncrementAdjust);
 
         nextThoughtTime += UnityEngine.Random.Range(0, nextMaxThoughtTimeIncrement);
@@ -123,7 +123,7 @@ public class Creature : MonoBehaviour
                 StartMovement();
             }
 
-            if (targetPosition.HasValue && Vector3.Distance(transform.position, targetPosition.Value) < 0.1f && rigidBody.velocity != Vector2.zero)
+            if (targetPosition.HasValue && Vector3.Distance(transform.position, targetPosition.Value) < 0.2f && rigidBody.velocity != Vector2.zero)
             {
                 StopMovement();
             }
@@ -199,5 +199,10 @@ public class Creature : MonoBehaviour
         {
             Destroy(Instantiate(manager.BoredPrefab, transform), ThoughtTime);
         }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        StopMovement();
     }
 }

@@ -9,6 +9,11 @@ public class CareManager : MonoBehaviour
 {
     // UI elements needed
     public GameObject CreaturePopupPanel; // Assign the popup panel in the Inspector
+    public GameObject ShopPopupPanel; // Assign the popup panel in the Inspector
+    public GameObject ToyShopPanel; // Assign the panel in the Inspector
+    public GameObject FoodShopPanel; // Assign the panel in the Inspector
+    public Transform ToyShopInventory; // Assign the inventory object in the Inspector
+    public Transform FoodShopInventory; // Assign the inventory object in the Inspector
     public GameObject ItemPopupPanel; // Assign the popup panel in the Inspector
     public GameObject FoodPopupPanel; // Assign the popup panel in the Inspector
     public Transform FoodInventory; // Assign the inventory object in the Inspector
@@ -24,6 +29,7 @@ public class CareManager : MonoBehaviour
     public RectTransform linePosition; // Assign the position where the line renderer attaches to the creature panel in the Inspector.
     public Camera UiCamera; // Assign the camera rendering the UI
     public GameObject UiItemPrefab;
+    public GameObject UiShopItemPrefab;
     public Vector2 grabOffset = new Vector2(-15, 5);
 
     public GameObject BoredPrefab;
@@ -37,6 +43,8 @@ public class CareManager : MonoBehaviour
     internal Vector2 hotSpot = new Vector2(5, 5);
     internal CursorMode cursorMode = CursorMode.Auto;
 
+    internal float minXRange = -3f; // min x position inside the fence
+    internal float minYRange = -3.5f; // min y position inside the fence
     internal float maxXRange = 3f; // max x position inside the fence
     internal float maxYRange = 3.5f; // max y position inside the fence
 
@@ -55,36 +63,41 @@ public class CareManager : MonoBehaviour
     {
         Cursor.SetCursor(mainCursor, hotSpot, cursorMode);
 
-        // TODO: Instantiate creatures that the game state has saved.
-        var allPossibleCreatureStats = ScriptableObjectFinder.GetAllCreatureStats();
-        for (int i = 0; i < 10; i++)
+        var creaturesOwned = WorldManager.instance.activeCreatureStats.ToArray();
+        for (int i = 0; i < creaturesOwned.Length; i++)
         {
-            var randomCreatureIndex = UnityEngine.Random.Range(0, allPossibleCreatureStats.Count);
-            var creatureInstance = Instantiate(allPossibleCreatureStats.ElementAt(randomCreatureIndex).CreaturePrefab, GetNextRandomPosition(), Quaternion.identity);
+            var currentCreatureStats = creaturesOwned[i];
+            var creatureStats = ScriptableObjectFinder.FindScriptableObjectByName<CreatureStats>(currentCreatureStats.name);
+            var creatureInstance = Instantiate(creatureStats.CreaturePrefab, GetNextRandomPosition(), Quaternion.identity);
             CreaturesOwned.Add(creatureInstance);
         }
 
-        // TODO: Instatntiate the food you actually have instead of the mock inventory I am loading for testing.
-        var allPossibleFoods = ScriptableObjectFinder.GetAllFoodStats();
+        var allPossibleFoods = ScriptableObjectFinder.GetAllFoodStats().ToArray();
         for (int i = 0; i < allPossibleFoods.Count(); i++)
         {
-            var foodInstance = Instantiate(allPossibleFoods.ElementAt(i).FoodPrefab);
-            foodInstance.SetActive(false);
-            FoodOwned.Add(foodInstance);
-            foodInstance = Instantiate(allPossibleFoods.ElementAt(i).FoodPrefab);
-            foodInstance.SetActive(false);
-            FoodOwned.Add(foodInstance);
+            var currentFood = allPossibleFoods[i];
+            var go = Instantiate(UiShopItemPrefab, FoodShopInventory);
+            var shopItem = go.GetComponent<ShopItem>();
+            shopItem.ItemImage.sprite = currentFood.ShopImage;
+            shopItem.GoldAmountText.text = currentFood.Cost + "G";
+            shopItem.ItemName = currentFood.name;
+            shopItem.ItemDescription = $"Food: {currentFood.HungerRestore}\n" +
+                                       $"Uses: {currentFood.NumberOfUses}\n" +
+                                       $"{currentFood.Description}";
         }
-        // TODO: Instatntiate the toys you actually have instead of the mock inventory I am loading for testing.
-        var allPossibleToys = ScriptableObjectFinder.GetAllToyStats();
+
+        var allPossibleToys = ScriptableObjectFinder.GetAllToyStats().ToArray();
         for (int i = 0; i < allPossibleToys.Count(); i++)
         {
-            var toyInstance = Instantiate(allPossibleToys.ElementAt(i).ToyPrefab);
-            toyInstance.SetActive(false);
-            ToysOwned.Add(toyInstance);
-            toyInstance = Instantiate(allPossibleToys.ElementAt(i).ToyPrefab);
-            toyInstance.SetActive(false);
-            ToysOwned.Add(toyInstance);
+            var currentToy = allPossibleToys[i];
+            var go = Instantiate(UiShopItemPrefab, ToyShopInventory);
+            var shopItem = go.GetComponent<ShopItem>();
+            shopItem.ItemImage.sprite = currentToy.ShopImage;
+            shopItem.GoldAmountText.text = currentToy.Cost + "G";
+            shopItem.ItemName = currentToy.name;
+            shopItem.ItemDescription = $"Food: {currentToy.EntertainmentRestore}\n" +
+                                       $"Uses: {currentToy.NumberOfUses}\n" +
+                                       $"{currentToy.Description}";
         }
         SetupInventoryImages();
 
@@ -183,6 +196,12 @@ public class CareManager : MonoBehaviour
     {
         PlayPopupPanel.SetActive(!PlayPopupPanel.activeSelf);
     }
+
+    public void ToggleShopMenu()
+    {
+        ShopPopupPanel.SetActive(!ShopPopupPanel.activeSelf);
+    }
+
     public void ToggleScrubBrush()
     {
         isUsingScrubBrush = !isUsingScrubBrush;
@@ -213,6 +232,18 @@ public class CareManager : MonoBehaviour
         FoodPopupPanel.SetActive(false);
     }
 
+    public void SelectToyShop()
+    {
+        ToyShopPanel.SetActive(true);
+        FoodShopPanel.SetActive(false);
+    }
+
+    public void SelectFoodShop()
+    {
+        ToyShopPanel.SetActive(false);
+        FoodShopPanel.SetActive(true);
+    }
+
     public void SetMainCursor()
     {
         if (DraggingItem == null && !isUsingScrubBrush)
@@ -234,6 +265,11 @@ public class CareManager : MonoBehaviour
         PlayPopupPanel.SetActive(false);
     }
 
+    public void CloseShopMenu()
+    {
+        ShopPopupPanel.SetActive(false);
+    }
+
     internal void UpdateCreatureInfo(Creature creature)
     {
         var currentCreatureSelected = FindObjectOfType<CreatureClickHandler>().currentCreature;
@@ -249,9 +285,23 @@ public class CareManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Generates a random position within the range.
+    /// </summary>
+    /// <returns>A Vector3 representing the new position for the egg to be spawned at.</returns>
+    internal Vector3 GetNextRandomPosition()
+    {
+        var randomX = UnityEngine.Random.Range(minXRange, maxXRange);
+        var randomY = UnityEngine.Random.Range(minYRange, maxYRange);
+        return new Vector3(randomX, randomY, 0);
+    }
+
     internal bool IsDroppedWithinFence()
     {
-        Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        var mousePosition = Input.mousePosition;
+        mousePosition.x += grabOffset.x;
+        mousePosition.y += grabOffset.y;
+        Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
         return worldPosition.x < maxXRange
             && worldPosition.x > -maxXRange
             && worldPosition.y < maxYRange
@@ -304,17 +354,5 @@ public class CareManager : MonoBehaviour
     {
         var eggScriptableObject = ScriptableObjectFinder.FindScriptableObjectByName<EggStats>(type+"Egg");
         Instantiate(eggScriptableObject.EggPrefab, GetNextRandomPosition(), Quaternion.identity);
-    }
-
-
-    /// <summary>
-    /// Generates a random position within the range.
-    /// </summary>
-    /// <returns>A Vector3 representing the new position for the egg to be spawned at.</returns>
-    private Vector3 GetNextRandomPosition()
-    {
-        var randomX = UnityEngine.Random.Range(-maxXRange, maxXRange);
-        var randomY = UnityEngine.Random.Range(-maxYRange, maxYRange);
-        return new Vector3(randomX, randomY, 0);
     }
 }

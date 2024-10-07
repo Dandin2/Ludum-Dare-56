@@ -24,6 +24,10 @@ public class FoodStats : ScriptableObject
 
     public int NumberOfUses;
 
+    public int Cost;
+
+    public Sprite ShopImage;
+
     public string Description;
 
     public GameObject FoodPrefab;

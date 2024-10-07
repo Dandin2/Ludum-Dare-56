@@ -20,5 +20,5 @@ MonoBehaviour:
   Hunger: 100
   Entertainment: 100
   Hygiene: 100
-  Speed: 1
+  Speed: 1.1
   CreaturePrefab: {fileID: 7675345743379837916, guid: 5062a02d06111cb438737977981f85e5, type: 3}

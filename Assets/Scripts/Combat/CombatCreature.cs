@@ -103,6 +103,7 @@ public class CombatCreature : MonoBehaviour
 [Serializable]
 public class ActiveCreatureStats
 {
+    public string name;
     public int health;
     public int damage;
     public int block;
