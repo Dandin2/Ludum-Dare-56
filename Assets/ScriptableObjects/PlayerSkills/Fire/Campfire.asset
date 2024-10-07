@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: Campfire
   m_EditorClassIdentifier: 
   SkillName: Campfire
-  TextOnHover: 'Lv 1: Heal all creatures a small amount.'
+  TextOnHover: 'Lv 2: Heal all creatures a decent amount.'
   TextOnUse: Tiny creatures used Campfire!
   requiredType: 0
-  requiredAmount: 5
+  requiredAmount: 9
   effects:
   - elementType: 5
     target: 0
     damage: 0
-    heal: 1
+    heal: 3
     block: 0
     mods: []
   effectsOnCreatures: []

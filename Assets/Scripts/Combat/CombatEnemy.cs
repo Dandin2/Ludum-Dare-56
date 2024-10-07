@@ -57,7 +57,13 @@ public class CombatEnemy : MonoBehaviour
     public void TakeDamage(int dmg)
     {
         currentHP -= dmg;
-        HealthBar.UpdateHealth(myInfo.health, currentHP, 0, () => { CombatManager.Instance.PlayerTurnDoneAnimating(); });
+        HealthBar.UpdateHealth(myInfo.health, currentHP, 0, () =>
+        {
+            if (currentHP <= 0)
+                CombatManager.Instance.Victory();
+            else
+                CombatManager.Instance.PlayerTurnDoneAnimating();
+        });
         if (currentHP > 0)
             GetComponentInChildren<Animator>().SetTrigger("Hit");
         else
@@ -66,16 +72,6 @@ public class CombatEnemy : MonoBehaviour
 
     public void ReceiveEffect(SpecialSkillInfo ssi)
     {
-        if (ssi.OnEnemiesAnimation != null)
-        {
-            GameObject go = Instantiate(ssi.OnEnemiesAnimation);
-            go.transform.parent = transform;
-            go.transform.SetLocalPosition(0, 0, -10);
-            go.GetComponent<OneTimeAnimation>()?.SetCompleteAction(() => { CombatManager.Instance.PlayerTurnDoneAnimating(); });
-        }
-        else
-            CombatManager.Instance.PlayerTurnDoneAnimating();
-
         int totalDamage = 0;
         int heal = 0;
         int block = 0;
@@ -101,11 +97,29 @@ public class CombatEnemy : MonoBehaviour
         }
 
         if (totalDamage > 0)
+        {
             TakeDamage(totalDamage);
+            if (totalResistVuln >= 20)
+                CombatManager.Instance.TextDisplay.SetMessage("It's super effective!", false, null, 1);
+            else if(totalResistVuln <= -20)
+                CombatManager.Instance.TextDisplay.SetMessage("It's not very effective...", false, null, 1);
+        }
         if (heal > 0)
             Heal(heal);
         if (block > 0)
             Block(block);
+
+
+        if (ssi.OnEnemiesAnimation != null)
+        {
+            GameObject go = Instantiate(ssi.OnEnemiesAnimation);
+            go.transform.parent = transform;
+            go.transform.SetLocalPosition(0, 0, -10);
+            if (totalDamage <= 0)
+                go.GetComponent<OneTimeAnimation>()?.SetCompleteAction(() => { CombatManager.Instance.PlayerTurnDoneAnimating(); });
+        }
+        else if (totalDamage <= 0)
+            CombatManager.Instance.PlayerTurnDoneAnimating();
     }
 
     public void Heal(int hp)

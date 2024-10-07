@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CombatCreature : MonoBehaviour
 {
@@ -13,32 +14,31 @@ public class CombatCreature : MonoBehaviour
     public GameObject Preview;
     public GameObject Exhaust;
 
-    //Delete this when we get actual sprites
-    public void SetType(CreatureType type)
-    {
-        myStats.myType = type;
-        myStats.damage = 7;
-        myStats.health = 10;
-        if (GetComponent<SpriteRenderer>() != null)
-        {
-            if (type == CreatureType.Air)
-                GetComponent<SpriteRenderer>().color = Color.cyan;
-            if (type == CreatureType.Airship)
-                GetComponent<SpriteRenderer>().color = Color.gray;
-            if (type == CreatureType.Fire)
-                GetComponent<SpriteRenderer>().color = Color.red;
-            if (type == CreatureType.Chef)
-                GetComponent<SpriteRenderer>().color = Color.green;
-            if (type == CreatureType.Water)
-                GetComponent<SpriteRenderer>().color = Color.blue;
+    private int damageMod;
+    private int blockMod;
 
-            myColor = GetComponent<SpriteRenderer>().color;
-            //Just in case we want to have exhaustion pass from the other mode.
-            if (myStats.exhausted)
-            {
-                myStats.exhausted = false;
-                SetExhaust(myStats.exhausted);
-            }
+    //Delete this when we get actual sprites
+    public void SetType(ActiveCreatureStats stats)
+    {
+        myStats = stats;
+
+        if (myStats.myType == CreatureType.Air)
+            gameObject.SetColor(0, 1, 1);
+        if (myStats.myType == CreatureType.Airship)
+            gameObject.SetColor(0.5f, 0.5f, 0.5f);
+        if (myStats.myType == CreatureType.Fire)
+            gameObject.SetColor(1, 0, 0);
+        if (myStats.myType == CreatureType.Chef)
+            gameObject.SetColor(0, 1, 0);
+        if (myStats.myType == CreatureType.Water)
+            gameObject.SetColor(0, 0, 1);
+
+        myColor = GetComponent<SpriteRenderer>() != null ? GetComponent<SpriteRenderer>().color : GetComponent<Image>().color;
+        //Just in case we want to have exhaustion pass from the other mode.
+        if (myStats.exhausted)
+        {
+            myStats.exhausted = false;
+            SetExhaust(myStats.exhausted);
         }
     }
 
@@ -57,7 +57,26 @@ public class CombatCreature : MonoBehaviour
 
     public void ReceiveCreatureEffect(CreatureEffect ce)
     {
+        if (ce.heal > 0 || ce.takeDamage > 0)
+            TakeDamage(ce.takeDamage - ce.heal);
 
+        myStats.hunger += ce.hungerChange;
+        myStats.hygene += ce.hygeneChange;
+        myStats.entertainment += ce.happinessChange;
+
+        damageMod += ce.damageMod;
+
+        if (ce.ready)
+            SetExhaust(false);
+        else if (ce.exhaust)
+            SetExhaust(true);
+    }
+
+    public int CalculateDamage()
+    {
+        int dmg = myStats.damage + damageMod;
+        damageMod = 0;
+        return dmg;
     }
 
     public void SetPreview()
@@ -112,4 +131,21 @@ public class ActiveCreatureStats
     public int entertainment;
     public CreatureType myType;
     public bool exhausted;
+
+    public ActiveCreatureStats()
+    {
+
+    }
+    public ActiveCreatureStats(CreatureStats c)
+    {
+        name = c.name;
+        health = c.HitPoints;
+        damage = c.Attack;
+        block = c.Defence;
+        hunger = c.Hunger;
+        hygene = c.Hygiene;
+        entertainment = c.Entertainment;
+        myType = c.CreatureType;
+        exhausted = false;
+    }
 }

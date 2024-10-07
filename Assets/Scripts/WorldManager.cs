@@ -7,11 +7,14 @@ public class WorldManager : MonoBehaviour
 {
     public static WorldManager instance;
 
+    public List<CreatureStats> CreatureBases;
+
     internal List<ActiveCreatureStats> activeCreatureStats = new List<ActiveCreatureStats>();
     internal List<ActiveItemStats> foodInventory = new List<ActiveItemStats>();
     internal List<ActiveItemStats> toysInventory = new List<ActiveItemStats>();
 
     internal int GoldAmount;
+    public int level;
 
     public bool isTesting = false;
     // Start is called before the first frame update

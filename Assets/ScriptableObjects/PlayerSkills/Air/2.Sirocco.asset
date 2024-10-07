@@ -35,7 +35,7 @@ MonoBehaviour:
     hungerChange: 0
     hygeneChange: 0
     happinessChange: 0
-    damageMod: 1
+    damageMod: 5
     hpMod: 0
     blockMod: 0
     takeDamage: 0

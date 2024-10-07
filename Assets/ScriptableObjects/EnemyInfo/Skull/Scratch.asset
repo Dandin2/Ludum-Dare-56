@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: Scratch
   m_EditorClassIdentifier: 
   ChanceToUseAttack: 50
-  SkillName: scratch
+  SkillName: Scratch
   WindUpTurns: 0
   WindUpMessage: 
   Damage: 5
-  NumToDamage: 30
-  PercentToDamage: 0
+  NumToDamage: 0
+  PercentToDamage: 20
   NumToExhaust: 0
   NumToReady: 0
   SelfHealAmount: 0

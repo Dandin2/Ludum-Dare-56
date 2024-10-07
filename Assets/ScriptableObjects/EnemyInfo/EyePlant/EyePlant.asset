@@ -12,8 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39b2559d12e3e8740a59914add2c6e4e, type: 3}
   m_Name: EyePlant
   m_EditorClassIdentifier: 
-  type: 0
-  health: 0
-  myAttacks: []
-  defaultBlock: 0
+  enemyName: Eye Plant
+  combatIntroText: ':hissssss:'
+  type: 1
+  health: 150
+  myAttacks:
+  - {fileID: 11400000, guid: 427b0f2eee1144043af8b70a37e36689, type: 2}
+  - {fileID: 11400000, guid: 1d8b08c7b89659045966d2d2b011872f, type: 2}
+  defaultBlock: 2
+  weaknesses:
+  - type: 0
+    vulnPercent: 25
+  - type: 4
+    vulnPercent: 10
+  strengths:
+  - type: 1
+    resistPercent: 25
+  - type: 3
+    resistPercent: 10
   prefab: {fileID: 960600405851562661, guid: 5b866951ab8730e438eb961ba2185769, type: 3}

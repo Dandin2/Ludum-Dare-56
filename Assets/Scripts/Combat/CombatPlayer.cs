@@ -55,12 +55,12 @@ public class CombatPlayer : MonoBehaviour
 
     public void SetInitial()
     {
-        for (int i = 0; i < 30; i++)
+        foreach(ActiveCreatureStats acs in WorldManager.instance.activeCreatureStats)
         {
             GameObject go = Instantiate(CreaturePrefab);
             CombatCreature cc = go.GetComponent<CombatCreature>();
             myCreatures.Add(cc);
-            cc.SetType((CreatureType)UnityEngine.Random.Range(0, 5));
+            cc.SetType(acs);
             cc.transform.parent = transform;
             cc.transform.position = new Vector3(minX + ((maxX - minX) * UnityEngine.Random.value),
                                                 minY + ((maxY - minY) * UnityEngine.Random.value),
@@ -69,9 +69,14 @@ public class CombatPlayer : MonoBehaviour
         }
     }
 
+    public List<ActiveCreatureStats> GetCreatures()
+    {
+        return preppedCreatures.Select(x => x.myStats).ToList();
+    }
+
     public int CalculateDamage()
     {
-        return myCreatures.Sum(x => x.myStats.damage) / myCreatures.Count;
+        return (int)(myCreatures.Sum(x => x.CalculateDamage()) / 12.5f); //20 should do about 8 damage.
     }
 
     public void ReceiveEnemyEffect(EnemyAttackInfo attackInfo)
@@ -92,11 +97,11 @@ public class CombatPlayer : MonoBehaviour
             if (attackInfo.NumToDamage > 0)
                 numDamaging = attackInfo.NumToDamage;
             else
-                numDamaging = (int)(attackInfo.PercentToDamage * myCreatures.Count());
+                numDamaging = (int)(attackInfo.PercentToDamage * myCreatures.Count() * 0.01f);
 
             myCreatures.OrderBy(x => UnityEngine.Random.value).Take(numDamaging).ToList().ForEach(x => 
             { 
-                x.TakeDamage(attackInfo.Damage);
+                x.TakeDamage((int)(attackInfo.Damage * (100 - blockPercent) * (x.myStats.exhausted ? 1.2f : 1) * 0.01f));
             });
 
             myCreatures = myCreatures.Where(x => x.myStats.health > 0).ToList();
@@ -104,12 +109,16 @@ public class CombatPlayer : MonoBehaviour
 
         if(attackInfo.NumToExhaust > 0)
         {
-            myCreatures.OrderBy(x => x.myStats.exhausted).ThenBy(x => UnityEngine.Random.value).Take(attackInfo.NumToExhaust).ToList().ForEach(x => x.myStats.exhausted = true);
+            myCreatures.OrderBy(x => x.myStats.exhausted).ThenBy(x => UnityEngine.Random.value).Take(attackInfo.NumToExhaust).ToList().ForEach(x => x.SetExhaust(true));
         }
         if (attackInfo.NumToReady > 0)
         {
-            myCreatures.OrderBy(x => x.myStats.exhausted).ThenBy(x => UnityEngine.Random.value).Take(attackInfo.NumToExhaust).ToList().ForEach(x => x.myStats.exhausted = true);
+            myCreatures.OrderBy(x => x.myStats.exhausted).ThenBy(x => UnityEngine.Random.value).Take(attackInfo.NumToExhaust).ToList().ForEach(x => x.SetExhaust(true));
         }
+
+        blockPercent = 0;
+        if (myCreatures.Count == 0)
+            CombatManager.Instance.Defeat();
     }
 
     public void ReceivePlayerEffect(SpecialSkillInfo ssi)
@@ -145,6 +154,9 @@ public class CombatPlayer : MonoBehaviour
         }
 
         ultimate += ssi.ultimateMeterChange;
+
+        if (myCreatures.Count == 0)
+            CombatManager.Instance.Defeat();
     }
 
     public List<CombatCreature> GetRandomAmountOfType(int amount, CreatureType type)
@@ -189,6 +201,11 @@ public class CombatPlayer : MonoBehaviour
     }
 
 
+    public void Block()
+    {
+        blockPercent += 50;
+        myCreatures.Where(x => x.myStats.exhausted).OrderBy(x => UnityEngine.Random.value).Take(10).ToList().ForEach(x => x.SetExhaust(false));
+    }
 
     public void PlayAttackAnimation()
     {
@@ -198,8 +215,10 @@ public class CombatPlayer : MonoBehaviour
             cc.GetComponentInChildren<ParticleSystem>().Play();
             activeParticles = myCreatures.Count();
             cc.GetComponentInChildren<ParticleTriggerHandler>().SetInfoAndPlay(cc.myStats.myType, 1, cc.myColor != null ? cc.myColor : Color.red, new Color(), CombatEnemy.Instance.ParticleAbsorber, 
-                                                                               () => { CombatEnemy.Instance.TakeDamage(CalculateDamage()); }, () => { ParticleCollided(); });
+                                                                        () => { CombatEnemy.Instance.TakeDamage(CalculateDamage()); }, () => { ParticleCollided(); });
         }
+        myCreatures.Where(x => x.myStats.exhausted).OrderBy(x => UnityEngine.Random.value).Take(5).ToList().ForEach(x => x.SetExhaust(false));
+
     }
 
     public void ParticleCollided()

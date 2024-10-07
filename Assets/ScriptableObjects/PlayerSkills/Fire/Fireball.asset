@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: Fireball
   m_EditorClassIdentifier: 
   SkillName: Fireball
-  TextOnHover: 'Lv 2: Deal fire damage to opponent, but lower your creatures happiness
+  TextOnHover: 'Lv 1: Deal fire damage to opponent, but lower your creatures happiness
     a tiny bit.'
   TextOnUse: Tiny creatures used Fireball!
   requiredType: 0
-  requiredAmount: 9
+  requiredAmount: 5
   effects:
   - elementType: 0
     target: 1
-    damage: 31
+    damage: 22
     heal: 0
     block: 0
     mods: []
@@ -35,7 +35,7 @@ MonoBehaviour:
     heal: 0
     hungerChange: 0
     hygeneChange: 0
-    happinessChange: -5
+    happinessChange: -2
     damageMod: 0
     hpMod: 0
     blockMod: 0
