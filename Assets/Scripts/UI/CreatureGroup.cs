@@ -70,6 +70,7 @@ public class CreatureGroup : MonoBehaviour
     }
     private IEnumerator OnClick()
     {
+        transform.parent.GetComponentsInChildren<UIClick>().ToList().ForEach(x => x.gameObject.SetActive(false));
         WorldManager.instance.activeCreatureStats = myCreatures.Select(x => x.myStats).ToList();
         Fade.transform.parent.gameObject.SetActive(false);
         Screen2.SetActive(true);
