@@ -13,6 +13,9 @@ public class WorldManager : MonoBehaviour
     internal List<ActiveItemStats> foodInventory = new List<ActiveItemStats>();
     internal List<ActiveItemStats> toysInventory = new List<ActiveItemStats>();
 
+    internal bool MusicMuted;
+    internal bool SfxMuted;
+
     internal int GoldAmount;
     public int level;
 
@@ -39,9 +42,9 @@ public class WorldManager : MonoBehaviour
                         health = creature.HitPoints,
                         damage = creature.Attack,
                         block = creature.Defence,
-                        hunger = creature.Hunger,
-                        entertainment = creature.Entertainment,
-                        hygene = creature.Hygiene,
+                        hunger = creature.Hunger - UnityEngine.Random.Range(0, creature.Hunger),
+                        entertainment = creature.Entertainment - UnityEngine.Random.Range(0, creature.Entertainment),
+                        hygene = creature.Hygiene - UnityEngine.Random.Range(0, creature.Hygiene),
                         exhausted = false,
                         myType = creature.CreatureType
                     });
