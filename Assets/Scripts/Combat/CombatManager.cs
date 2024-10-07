@@ -106,31 +106,34 @@ public class CombatManager : MonoBehaviour
 
     public void DisplayResultMessage(bool playerTurn)
     {
-        string updateStr = "";
-        if (lostCreatures > 0)
-            updateStr += $"{lostCreatures} creatures perished!";
-        if (restoredCreatures > 0)
-            updateStr += (string.IsNullOrEmpty(updateStr) ? "" : Environment.NewLine) + $"{restoredCreatures} creatures restored!";
-        if (exhaustedCreatures > 0)
-            updateStr += (string.IsNullOrEmpty(updateStr) ? "" : Environment.NewLine) + $"{exhaustedCreatures} creatures exhausted!";
-
-        lostCreatures = 0;
-        restoredCreatures = 0;
-        exhaustedCreatures = 0;
-
-        if (!string.IsNullOrEmpty(updateStr))
+        if (!combatOver)
         {
-            TextDisplay.SetMessage(updateStr, false, () => { if (playerTurn) { StartEnemyTurn(); } else { StartPlayerTurn(); } }, 2);
-        }
-        else
-        {
-            if (playerTurn)
+            string updateStr = "";
+            if (lostCreatures > 0)
+                updateStr += $"{lostCreatures} creatures perished!";
+            if (restoredCreatures > 0)
+                updateStr += (string.IsNullOrEmpty(updateStr) ? "" : Environment.NewLine) + $"{restoredCreatures} creatures restored!";
+            if (exhaustedCreatures > 0)
+                updateStr += (string.IsNullOrEmpty(updateStr) ? "" : Environment.NewLine) + $"{exhaustedCreatures} creatures exhausted!";
+
+            lostCreatures = 0;
+            restoredCreatures = 0;
+            exhaustedCreatures = 0;
+
+            if (!string.IsNullOrEmpty(updateStr))
             {
-                StartEnemyTurn();
+                TextDisplay.SetMessage(updateStr, false, () => { if (playerTurn) { StartEnemyTurn(); } else { StartPlayerTurn(); } }, 2);
             }
             else
             {
-                StartPlayerTurn();
+                if (playerTurn)
+                {
+                    StartEnemyTurn();
+                }
+                else
+                {
+                    StartPlayerTurn();
+                }
             }
         }
     }
