@@ -2,20 +2,20 @@ using System;
 using UnityEditor;
 using UnityEngine;
 
-public class CreateCreature
-{
-    [MenuItem("Assets/Create/Creature")]
-    public static void Create()
-    {
-        CreatureStats ati = ScriptableObject.CreateInstance<CreatureStats>();
-        AssetDatabase.CreateAsset(ati, "Assets/ScriptableObjects/Creatures/NewCreature.asset");
-        AssetDatabase.SaveAssets();
+//public class CreateCreature
+//{
+//    [MenuItem("Assets/Create/Creature")]
+//    public static void Create()
+//    {
+//        CreatureStats ati = ScriptableObject.CreateInstance<CreatureStats>();
+//        AssetDatabase.CreateAsset(ati, "Assets/ScriptableObjects/Creatures/NewCreature.asset");
+//        AssetDatabase.SaveAssets();
 
-        EditorUtility.FocusProjectWindow();
+//        EditorUtility.FocusProjectWindow();
 
-        Selection.activeObject = ati;
-    }
-}
+//        Selection.activeObject = ati;
+//    }
+//}
 
 public class CreatureStats : ScriptableObject
 {

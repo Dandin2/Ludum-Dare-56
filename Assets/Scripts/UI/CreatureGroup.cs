@@ -77,7 +77,7 @@ public class CreatureGroup : MonoBehaviour
         Fade.transform.parent.gameObject.SetActive(true);
         Fade.FadeToBlack(2, null);
         yield return new WaitForSeconds(2);
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(2);
         yield break;
     }
 }

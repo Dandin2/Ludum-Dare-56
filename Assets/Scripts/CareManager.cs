@@ -337,7 +337,7 @@ public class CareManager : MonoBehaviour
     public void EnterBattle()
     {
         CancelScrubBrush();
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(2);
         SaveCreatureValues();
         SaveItemValues();
     }

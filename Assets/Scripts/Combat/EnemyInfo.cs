@@ -16,18 +16,18 @@ public class EnemyInfo : ScriptableObject
     public List<Resistance> strengths;
     public GameObject prefab;
 }
-public class CreateEnemyInfo
-{
-    [MenuItem("Assets/Create Scriptable/Create Enemy Info")]
-    public static void Create()
-    {
-        EnemyInfo ati = ScriptableObject.CreateInstance<EnemyInfo>();
-        AssetDatabase.CreateAsset(ati, "Assets/ScriptableObjects/EnemyInfo/NewEnemyInfo.asset");
-        AssetDatabase.SaveAssets();
+//public class CreateEnemyInfo
+//{
+//    [MenuItem("Assets/Create Scriptable/Create Enemy Info")]
+//    public static void Create()
+//    {
+//        EnemyInfo ati = ScriptableObject.CreateInstance<EnemyInfo>();
+//        AssetDatabase.CreateAsset(ati, "Assets/ScriptableObjects/EnemyInfo/NewEnemyInfo.asset");
+//        AssetDatabase.SaveAssets();
 
-        EditorUtility.FocusProjectWindow();
+//        EditorUtility.FocusProjectWindow();
 
-        Selection.activeObject = ati;
-    }
-}
+//        Selection.activeObject = ati;
+//    }
+//}
 

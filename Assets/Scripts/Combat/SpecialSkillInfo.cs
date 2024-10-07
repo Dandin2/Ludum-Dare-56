@@ -73,17 +73,17 @@ public enum CombatTarget
 }
 
 
-public class CreateSpecialSkillInfo
-{
-    [MenuItem("Assets/Create Scriptable/SpecialSkillInfo")]
-    public static void Create()
-    {
-        SpecialSkillInfo ati = ScriptableObject.CreateInstance<SpecialSkillInfo>();
-        AssetDatabase.CreateAsset(ati, "Assets/ScriptableObjects/PlayerSkills/NewSpecialSkillInfo.asset");
-        AssetDatabase.SaveAssets();
+//public class CreateSpecialSkillInfo
+//{
+//    [MenuItem("Assets/Create Scriptable/SpecialSkillInfo")]
+//    public static void Create()
+//    {
+//        SpecialSkillInfo ati = ScriptableObject.CreateInstance<SpecialSkillInfo>();
+//        AssetDatabase.CreateAsset(ati, "Assets/ScriptableObjects/PlayerSkills/NewSpecialSkillInfo.asset");
+//        AssetDatabase.SaveAssets();
 
-        EditorUtility.FocusProjectWindow();
+//        EditorUtility.FocusProjectWindow();
 
-        Selection.activeObject = ati;
-    }
-}
+//        Selection.activeObject = ati;
+//    }
+//}

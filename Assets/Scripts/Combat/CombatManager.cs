@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -220,7 +219,7 @@ public class CombatManager : MonoBehaviour
         int goldGain = 500 + (500 * WorldManager.instance.level);
         if (WorldManager.instance.level >= 4)
         {
-            Fader.FadeToBlack(2, () => { SceneManager.LoadScene(5); });
+            Fader.FadeToBlack(2, () => { SceneManager.LoadScene(4); });
         }
         else
         {
@@ -231,7 +230,7 @@ public class CombatManager : MonoBehaviour
                     WorldManager.instance.activeCreatureStats = CombatPlayer.Instance.GetCreatures();
                     WorldManager.instance.GoldAmount += goldGain;
                     WorldManager.instance.level++;
-                    SceneManager.LoadScene(2);
+                    SceneManager.LoadScene(3);
                 }, 2);
             }, 2);
         }
@@ -242,7 +241,7 @@ public class CombatManager : MonoBehaviour
         combatOver = true;
         TextDisplay.SetMessage("You lose.....", false, () =>
         {
-            Fader.FadeToBlack(2, () => { SceneManager.LoadScene(4); });
+            Fader.FadeToBlack(2, () => { SceneManager.LoadScene(0); });
         }, 4);
     }
 }

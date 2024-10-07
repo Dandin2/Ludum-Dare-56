@@ -24,17 +24,17 @@ public class EnemyAttackInfo : ScriptableObject
     public GameObject OnSelfAnimation;
 }
 
-public class CreateEnemyAttackInfo
-{
-    [MenuItem("Assets/Create Scriptable/EnemyAttackInfo")]
-    public static void Create()
-    {
-        EnemyAttackInfo ati = ScriptableObject.CreateInstance<EnemyAttackInfo>();
-        AssetDatabase.CreateAsset(ati, "Assets/ScriptableObjects/EnemyInfo/NewEnemyAttackInfo.asset");
-        AssetDatabase.SaveAssets();
+//public class CreateEnemyAttackInfo
+//{
+//    [MenuItem("Assets/Create Scriptable/EnemyAttackInfo")]
+//    public static void Create()
+//    {
+//        EnemyAttackInfo ati = ScriptableObject.CreateInstance<EnemyAttackInfo>();
+//        AssetDatabase.CreateAsset(ati, "Assets/ScriptableObjects/EnemyInfo/NewEnemyAttackInfo.asset");
+//        AssetDatabase.SaveAssets();
 
-        EditorUtility.FocusProjectWindow();
+//        EditorUtility.FocusProjectWindow();
 
-        Selection.activeObject = ati;
-    }
-}
+//        Selection.activeObject = ati;
+//    }
+//}

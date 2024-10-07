@@ -16,6 +16,6 @@ public class TitlePage : MonoBehaviour
     private void Awake()
     {
         Cursor.SetCursor(mainCursor, hotSpot, cursorMode);
-        TheButton.SetClickAction(() => { if (!fading) { Fader.transform.parent.gameObject.SetActive(true); Fader.FadeToBlack(1, () => { SceneManager.LoadScene(3); }); } });
+        TheButton.SetClickAction(() => { if (!fading) { Fader.transform.parent.gameObject.SetActive(true); Fader.FadeToBlack(1, () => { SceneManager.LoadScene(1); }); } });
     }
 }

@@ -1,20 +1,20 @@
 using UnityEditor;
 using UnityEngine;
 
-public class CreateFood
-{
-    [MenuItem("Assets/Create/Food")]
-    public static void Create()
-    {
-        FoodStats ati = ScriptableObject.CreateInstance<FoodStats>();
-        AssetDatabase.CreateAsset(ati, "Assets/ScriptableObjects/Foods/NewFood.asset");
-        AssetDatabase.SaveAssets();
+//public class CreateFood
+//{
+//    [MenuItem("Assets/Create/Food")]
+//    public static void Create()
+//    {
+//        FoodStats ati = ScriptableObject.CreateInstance<FoodStats>();
+//        AssetDatabase.CreateAsset(ati, "Assets/ScriptableObjects/Foods/NewFood.asset");
+//        AssetDatabase.SaveAssets();
 
-        EditorUtility.FocusProjectWindow();
+//        EditorUtility.FocusProjectWindow();
 
-        Selection.activeObject = ati;
-    }
-}
+//        Selection.activeObject = ati;
+//    }
+//}
 
 public class FoodStats : ScriptableObject
 {
