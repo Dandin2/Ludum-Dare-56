@@ -76,14 +76,14 @@ public class CareManager : MonoBehaviour
         for (int i = 0; i < creaturesOwned.Length; i++)
         {
             var currentCreatureStats = creaturesOwned[i];
-            var creatureStats = ScriptableObjectFinder.FindScriptableObjectByName<CreatureStats>(currentCreatureStats.name);
+            var creatureStats = WorldManager.instance.CreatureBases.First(x => x.CreatureName == currentCreatureStats.name);
             var creatureInstance = Instantiate(creatureStats.CreaturePrefab, GetNextRandomPosition(), Quaternion.identity);
             var creature = creatureInstance.GetComponent<Creature>();
             creature.SetStats(currentCreatureStats);
             CreaturesOwned.Add(creatureInstance);
         }
 
-        var allPossibleEggs = ScriptableObjectFinder.GetAllEggStats().ToArray();
+        var allPossibleEggs = WorldManager.instance.EggBases.ToArray();
         for (int i = 0; i < allPossibleEggs.Count(); i++)
         {
             var currentEgg = allPossibleEggs[i];
@@ -97,7 +97,7 @@ public class CareManager : MonoBehaviour
                                        $"The egg will spawn in your tiny creature area.";
         }
 
-        var allPossibleFoods = ScriptableObjectFinder.GetAllFoodStats().ToArray();
+        var allPossibleFoods = WorldManager.instance.FoodBases.ToArray();
         for (int i = 0; i < allPossibleFoods.Count(); i++)
         {
             var currentFood = allPossibleFoods[i];
@@ -112,7 +112,7 @@ public class CareManager : MonoBehaviour
                                        $"{currentFood.Description}";
         }
 
-        var allPossibleToys = ScriptableObjectFinder.GetAllToyStats().ToArray();
+        var allPossibleToys = WorldManager.instance.ToyBases.ToArray();
         for (int i = 0; i < allPossibleToys.Count(); i++)
         {
             var currentToy = allPossibleToys[i];
@@ -132,7 +132,7 @@ public class CareManager : MonoBehaviour
         for (int i = 0; i < foodOwned.Length; i++)
         {
             var currentFood = foodOwned[i];
-            var foodStats = ScriptableObjectFinder.FindScriptableObjectByName<FoodStats>(currentFood.name);
+            var foodStats = WorldManager.instance.FoodBases.First(x => x.name == currentFood.name);
             var go = Instantiate(foodStats.FoodPrefab);
             go.SetActive(false);
             FoodOwned.Add(go);
@@ -142,7 +142,7 @@ public class CareManager : MonoBehaviour
         for (int i = 0; i < toysOwned.Length; i++)
         {
             var currentToy = toysOwned[i];
-            var toyStats = ScriptableObjectFinder.FindScriptableObjectByName<ToyStats>(currentToy.name);
+            var toyStats = WorldManager.instance.ToyBases.First(x => x.name == currentToy.name);
             var go = Instantiate(toyStats.ToyPrefab);
             go.SetActive(false);
             ToysOwned.Add(go);
@@ -499,7 +499,7 @@ public class CareManager : MonoBehaviour
 
     private void SpawnEgg(string type)
     {
-        var eggScriptableObject = ScriptableObjectFinder.FindScriptableObjectByName<EggStats>(type+"Egg");
+        var eggScriptableObject = WorldManager.instance.EggBases.First(x => x.name == type+"Egg");
         Instantiate(eggScriptableObject.EggPrefab, GetNextRandomPosition(), Quaternion.identity);
     }
 

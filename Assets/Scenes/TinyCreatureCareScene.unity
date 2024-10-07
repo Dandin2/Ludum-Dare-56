@@ -8720,9 +8720,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1f0e409464fff44cacbf012176e9f15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CreatureBases: []
+  CreatureBases:
+  - {fileID: 11400000, guid: 022ea80422e32a9409e41a184ff5a6ff, type: 2}
+  - {fileID: 11400000, guid: 26cc5b9ad6110044891bc640f0f76424, type: 2}
+  - {fileID: 11400000, guid: 82285afa4ae324a4082eaecabd4703c4, type: 2}
+  - {fileID: 11400000, guid: 8a22c17bab1189b4790e0cef467fbd4c, type: 2}
+  - {fileID: 11400000, guid: 10bb931edb200274db2820d39a992206, type: 2}
+  EggBases:
+  - {fileID: 11400000, guid: 6888a2c428b3c2c439872944dded99f9, type: 2}
+  - {fileID: 11400000, guid: 0095d1a9d8c541447902fd1b63d362ad, type: 2}
+  - {fileID: 11400000, guid: 3e5c57681400bd24c972bcd1ea0b7d78, type: 2}
+  - {fileID: 11400000, guid: c54ae35cfd9a9f64a8d16fb4274e5048, type: 2}
+  - {fileID: 11400000, guid: bf6536b389be0c644b47eb944e95840d, type: 2}
+  FoodBases:
+  - {fileID: 11400000, guid: 10d0547b8937d284c9f0db7e8f205ce0, type: 2}
+  - {fileID: 11400000, guid: 2888a51e241f09141b8632ef082f9cc5, type: 2}
+  - {fileID: 11400000, guid: bd0af23a8744c874c888869947126ef1, type: 2}
+  ToyBases:
+  - {fileID: 11400000, guid: dc25d9a51b62b734e8289ef384fb3007, type: 2}
+  - {fileID: 11400000, guid: 5b1838873eb311f4fbb2a76379efe2ad, type: 2}
+  - {fileID: 11400000, guid: 0589d3697760d824994ef265385e26b5, type: 2}
   level: 0
-  isTesting: 1
+  isTesting: 0
 --- !u!4 &1542651262
 Transform:
   m_ObjectHideFlags: 0

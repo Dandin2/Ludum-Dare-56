@@ -8,6 +8,9 @@ public class WorldManager : MonoBehaviour
     public static WorldManager instance;
 
     public List<CreatureStats> CreatureBases;
+    public List<EggStats> EggBases;
+    public List<FoodStats> FoodBases;
+    public List<ToyStats> ToyBases;
 
     internal List<ActiveCreatureStats> activeCreatureStats = new List<ActiveCreatureStats>();
     internal List<ActiveItemStats> foodInventory = new List<ActiveItemStats>();
@@ -31,7 +34,7 @@ public class WorldManager : MonoBehaviour
             if (isTesting)
             {
                 GoldAmount = 30000;
-                var allPossibleCreatureStats = ScriptableObjectFinder.GetAllCreatureStats();
+                var allPossibleCreatureStats = CreatureBases;
                 for (int i = 0; i < 10; i++)
                 {
                     var randomCreatureIndex = UnityEngine.Random.Range(0, allPossibleCreatureStats.Count);

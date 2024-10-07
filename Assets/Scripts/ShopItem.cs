@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -55,21 +56,21 @@ public class ShopItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             WorldManager.instance.RemoveGold(GoldAmount);
             if (ItemType == ItemType.Food)
             {
-                var foodStats = ScriptableObjectFinder.FindScriptableObjectByName<FoodStats>(ItemName);
+                var foodStats = WorldManager.instance.FoodBases.First(x => x.name == ItemName);
                 var go = Instantiate(foodStats.FoodPrefab);
                 go.SetActive(false);
                 manager.FoodOwned.Add(go);
             }
             else if (ItemType == ItemType.Toy)
             {
-                var toyStats = ScriptableObjectFinder.FindScriptableObjectByName<ToyStats>(ItemName);
+                var toyStats = WorldManager.instance.ToyBases.First(x => x.name == ItemName);
                 var go = Instantiate(toyStats.ToyPrefab);
                 go.SetActive(false);
                 manager.ToysOwned.Add(go);
             }
             else if (ItemType == ItemType.Egg)
             {
-                var eggStats = ScriptableObjectFinder.FindScriptableObjectByName<EggStats>(ItemName);
+                var eggStats = WorldManager.instance.EggBases.First(x => x.name == ItemName);
                 Instantiate(eggStats.EggPrefab, manager.GetNextRandomPosition(), Quaternion.identity);
             }
             manager.SetupInventoryImages();
