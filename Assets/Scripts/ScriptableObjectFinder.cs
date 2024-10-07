@@ -74,4 +74,22 @@ public class ScriptableObjectFinder
 
         return toys;
     }
+
+    public static List<EggStats> GetAllEggStats()
+    {
+        var eggs = new List<EggStats>();
+        string[] guids = AssetDatabase.FindAssets("t:EggStats");
+
+        foreach (string guid in guids)
+        {
+            string path = AssetDatabase.GUIDToAssetPath(guid);
+            EggStats egg = AssetDatabase.LoadAssetAtPath<EggStats>(path);
+            if (egg != null)
+            {
+                eggs.Add(egg);
+            }
+        }
+
+        return eggs;
+    }
 }

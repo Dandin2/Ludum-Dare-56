@@ -5,7 +5,8 @@ using UnityEngine.UI;
 public enum ItemType
 {
     Food,
-    Toy
+    Toy,
+    Egg
 }
 
 public class ShopItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
@@ -65,6 +66,11 @@ public class ShopItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 var go = Instantiate(toyStats.ToyPrefab);
                 go.SetActive(false);
                 manager.ToysOwned.Add(go);
+            }
+            else if (ItemType == ItemType.Egg)
+            {
+                var eggStats = ScriptableObjectFinder.FindScriptableObjectByName<EggStats>(ItemName);
+                Instantiate(eggStats.EggPrefab, manager.GetNextRandomPosition(), Quaternion.identity);
             }
             manager.SetupInventoryImages();
         }

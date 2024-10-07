@@ -21,36 +21,33 @@ public class WorldManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
+
+            if (isTesting)
+            {
+                GoldAmount = 300;
+                var allPossibleCreatureStats = ScriptableObjectFinder.GetAllCreatureStats();
+                for (int i = 0; i < 10; i++)
+                {
+                    var randomCreatureIndex = UnityEngine.Random.Range(0, allPossibleCreatureStats.Count);
+                    var creature = allPossibleCreatureStats.ElementAt(randomCreatureIndex);
+                    activeCreatureStats.Add(new ActiveCreatureStats()
+                    {
+                        name = creature.CreatureName,
+                        health = creature.HitPoints,
+                        damage = creature.Attack,
+                        block = creature.Defence,
+                        hunger = creature.Hunger,
+                        entertainment = creature.Entertainment,
+                        hygene = creature.Hygiene,
+                        exhausted = false,
+                        myType = creature.CreatureType
+                    });
+                }
+            }
         }
         else
         {
             Destroy(gameObject);
-        }
-    }
-
-    private void Start()
-    {
-        if(isTesting)
-        {
-            GoldAmount = 300;
-            var allPossibleCreatureStats = ScriptableObjectFinder.GetAllCreatureStats();
-            for (int i = 0; i < 10; i++)
-            {
-                var randomCreatureIndex = UnityEngine.Random.Range(0, allPossibleCreatureStats.Count);
-                var creature = allPossibleCreatureStats.ElementAt(randomCreatureIndex);
-                activeCreatureStats.Add(new ActiveCreatureStats()
-                {
-                    name = creature.CreatureName,
-                    health = creature.HitPoints,
-                    damage = creature.Attack,
-                    block = creature.Defence,
-                    hunger = creature.Hunger,
-                    entertainment = creature.Entertainment,
-                    hygene = creature.Hygiene,
-                    exhausted = false,
-                    myType = creature.CreatureType
-                });
-            }
         }
     }
 

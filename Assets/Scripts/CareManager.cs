@@ -10,11 +10,15 @@ public class CareManager : MonoBehaviour
 {
     // UI elements needed
     public GameObject CreaturePopupPanel; // Assign the popup panel in the Inspector
+    public GameObject HelpPopupPanel; // Assign the popup panel in the Inspector
+    public GameObject[] HelpListPages; // Assign the list of pages in the Inspector
     public GameObject ShopPopupPanel; // Assign the popup panel in the Inspector
     public GameObject ToyShopPanel; // Assign the panel in the Inspector
     public GameObject FoodShopPanel; // Assign the panel in the Inspector
+    public GameObject EggsShopPanel; // Assign the panel in the Inspector
     public Transform ToyShopInventory; // Assign the inventory object in the Inspector
     public Transform FoodShopInventory; // Assign the inventory object in the Inspector
+    public Transform EggsShopInventory; // Assign the inventory object in the Inspector
     public GameObject ItemPopupPanel; // Assign the popup panel in the Inspector
     public GameObject FoodPopupPanel; // Assign the popup panel in the Inspector
     public Transform FoodInventory; // Assign the inventory object in the Inspector
@@ -60,6 +64,8 @@ public class CareManager : MonoBehaviour
     internal Dictionary<int, GameObject> UiToGameObjectDictionary = new Dictionary<int, GameObject>();
     internal GameObject DraggingItem;
 
+    private int currentHelpPage = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -72,6 +78,20 @@ public class CareManager : MonoBehaviour
             var creatureStats = ScriptableObjectFinder.FindScriptableObjectByName<CreatureStats>(currentCreatureStats.name);
             var creatureInstance = Instantiate(creatureStats.CreaturePrefab, GetNextRandomPosition(), Quaternion.identity);
             CreaturesOwned.Add(creatureInstance);
+        }
+
+        var allPossibleEggs = ScriptableObjectFinder.GetAllEggStats().ToArray();
+        for (int i = 0; i < allPossibleEggs.Count(); i++)
+        {
+            var currentEgg = allPossibleEggs[i];
+            var go = Instantiate(UiShopItemPrefab, EggsShopInventory);
+            var shopItem = go.GetComponent<ShopItem>();
+            shopItem.ItemImage.sprite = currentEgg.ShopImage;
+            shopItem.GoldAmount = currentEgg.Cost;
+            shopItem.ItemName = currentEgg.name;
+            shopItem.ItemType = ItemType.Egg;
+            shopItem.ItemDescription = $"Type: {Enum.GetName(typeof(CreatureType), currentEgg.CreatureType)}\n" +
+                                       $"The egg will spawn in your tiny creature area.";
         }
 
         var allPossibleFoods = ScriptableObjectFinder.GetAllFoodStats().ToArray();
@@ -127,7 +147,6 @@ public class CareManager : MonoBehaviour
 
         SetupInventoryImages();
 
-        // TODO: Calculate Eggs Spawned based on all creatures and their current stats.
         CalculateEggSpawns();
     }
 
@@ -271,12 +290,20 @@ public class CareManager : MonoBehaviour
     {
         ToyShopPanel.SetActive(true);
         FoodShopPanel.SetActive(false);
+        EggsShopPanel.SetActive(false);
     }
 
     public void SelectFoodShop()
     {
         ToyShopPanel.SetActive(false);
         FoodShopPanel.SetActive(true);
+        EggsShopPanel.SetActive(false);
+    }
+    public void SelectEggsShop()
+    {
+        ToyShopPanel.SetActive(false);
+        FoodShopPanel.SetActive(false);
+        EggsShopPanel.SetActive(true);
     }
 
     public void SetMainCursor()
@@ -309,6 +336,38 @@ public class CareManager : MonoBehaviour
     {
         SaveCreatureValues();
         SaveItemValues();
+    }
+
+    public void ToggleHelpPanel()
+    {
+        HelpPopupPanel.SetActive(!HelpPopupPanel.activeSelf);
+    }
+
+    public void CloseHelpPanel()
+    {
+        HelpPopupPanel.SetActive(false);
+    }
+
+    public void NextHelpPage()
+    {
+        HelpListPages[currentHelpPage].SetActive(false);
+        currentHelpPage++;
+        if(currentHelpPage >= HelpListPages.Length)
+        {
+            currentHelpPage = 0;
+        }
+        HelpListPages[currentHelpPage].SetActive(true);
+    }
+
+    public void PreviousHelpPage()
+    {
+        HelpListPages[currentHelpPage].SetActive(false);
+        currentHelpPage--;
+        if (currentHelpPage < 0)
+        {
+            currentHelpPage = HelpListPages.Length - 1;
+        }
+        HelpListPages[currentHelpPage].SetActive(true);
     }
 
     internal void UpdateCreatureInfo(Creature creature)

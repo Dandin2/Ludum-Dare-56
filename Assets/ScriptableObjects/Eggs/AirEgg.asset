@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MinHatchTime: 5
   MaxHatchTime: 10
+  ShopImage: {fileID: -315231039, guid: 0d9890617a30df64eb6b204cf8a8cd66, type: 3}
+  Cost: 100
   CreatureType: 3
   EggPrefab: {fileID: 8011089708652813521, guid: 95c373f0bd003d14e8621074a8cd0831, type: 3}

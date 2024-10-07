@@ -22,6 +22,10 @@ public class EggStats : ScriptableObject
 
     public float MaxHatchTime;
 
+    public Sprite ShopImage;
+
+    public int Cost;
+
     public CreatureType CreatureType;
 
     public GameObject EggPrefab;
