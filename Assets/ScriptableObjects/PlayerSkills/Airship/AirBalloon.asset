@@ -21,11 +21,11 @@ MonoBehaviour:
   effects:
   - elementType: 5
     target: 1
-    damage: 25
+    damage: 35
     heal: 0
     block: 0
     mods: []
   effectsOnCreatures: []
   ultimateMeterChange: 0
-  OnEnemiesAnimation: {fileID: 0}
+  OnEnemiesAnimation: {fileID: 4288569446507331513, guid: e1f71147e64728e4c9bd855012e1fba4, type: 3}
   OnSelfAnimation: {fileID: 0}

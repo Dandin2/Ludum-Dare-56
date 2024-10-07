@@ -13,6 +13,8 @@ public class CombatManager : MonoBehaviour
     public List<CombatEnemyInfo> Enemies;
     public CombatTextDisplay TextDisplay;
     public ScreenFader Fader;
+    public RectTransform ChargeBar;
+    public RectTransform ChargeBarBackground;
 
     public GameObject InactivePrefab;
 
@@ -33,7 +35,12 @@ public class CombatManager : MonoBehaviour
     }
     private int doneAnimatingCount;
     private bool combatOver = false;
+    public int lastUltimateDamage = 0;
+    public int lostCreatures = 0;
+    public int exhaustedCreatures = 0;
+    public int restoredCreatures = 0;
 
+    public bool lastFrameClick = false;
 
     private void Awake()
     {
@@ -44,6 +51,11 @@ public class CombatManager : MonoBehaviour
         }
         else
             Destroy(gameObject);
+    }
+
+    private void Update()
+    {
+        lastFrameClick = Input.GetKeyDown(KeyCode.Mouse0);
     }
 
     public void RegisterInstanceCreated()
@@ -60,7 +72,7 @@ public class CombatManager : MonoBehaviour
         CombatPlayer.Instance.SetInitial();
         Fader.FadeToClear(2, () =>
         {
-            TextDisplay.SetMessage($"A {chosen.myInfo.enemyName} appeared!", false, () =>
+            TextDisplay.SetMessage($"A(n) {chosen.myInfo.enemyName} appeared!", false, () =>
             {
                 TextDisplay.SetMessage(chosen.myInfo.combatIntroText, false, () => { StartPlayerTurn(); }, 2);
             }, 3);
@@ -93,13 +105,44 @@ public class CombatManager : MonoBehaviour
         }
     }
 
+    public void DisplayResultMessage(bool playerTurn)
+    {
+        string updateStr = "";
+        if (lostCreatures > 0)
+            updateStr += $"{lostCreatures} creatures perished!";
+        if (restoredCreatures > 0)
+            updateStr += (string.IsNullOrEmpty(updateStr) ? "" : Environment.NewLine) + $"{restoredCreatures} creatures restored!";
+        if (exhaustedCreatures > 0)
+            updateStr += (string.IsNullOrEmpty(updateStr) ? "" : Environment.NewLine) + $"{exhaustedCreatures} creatures exhausted!";
+
+        lostCreatures = 0;
+        restoredCreatures = 0;
+        exhaustedCreatures = 0;
+
+        if (!string.IsNullOrEmpty(updateStr))
+        {
+            TextDisplay.SetMessage(updateStr, false, () => { if (playerTurn) { StartEnemyTurn(); } else { StartPlayerTurn(); } }, 2);
+        }
+        else
+        {
+            if (playerTurn)
+            {
+                StartEnemyTurn();
+            }
+            else
+            {
+                StartPlayerTurn();
+            }
+        }
+    }
+
     public void EnemyTurnDoneAnimating()
     {
         doneAnimatingCount++;
         if (doneAnimatingCount > 1)
         {
             doneAnimatingCount = 0;
-            StartCoroutine(WaitThenDo(1, () => { StartPlayerTurn(); }));
+            StartCoroutine(WaitThenDo(1, () => { DisplayResultMessage(false); }));
         }
     }
 
@@ -109,14 +152,32 @@ public class CombatManager : MonoBehaviour
         if (doneAnimatingCount > 1)
         {
             doneAnimatingCount = 0;
-            StartCoroutine(WaitThenDo(1, () => { StartEnemyTurn(); }));
+            StartCoroutine(WaitThenDo(1, () => { DisplayResultMessage(true); }));
         }
+    }
+
+    public void UpdateUltimateCharge(float ultimate)
+    {
+        ChargeBar.SetSize(Math.Min(ChargeBarBackground.sizeDelta.x,ChargeBarBackground.sizeDelta.x * (0.1f + (0.9f * ultimate * 0.01f))));
     }
 
     public void AttackEnemy()
     {
         isPlayerTurn = false;
-        CombatPlayer.Instance.PlayAttackAnimation();
+        TextDisplay.SetMessage("You unleash your ultimate attack!", false, () =>
+        {
+            CombatPlayer.Instance.PlayAttackAnimation();
+        }, 2);
+    }
+
+    public void DisplayUltimateResultMessage()
+    {
+        if (lastUltimateDamage < 30)
+        {
+            TextDisplay.SetMessage("Seems like it could have used more time to prepare...", false, () => { PlayerTurnDoneAnimating(); }, 2);
+        }
+        else
+            PlayerTurnDoneAnimating();
     }
 
     public void Block()
@@ -157,16 +218,23 @@ public class CombatManager : MonoBehaviour
     {
         combatOver = true;
         int goldGain = 500 + (500 * WorldManager.instance.level);
-        TextDisplay.SetMessage("You win!", false, () =>
+        if (WorldManager.instance.level >= 4)
         {
-            TextDisplay.SetMessage($"You gain {goldGain} gold!", false, () =>
+            Fader.FadeToBlack(2, () => { SceneManager.LoadScene(5); });
+        }
+        else
+        {
+            TextDisplay.SetMessage("You win!", false, () =>
             {
-                WorldManager.instance.activeCreatureStats = CombatPlayer.Instance.GetCreatures();
-                WorldManager.instance.GoldAmount += goldGain;
-                WorldManager.instance.level++;
-                SceneManager.LoadScene(2);
-            }, 3);
-        }, 4);
+                TextDisplay.SetMessage($"You gain {goldGain} gold!", false, () =>
+                {
+                    WorldManager.instance.activeCreatureStats = CombatPlayer.Instance.GetCreatures();
+                    WorldManager.instance.GoldAmount += goldGain;
+                    WorldManager.instance.level++;
+                    SceneManager.LoadScene(2);
+                }, 2);
+            }, 2);
+        }
     }
 
     public void Defeat()

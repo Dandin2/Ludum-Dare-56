@@ -40,5 +40,5 @@ MonoBehaviour:
     blockMod: 0
     takeDamage: 0
   ultimateMeterChange: 0
-  OnEnemiesAnimation: {fileID: 0}
-  OnSelfAnimation: {fileID: 0}
+  OnEnemiesAnimation: {fileID: 4288569446507331513, guid: e1f71147e64728e4c9bd855012e1fba4, type: 3}
+  OnSelfAnimation: {fileID: 4288569446507331513, guid: c2e1bf2b76a8c6b4982c5489682b6b73, type: 3}

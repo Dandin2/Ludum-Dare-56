@@ -23,7 +23,19 @@ public class CombatPlayer : MonoBehaviour
     private int activeParticles;
 
     public float blockPercent;
-    public float ultimate;
+    private float _ultimate;
+    public float ultimate
+    {
+        get
+        {
+            return _ultimate;
+        }
+        set
+        {
+            _ultimate = value;
+            CombatManager.Instance?.UpdateUltimateCharge(_ultimate);
+        }
+    }
 
     private List<CombatCreature> preppedCreatures = new List<CombatCreature>();
 
@@ -55,7 +67,7 @@ public class CombatPlayer : MonoBehaviour
 
     public void SetInitial()
     {
-        foreach(ActiveCreatureStats acs in WorldManager.instance.activeCreatureStats)
+        foreach (ActiveCreatureStats acs in WorldManager.instance.activeCreatureStats)
         {
             GameObject go = Instantiate(CreaturePrefab);
             CombatCreature cc = go.GetComponent<CombatCreature>();
@@ -74,14 +86,23 @@ public class CombatPlayer : MonoBehaviour
         return myCreatures.Select(x => x.myStats).ToList();
     }
 
-    public int CalculateDamage()
+    public int GetCreatureQuantity(CreatureType ct)
     {
-        return (int)(myCreatures.Sum(x => x.CalculateDamage()) / 12.5f); //20 should do about 8 damage.
+        if (ct == CreatureType.All)
+            return myCreatures.Where(x => !x.myStats.exhausted).Count();
+        else
+            return myCreatures.Where(x => !x.myStats.exhausted && x.myStats.myType == ct).Count();
+    }
+
+    public int CalculateUltimateDamage()
+    {
+        return (int)(10 + (90 * Mathf.Min(100, ultimate) * 0.01f));
     }
 
     public void ReceiveEnemyEffect(EnemyAttackInfo attackInfo)
     {
-        if(attackInfo.OnEnemiesAnimation != null)
+        int startCount = myCreatures.Count();
+        if (attackInfo.OnEnemiesAnimation != null)
         {
             GameObject go = Instantiate(attackInfo.OnEnemiesAnimation);
             go.transform.parent = transform;
@@ -91,7 +112,7 @@ public class CombatPlayer : MonoBehaviour
         else
             CombatManager.Instance.EnemyTurnDoneAnimating();
 
-        if(attackInfo.Damage > 0)
+        if (attackInfo.Damage > 0)
         {
             int numDamaging = 0;
             if (attackInfo.NumToDamage > 0)
@@ -99,21 +120,26 @@ public class CombatPlayer : MonoBehaviour
             else
                 numDamaging = (int)(attackInfo.PercentToDamage * myCreatures.Count() * 0.01f);
 
-            myCreatures.OrderBy(x => UnityEngine.Random.value).Take(numDamaging).ToList().ForEach(x => 
-            { 
+            myCreatures.OrderBy(x => UnityEngine.Random.value).Take(numDamaging).ToList().ForEach(x =>
+            {
                 x.TakeDamage((int)(attackInfo.Damage * (100 - blockPercent) * (x.myStats.exhausted ? 1.2f : 1) * 0.01f));
             });
 
             myCreatures = myCreatures.Where(x => x.myStats.health > 0).ToList();
+            int endCount = myCreatures.Count();
+            if (endCount < startCount)
+                CombatManager.Instance.lostCreatures = (startCount - endCount);
         }
 
-        if(attackInfo.NumToExhaust > 0)
+        if (attackInfo.NumToExhaust > 0)
         {
-            myCreatures.OrderBy(x => x.myStats.exhausted).ThenBy(x => UnityEngine.Random.value).Take(attackInfo.NumToExhaust).ToList().ForEach(x => x.SetExhaust(true));
+            myCreatures.OrderBy(x => !x.myStats.exhausted).ThenBy(x => UnityEngine.Random.value).Take(attackInfo.NumToExhaust).ToList().ForEach(x => x.SetExhaust(true));
+            CombatManager.Instance.exhaustedCreatures = attackInfo.NumToExhaust;
         }
         if (attackInfo.NumToReady > 0)
         {
-            myCreatures.OrderBy(x => x.myStats.exhausted).ThenBy(x => UnityEngine.Random.value).Take(attackInfo.NumToExhaust).ToList().ForEach(x => x.SetExhaust(true));
+            myCreatures.OrderBy(x => x.myStats.exhausted).ThenBy(x => UnityEngine.Random.value).Take(attackInfo.NumToReady).ToList().ForEach(x => x.SetExhaust(false));
+            CombatManager.Instance.restoredCreatures = attackInfo.NumToReady;
         }
 
         blockPercent = 0;
@@ -124,13 +150,14 @@ public class CombatPlayer : MonoBehaviour
     public void ReceivePlayerEffect(SpecialSkillInfo ssi)
     {
         //Exhaust creatures required to perform the effect
-        if(ssi.requiredAmount > 0)
+        if (ssi.requiredAmount > 0)
         {
-            GetRandomAmountOfType(ssi.requiredAmount, ssi.requiredType).ForEach(x => x.SetExhaust(true));
+            GetRandomAmountOfType(ssi.requiredAmount, ssi.requiredType, false, true).ForEach(x => x.SetExhaust(true));
+            CombatManager.Instance.exhaustedCreatures += ssi.requiredAmount;
         }
 
         //Play any animation on self
-        if(ssi.OnSelfAnimation != null)
+        if (ssi.OnSelfAnimation != null)
         {
             GameObject go = Instantiate(ssi.OnSelfAnimation);
             go.transform.parent = transform;
@@ -148,9 +175,9 @@ public class CombatPlayer : MonoBehaviour
         }
 
         //Find any effects that target your creatures and perform them
-        foreach(CreatureEffect ce in ssi.effectsOnCreatures)
+        foreach (CreatureEffect ce in ssi.effectsOnCreatures)
         {
-            GetRandomAmountOfType(ce.quantity, ce.type).ForEach(x => x.ReceiveCreatureEffect(ce));
+            GetRandomAmountOfType(ce.quantity, ce.type, ce.ready, ce.exhaust).ForEach(x => x.ReceiveCreatureEffect(ce));
         }
 
         ultimate += ssi.ultimateMeterChange;
@@ -159,18 +186,28 @@ public class CombatPlayer : MonoBehaviour
             CombatManager.Instance.Defeat();
     }
 
-    public List<CombatCreature> GetRandomAmountOfType(int amount, CreatureType type)
+    public float BaseDamageMod()
     {
-        List<CombatCreature> toExhaust = myCreatures;
-        if (type != CreatureType.All)
-            toExhaust = myCreatures.Where(x => x.myStats.myType == type).ToList();
+        return myCreatures.Sum(x => x.CalculateDamagePercent()) / myCreatures.Count();
+    }
 
-        if(amount < toExhaust.Count)
+    public List<CombatCreature> GetRandomAmountOfType(int amount, CreatureType type, bool onlyExhausted = false, bool onlyNotExhausted = true)
+    {
+        List<CombatCreature> toReturn = myCreatures;
+        if (onlyExhausted)
+            toReturn = toReturn.Where(x => x.myStats.exhausted).ToList();
+        else if(onlyNotExhausted)
+            toReturn = toReturn.Where(x => !x.myStats.exhausted).ToList();
+
+        if (type != CreatureType.All)
+            toReturn = myCreatures.Where(x => x.myStats.myType == type).ToList();
+
+        if (amount < toReturn.Count)
         {
-            toExhaust = toExhaust.OrderBy(x => UnityEngine.Random.value).Take(amount).ToList();
+            toReturn = toReturn.OrderBy(x => UnityEngine.Random.value).Take(amount).ToList();
         }
 
-        return toExhaust;
+        return toReturn;
     }
 
     public bool HasRequiredCreatures(int amount, CreatureType ct)
@@ -193,7 +230,7 @@ public class CombatPlayer : MonoBehaviour
 
     public void UnPreview()
     {
-        if(preppedCreatures != null && preppedCreatures.Count > 0)
+        if (preppedCreatures != null && preppedCreatures.Count > 0)
         {
             preppedCreatures.ForEach(x => x.UnPreview());
             preppedCreatures.Clear();
@@ -210,12 +247,17 @@ public class CombatPlayer : MonoBehaviour
     public void PlayAttackAnimation()
     {
         StartCoroutine(StopParticlesWithFF());
-        foreach(CombatCreature cc in myCreatures)
+        foreach (CombatCreature cc in myCreatures)
         {
             cc.GetComponentInChildren<ParticleSystem>().Play();
             activeParticles = myCreatures.Count();
-            cc.GetComponentInChildren<ParticleTriggerHandler>().SetInfoAndPlay(cc.myStats.myType, 1, cc.myColor != null ? cc.myColor : Color.red, new Color(), CombatEnemy.Instance.ParticleAbsorber, 
-                                                                        () => { CombatEnemy.Instance.TakeDamage(CalculateDamage()); }, () => { ParticleCollided(); });
+            cc.GetComponentInChildren<ParticleTriggerHandler>().SetInfoAndPlay(cc.myStats.myType, 1, cc.myColor != null ? cc.myColor : Color.red, new Color(), CombatEnemy.Instance.ParticleAbsorber,
+                                                                        () => 
+                                                                        {
+                                                                            int dmg = CalculateUltimateDamage();
+                                                                            CombatEnemy.Instance.TakeDamage(dmg); 
+                                                                            CombatManager.Instance.lastUltimateDamage = dmg; 
+                                                                        }, () => { ParticleCollided(); });
         }
         myCreatures.Where(x => x.myStats.exhausted).OrderBy(x => UnityEngine.Random.value).Take(5).ToList().ForEach(x => x.SetExhaust(false));
 
@@ -224,9 +266,9 @@ public class CombatPlayer : MonoBehaviour
     public void ParticleCollided()
     {
         activeParticles -= 1;
-        if(activeParticles == 0)
+        if (activeParticles == 0)
         {
-            CombatManager.Instance.PlayerTurnDoneAnimating();
+            CombatManager.Instance.DisplayUltimateResultMessage();
         }
     }
 
