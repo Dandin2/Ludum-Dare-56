@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: EyePlant
   m_EditorClassIdentifier: 
   enemyName: Eye Plant
+  introTextQualifier: 'An '
   combatIntroText: ':hissssss:'
+  textTime: 1.5
   type: 1
   health: 150
   myAttacks:

@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39b2559d12e3e8740a59914add2c6e4e, type: 3}
   m_Name: Rabbit
   m_EditorClassIdentifier: 
-  enemyName: The Rabbit
+  enemyName: THE Rabbit
+  introTextQualifier: 
   combatIntroText: Servant, fetch me my Spaceship gloves!
+  textTime: 3
   type: 5
   health: 300
   myAttacks:

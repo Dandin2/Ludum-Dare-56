@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: PinkNimkip
   m_EditorClassIdentifier: 
   enemyName: Sir Turnuppington IV
-  combatIntroText: I see you defeated that blue buffoon, now let's see how you measure
-    up against a REAL Nimkip!  En Garde!
+  introTextQualifier: 
+  combatIntroText: You defeated that blue buffoon, now see how you stack up against
+    a REAL Nimkip!  En Garde!
+  textTime: 4.5
   type: 4
   health: 250
   myAttacks:

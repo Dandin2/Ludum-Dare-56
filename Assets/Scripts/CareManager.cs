@@ -424,6 +424,7 @@ public class CareManager : MonoBehaviour
             {
                 name = creature.Name,
                 health = creature.HitPoints,
+                maxHealth = creature.MaxHitPoints,
                 damage = creature.Attack,
                 block = creature.Defence,
                 hunger = creature.Hunger,

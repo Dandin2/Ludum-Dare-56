@@ -72,9 +72,9 @@ public class CombatManager : MonoBehaviour
         CombatPlayer.Instance.SetInitial();
         Fader.FadeToClear(2, () =>
         {
-            TextDisplay.SetMessage($"A(n) {chosen.myInfo.enemyName} appeared!", false, () =>
+            TextDisplay.SetMessage($"{chosen.myInfo.introTextQualifier}{chosen.myInfo.enemyName} appeared!", false, () =>
             {
-                TextDisplay.SetMessage(chosen.myInfo.combatIntroText, false, () => { StartPlayerTurn(); }, 2);
+                TextDisplay.SetMessage(chosen.myInfo.combatIntroText, false, () => { StartPlayerTurn(); }, chosen.myInfo.textTime);
             }, 3);
         });
     }

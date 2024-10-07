@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39b2559d12e3e8740a59914add2c6e4e, type: 3}
   m_Name: BlueNimkip
   m_EditorClassIdentifier: 
-  enemyName: That One Blue Nimkip You Didn't Like
+  enemyName: That One Blue Nimkip You Don't Like
   combatIntroText: I'm the strongest Nimkip there ever was, haha!
+  textTime: 4
   type: 3
   health: 200
   myAttacks:

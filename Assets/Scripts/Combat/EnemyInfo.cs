@@ -5,7 +5,9 @@ using UnityEngine;
 public class EnemyInfo : ScriptableObject
 {
     public string enemyName;
+    public string introTextQualifier;
     public string combatIntroText;
+    public float textTime;
     public EnemyType type;
     public int health;
     public List<EnemyAttackInfo> myAttacks;
