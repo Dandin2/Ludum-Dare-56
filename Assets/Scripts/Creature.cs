@@ -145,11 +145,11 @@ public class Creature : MonoBehaviour
             MaxHitPoints = startingStats.HitPoints;
             Defence = currentCreatureStats.block;
             Attack = currentCreatureStats.damage;
-            Hunger = currentCreatureStats.hunger - UnityEngine.Random.Range(0, startingStats.Hunger);
+            Hunger = currentCreatureStats.hunger;
             MaxHunger = startingStats.Hunger;
-            Entertainment = currentCreatureStats.entertainment - UnityEngine.Random.Range(0, startingStats.Entertainment);
+            Entertainment = currentCreatureStats.entertainment;
             MaxEntertainment = startingStats.Entertainment;
-            Hygiene = currentCreatureStats.hygene - UnityEngine.Random.Range(0, startingStats.Hygiene);
+            Hygiene = currentCreatureStats.hygene;
             MaxHygiene = startingStats.Hygiene;
             Speed = startingStats.Speed;
         }
