@@ -55,12 +55,16 @@ public class ShopItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             if (ItemType == ItemType.Food)
             {
                 var foodStats = ScriptableObjectFinder.FindScriptableObjectByName<FoodStats>(ItemName);
-                manager.FoodOwned.Add(Instantiate(foodStats.FoodPrefab));
+                var go = Instantiate(foodStats.FoodPrefab);
+                go.SetActive(false);
+                manager.FoodOwned.Add(go);
             }
             else if (ItemType == ItemType.Toy)
             {
                 var toyStats = ScriptableObjectFinder.FindScriptableObjectByName<ToyStats>(ItemName);
-                manager.ToysOwned.Add(Instantiate(toyStats.ToyPrefab));
+                var go = Instantiate(toyStats.ToyPrefab);
+                go.SetActive(false);
+                manager.ToysOwned.Add(go);
             }
             manager.SetupInventoryImages();
         }
