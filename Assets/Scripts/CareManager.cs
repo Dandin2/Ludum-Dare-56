@@ -335,6 +335,7 @@ public class CareManager : MonoBehaviour
 
     public void EnterBattle()
     {
+        CancelScrubBrush();
         SceneManager.LoadScene(1);
         SaveCreatureValues();
         SaveItemValues();
@@ -381,6 +382,7 @@ public class CareManager : MonoBehaviour
                             $"HP: {creature.HitPoints}/{creature.MaxHitPoints}\n" +
                             $"Attack: {creature.Attack}\n" +
                             $"Defence: {creature.Defence}\n" +
+                            $"Exhausted: {creature.IsExhausted}\n" +
                             $"Hunger: {creature.Hunger}/{creature.MaxHunger}\n" +
                             $"Entertainment: {creature.Entertainment}/{creature.MaxEntertainment}\n" +
                             $"Hygiene: {creature.Hygiene}/{creature.MaxHygiene}";
