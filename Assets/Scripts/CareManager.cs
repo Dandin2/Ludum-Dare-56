@@ -25,6 +25,7 @@ public class CareManager : MonoBehaviour
     public Text CreatureInfoText; // Assign the Text component for additional info
     public Image ItemImage; // Assign the Sprite component for the item image in the Inspector.
     public Text ItemNameText; // Assign the Text component for the name
+    public Text GoldAmountText; // Assign the Text component for the gold amount;
     public Text ItemInfoText; // Assign the Text component for additional info
     public LineRenderer LineRenderer; // Assign the LineRenderer in the Inspector
     public RectTransform linePosition; // Assign the position where the line renderer attaches to the creature panel in the Inspector.
@@ -172,6 +173,7 @@ public class CareManager : MonoBehaviour
             worldPosition.z = 0f;
             DraggingItem.transform.position = worldPosition;
         }
+        GoldAmountText.text = WorldManager.instance.GoldAmount.ToString();
     }
 
     public void SetupInventoryImages()
