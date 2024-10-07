@@ -507,13 +507,4 @@ public class CareManager : MonoBehaviour
         Instantiate(eggScriptableObject.EggPrefab, GetNextRandomPosition(), Quaternion.identity);
     }
 
-    private GameObject FindObjectByInstanceID(int instanceID)
-    {
-        UnityEngine.Object obj = EditorUtility.InstanceIDToObject(instanceID);
-        if (obj is GameObject)
-        {
-            return (GameObject)obj;
-        }
-        return null;
-    }
 }
