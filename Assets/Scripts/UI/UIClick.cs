@@ -10,6 +10,13 @@ public class UIClick : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
     public Action hoverAction;
     public Action unHoverAction;
 
+    private AudioSource audioSource;
+
+    public void Start()
+    {
+        audioSource= GetComponent<AudioSource>();
+    }
+
     public void SetClickAction(Action onClick)
     {
         clickAction = onClick;
@@ -27,6 +34,10 @@ public class UIClick : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        if(audioSource!= null)
+        {
+            audioSource.Play();
+        }
         clickAction?.Invoke();
     }
 

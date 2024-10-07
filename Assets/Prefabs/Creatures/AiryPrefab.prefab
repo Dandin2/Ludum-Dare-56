@@ -123,6 +123,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: Airy
+  ThoughtTime: 5
+  HungerThreshold: 0.5
+  EntertainmentThreshold: 0.5
+  HygieneThreshold: 0.5
 --- !u!114 &-2299835262576146560
 MonoBehaviour:
   m_ObjectHideFlags: 0
