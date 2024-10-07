@@ -17,9 +17,9 @@ public class Egg : MonoBehaviour
 
     void Awake()
     {
-        var startingStats = ScriptableObjectFinder.FindScriptableObjectByName<EggStats>(Name);
+        var startingStats = WorldManager.instance.EggBases.First(x => x.name == Name);
         hatchTime = Random.Range(startingStats.MinHatchTime, startingStats.MaxHatchTime);
-        var allPossibleCreatureStats = ScriptableObjectFinder.GetAllCreatureStats();
+        var allPossibleCreatureStats = WorldManager.instance.CreatureBases;
         possibleCreatures = allPossibleCreatureStats.Where(x => x.CreatureType == startingStats.CreatureType).ToArray();
     }
 

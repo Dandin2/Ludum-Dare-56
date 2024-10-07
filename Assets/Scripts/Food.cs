@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 public class Food : MonoBehaviour
@@ -17,7 +18,7 @@ public class Food : MonoBehaviour
 
     void Awake()
     {
-        var startingStats = ScriptableObjectFinder.FindScriptableObjectByName<FoodStats>(Name);
+        var startingStats = WorldManager.instance.FoodBases.First(x => x.name == Name);
         HungerRestore = startingStats.HungerRestore;
         AttractionRadius = startingStats.AttractionRadius;
         NumberOfUses = startingStats.NumberOfUses;

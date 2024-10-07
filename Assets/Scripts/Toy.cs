@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 
 public class Toy : MonoBehaviour
@@ -18,7 +19,7 @@ public class Toy : MonoBehaviour
 
     void Awake()
     {
-        var startingStats = ScriptableObjectFinder.FindScriptableObjectByName<ToyStats>(Name);
+        var startingStats = WorldManager.instance.ToyBases.First(x => x.name == Name);
         EntertainmentRestore = startingStats.EntertainmentRestore;
         AttractionRadius = startingStats.AttractionRadius;
         NumberOfUses = startingStats.NumberOfUses;

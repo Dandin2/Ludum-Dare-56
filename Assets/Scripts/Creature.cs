@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 
 public class Creature : MonoBehaviour
@@ -120,7 +121,7 @@ public class Creature : MonoBehaviour
 
     public void SetStats(ActiveCreatureStats currentCreatureStats)
     {
-        var startingStats = ScriptableObjectFinder.FindScriptableObjectByName<CreatureStats>(Name);
+        var startingStats = WorldManager.instance.CreatureBases.First(x => x.CreatureName == Name);
         if (currentCreatureStats == null)
         {
             CreatureType = startingStats.CreatureType;
