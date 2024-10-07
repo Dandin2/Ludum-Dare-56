@@ -15,6 +15,10 @@ public class UIClick : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
     public void Start()
     {
         audioSource= GetComponent<AudioSource>();
+        if(audioSource == null)
+        {
+            audioSource = Camera.main.GetComponent<AudioSource>();
+        }
     }
 
     public void SetClickAction(Action onClick)
