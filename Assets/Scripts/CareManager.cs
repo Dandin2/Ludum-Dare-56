@@ -109,7 +109,9 @@ public class CareManager : MonoBehaviour
         {
             var currentFood = foodOwned[i];
             var foodStats = ScriptableObjectFinder.FindScriptableObjectByName<FoodStats>(currentFood.name);
-            FoodOwned.Add(Instantiate(foodStats.FoodPrefab));
+            var go = Instantiate(foodStats.FoodPrefab);
+            go.SetActive(false);
+            FoodOwned.Add(go);
         }
 
         var toysOwned = WorldManager.instance.toysInventory.ToArray();
@@ -117,7 +119,9 @@ public class CareManager : MonoBehaviour
         {
             var currentToy = toysOwned[i];
             var toyStats = ScriptableObjectFinder.FindScriptableObjectByName<ToyStats>(currentToy.name);
-            ToysOwned.Add(Instantiate(toyStats.ToyPrefab));
+            var go = Instantiate(toyStats.ToyPrefab);
+            go.SetActive(false);
+            ToysOwned.Add(go);
         }
 
         SetupInventoryImages();
