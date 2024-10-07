@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -42,11 +43,13 @@ public class UiItemClick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
                 if(food != null)
                 {
                     food.enabled = true;
+                    manager.FoodOwned.Remove(manager.DraggingItem);
                 }
                 var toy = manager.DraggingItem.GetComponent<Toy>();
                 if(toy != null)
                 {
                     toy.enabled = true;
+                    manager.ToysOwned.Remove(manager.DraggingItem);
                 }
                 manager.DraggingItem = null;
                 manager.ItemPopupPanel.SetActive(false);
