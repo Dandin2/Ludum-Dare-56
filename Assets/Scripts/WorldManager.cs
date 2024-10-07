@@ -27,7 +27,7 @@ public class WorldManager : MonoBehaviour
 
             if (isTesting)
             {
-                GoldAmount = 300;
+                GoldAmount = 30000;
                 var allPossibleCreatureStats = ScriptableObjectFinder.GetAllCreatureStats();
                 for (int i = 0; i < 10; i++)
                 {

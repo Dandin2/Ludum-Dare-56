@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class CareManager : MonoBehaviour
@@ -334,6 +335,7 @@ public class CareManager : MonoBehaviour
 
     public void EnterBattle()
     {
+        SceneManager.LoadScene(1);
         SaveCreatureValues();
         SaveItemValues();
     }

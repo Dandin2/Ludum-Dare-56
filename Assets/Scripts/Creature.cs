@@ -55,7 +55,7 @@ public class Creature : MonoBehaviour
     private float nextMinThoughtTimeIncrement = 10; // min time in seconds to make a new thought
     private float nextMaxThoughtTimeIncrement = 50; // max time in seconds to make a new thought
 
-    private bool hasRandomStartingValues = false; // flag to test not full starting values for hunger, hygiene, and entertainment.
+    private bool hasRandomStartingValues = true; // flag to test not full starting values for hunger, hygiene, and entertainment.
 
     private void Awake()
     {
