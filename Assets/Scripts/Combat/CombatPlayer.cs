@@ -71,7 +71,7 @@ public class CombatPlayer : MonoBehaviour
 
     public List<ActiveCreatureStats> GetCreatures()
     {
-        return preppedCreatures.Select(x => x.myStats).ToList();
+        return myCreatures.Select(x => x.myStats).ToList();
     }
 
     public int CalculateDamage()

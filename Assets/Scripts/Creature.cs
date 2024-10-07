@@ -35,6 +35,8 @@ public class Creature : MonoBehaviour
 
     internal float Speed;
 
+    internal bool IsHatched;
+
     internal Vector3? targetPosition; // the target position the creature is trying to get to.
     internal Toy ToyUsing;
     internal Food FoodUsing;
@@ -55,10 +57,11 @@ public class Creature : MonoBehaviour
     private float nextMinThoughtTimeIncrement = 10; // min time in seconds to make a new thought
     private float nextMaxThoughtTimeIncrement = 50; // max time in seconds to make a new thought
 
-    private bool hasRandomStartingValues = true; // flag to test not full starting values for hunger, hygiene, and entertainment.
+    private bool hasRandomStartingValues = false; // flag to test not full starting values for hunger, hygiene, and entertainment.
 
     private void Awake()
     {
+        hasRandomStartingValues = WorldManager.instance.level <= 1 || IsHatched;
         var startingStats = ScriptableObjectFinder.FindScriptableObjectByName<CreatureStats>(Name);
         CreatureType = startingStats.CreatureType;
         Type = Enum.GetName(typeof(CreatureType), startingStats.CreatureType);

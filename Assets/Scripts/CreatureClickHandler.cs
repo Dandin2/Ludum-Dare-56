@@ -31,10 +31,10 @@ public class CreatureClickHandler : MonoBehaviour
                     ShowPopup(creature);
                     if(manager.isUsingScrubBrush && creature.Hygiene != creature.MaxHygiene && creature.gameObject.GetInstanceID() == gameObject.GetInstanceID())
                     {
-                        if(Time.time > lastTimeSpawned + 5f)
+                        if(Time.time > lastTimeSpawned + 2f)
                         {
                             lastTimeSpawned = Time.time;
-                            Destroy(Instantiate(manager.bubbleParticles, creature.transform), 5f);
+                            Destroy(Instantiate(manager.bubbleParticles, creature.transform), 2f);
                         }
                         creature.partialHygiene += .5f;
                         if(creature.partialHygiene >= 1)
@@ -66,6 +66,7 @@ public class CreatureClickHandler : MonoBehaviour
                         $"HP: {creature.HitPoints}/{creature.MaxHitPoints}\n" +
                         $"Attack: {creature.Attack}\n" +
                         $"Defence: {creature.Defence}\n" +
+                        $"Exhausted: {creature.IsExhausted}\n" +
                         $"Hunger: {creature.Hunger}/{creature.MaxHunger}\n" +
                         $"Entertainment: {creature.Entertainment}/{creature.MaxEntertainment}\n" +
                         $"Hygiene: {creature.Hygiene}/{creature.MaxHygiene}";
