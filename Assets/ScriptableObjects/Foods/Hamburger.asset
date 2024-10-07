@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bb6e1f0d038c7244844697aac605238, type: 3}
+  m_Name: Hamburger
+  m_EditorClassIdentifier: 
+  HungerRestore: 30
+  AttractionRadius: 1.5
+  NumberOfUses: 10
+  Cost: 300
+  ShopImage: {fileID: 21300000, guid: 14d82aeab2390f24c9778d74ce3ba695, type: 3}
+  Description: A juicy hamburger for all your tiny creatures to enjoy.
+  FoodPrefab: {fileID: 3475907818912968442, guid: a367cdc34551e004c999361daebe6b20, type: 3}

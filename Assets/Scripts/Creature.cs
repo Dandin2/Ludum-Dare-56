@@ -12,6 +12,7 @@ public class Creature : MonoBehaviour
     public float HygieneThreshold = .5f;
 
     internal string Type;
+    internal CreatureType CreatureType;
 
     internal int HitPoints;
     internal int MaxHitPoints;
@@ -59,6 +60,7 @@ public class Creature : MonoBehaviour
     private void Awake()
     {
         var startingStats = ScriptableObjectFinder.FindScriptableObjectByName<CreatureStats>(Name);
+        CreatureType = startingStats.CreatureType;
         Type = Enum.GetName(typeof(CreatureType), startingStats.CreatureType);
         HitPoints = startingStats.HitPoints;
         MaxHitPoints = startingStats.HitPoints;

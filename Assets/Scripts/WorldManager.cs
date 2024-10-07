@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -9,6 +10,8 @@ public class WorldManager : MonoBehaviour
     public List<CreatureStats> CreatureBases;
 
     internal List<ActiveCreatureStats> activeCreatureStats = new List<ActiveCreatureStats>();
+    internal List<ActiveItemStats> foodInventory = new List<ActiveItemStats>();
+    internal List<ActiveItemStats> toysInventory = new List<ActiveItemStats>();
 
     internal int GoldAmount;
     public int level;
@@ -32,7 +35,7 @@ public class WorldManager : MonoBehaviour
     {
         if(isTesting)
         {
-            GoldAmount = 100000;
+            GoldAmount = 300;
             var allPossibleCreatureStats = ScriptableObjectFinder.GetAllCreatureStats();
             for (int i = 0; i < 10; i++)
             {
@@ -68,4 +71,10 @@ public class WorldManager : MonoBehaviour
     {
         GoldAmount += amount;
     }
+}
+
+[Serializable]
+public class ActiveItemStats
+{
+    public string name;
 }
