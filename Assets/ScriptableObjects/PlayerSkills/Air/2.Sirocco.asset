@@ -20,7 +20,7 @@ MonoBehaviour:
   effects:
   - elementType: 3
     target: 1
-    damage: 25
+    damage: 45
     heal: 0
     block: 0
     mods: []

@@ -19,7 +19,7 @@ MonoBehaviour:
   Damage: 0
   NumToDamage: 0
   PercentToDamage: 0
-  NumToExhaust: 20
+  NumToExhaust: 12
   NumToReady: 0
   SelfHealAmount: 0
   SelfBlockAmount: 0
