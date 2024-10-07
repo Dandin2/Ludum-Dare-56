@@ -15,6 +15,7 @@ public class CombatButton : MonoBehaviour
     public SpecialSkillInfo SkillOnClick;
 
     public bool active = true;
+    public bool? manualActive = null;
     private GameObject inactive;
 
     private void Awake()
@@ -22,7 +23,7 @@ public class CombatButton : MonoBehaviour
         //Set defaults
         if (SkillOnClick != null && Click.clickAction == null)
         {
-            Click.SetClickAction(() => { if (active) { CombatManager.Instance.PerformPlayerAction(SkillOnClick); } });
+            Click.SetClickAction(() => { if (active) { CombatManager.Instance.PerformPlayerAction(SkillOnClick); CombatPlayer.Instance.UnPreview(); } });
         }
         if (Click.hoverAction == null && Click.unHoverAction == null)
         {
@@ -49,10 +50,15 @@ public class CombatButton : MonoBehaviour
 
     private void OnEnable()
     {
-        if (SkillOnClick != null && !CombatPlayer.Instance.HasRequiredCreatures(SkillOnClick.requiredAmount, SkillOnClick.requiredType))
-            active = false;
+        if (!manualActive.HasValue)
+        {
+            if (SkillOnClick != null && !CombatPlayer.Instance.HasRequiredCreatures(SkillOnClick.requiredAmount, SkillOnClick.requiredType))
+                active = false;
+            else
+                active = true;
+        }
         else
-            active = true;
+            active = manualActive.Value;
 
         if (!active)
         {

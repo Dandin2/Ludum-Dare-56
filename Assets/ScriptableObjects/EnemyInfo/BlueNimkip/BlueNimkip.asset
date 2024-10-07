@@ -12,11 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39b2559d12e3e8740a59914add2c6e4e, type: 3}
   m_Name: BlueNimkip
   m_EditorClassIdentifier: 
-  enemyName: 
-  type: 0
-  health: 0
-  myAttacks: []
+  enemyName: That One Blue Nimkip You Don't Like
+  combatIntroText: I'm the strongest Nimkip there ever was, haha!
+  textTime: 4
+  type: 3
+  health: 200
+  myAttacks:
+  - {fileID: 11400000, guid: f286204a0cbff3340924b83a7603b5d9, type: 2}
+  - {fileID: 11400000, guid: c93b241c82510cf4890e2b4c20b7ae15, type: 2}
   defaultBlock: 0
-  weaknesses: []
+  weaknesses:
+  - type: 0
+    vulnPercent: 20
+  - type: 1
+    vulnPercent: 20
+  - type: 2
+    vulnPercent: 20
+  - type: 3
+    vulnPercent: 20
+  - type: 4
+    vulnPercent: 20
   strengths: []
   prefab: {fileID: 5038992349550822927, guid: 7a6272db17a8f4542a5da99807075df5, type: 3}

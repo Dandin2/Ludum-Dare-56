@@ -12,11 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39b2559d12e3e8740a59914add2c6e4e, type: 3}
   m_Name: PinkNimkip
   m_EditorClassIdentifier: 
-  enemyName: 
-  type: 0
-  health: 0
-  myAttacks: []
-  defaultBlock: 0
-  weaknesses: []
-  strengths: []
+  enemyName: Sir Turnuppington IV
+  introTextQualifier: 
+  combatIntroText: You defeated that blue buffoon, now see how you stack up against
+    a REAL Nimkip!  En Garde!
+  textTime: 4.5
+  type: 4
+  health: 250
+  myAttacks:
+  - {fileID: 11400000, guid: e2840352c96270e4db31475f8128484c, type: 2}
+  - {fileID: 11400000, guid: 40be1d280535e0b4996ba8c186a69a75, type: 2}
+  - {fileID: 11400000, guid: 7633b78a323ccaa48b582fe3f4c58f44, type: 2}
+  defaultBlock: 1
+  weaknesses:
+  - type: 2
+    vulnPercent: 30
+  strengths:
+  - type: 3
+    resistPercent: 20
   prefab: {fileID: 1582405350493426486, guid: 1c81b84ed73a1594c8a5e77f1c692209, type: 3}

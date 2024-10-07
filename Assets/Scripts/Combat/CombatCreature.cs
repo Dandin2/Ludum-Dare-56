@@ -23,15 +23,15 @@ public class CombatCreature : MonoBehaviour
         myStats = stats;
 
         if (myStats.myType == CreatureType.Air)
-            gameObject.SetColor(0, 1, 1);
+            gameObject.SetColor(0.52f, 0.87f, 0.72f);
         if (myStats.myType == CreatureType.Airship)
-            gameObject.SetColor(0.5f, 0.5f, 0.5f);
+            gameObject.SetColor(0.72f, 0.52f, 0.87f);
         if (myStats.myType == CreatureType.Fire)
-            gameObject.SetColor(1, 0, 0);
+            gameObject.SetColor(.87f, .52f, .52f);
         if (myStats.myType == CreatureType.Chef)
-            gameObject.SetColor(0, 1, 0);
+            gameObject.SetColor(.87f, .78f, 0.52f);
         if (myStats.myType == CreatureType.Water)
-            gameObject.SetColor(0, 0, 1);
+            gameObject.SetColor(.52f, .67f, .87f);
 
         myColor = GetComponent<SpriteRenderer>() != null ? GetComponent<SpriteRenderer>().color : GetComponent<Image>().color;
         //Just in case we want to have exhaustion pass from the other mode.
@@ -45,6 +45,7 @@ public class CombatCreature : MonoBehaviour
     public void TakeDamage(int damage)
     {
         myStats.health -= damage;
+        myStats.health = Math.Min(myStats.health, myStats.maxHealth);
 
         if (GetComponent<SpriteRenderer>() != null)
         {
@@ -67,14 +68,28 @@ public class CombatCreature : MonoBehaviour
         damageMod += ce.damageMod;
 
         if (ce.ready)
+        {
+            if (myStats.exhausted)
+            {
+                CombatPlayer.Instance.ultimate = CombatPlayer.Instance.ultimate + 2;
+                CombatManager.Instance.restoredCreatures++;
+            }
+
             SetExhaust(false);
+        }
         else if (ce.exhaust)
+        {
+            if (!myStats.exhausted)
+                CombatManager.Instance.exhaustedCreatures++;
+
             SetExhaust(true);
+        }
     }
 
-    public int CalculateDamage()
+    public float CalculateDamagePercent()
     {
-        int dmg = myStats.damage + damageMod;
+        float dmgModPercent = (myStats.damage + damageMod) / myStats.damage;
+        float dmg = dmgModPercent * (myStats.hunger < 50 ? 0.9f : 1) * (myStats.entertainment < 50 ? 0.9f : 1) * (myStats.hygene < 50 ? 0.9f : 1) * (myStats.exhausted ? 0.5f : 1);
         damageMod = 0;
         return dmg;
     }
@@ -123,6 +138,7 @@ public class CombatCreature : MonoBehaviour
 public class ActiveCreatureStats
 {
     public string name;
+    public int maxHealth;
     public int health;
     public int damage;
     public int block;
@@ -139,6 +155,7 @@ public class ActiveCreatureStats
     public ActiveCreatureStats(CreatureStats c)
     {
         name = c.name;
+        maxHealth = c.HitPoints;
         health = c.HitPoints;
         damage = c.Attack;
         block = c.Defence;

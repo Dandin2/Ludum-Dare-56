@@ -27,4 +27,4 @@ MonoBehaviour:
   effectsOnCreatures: []
   ultimateMeterChange: 0
   OnEnemiesAnimation: {fileID: 0}
-  OnSelfAnimation: {fileID: 0}
+  OnSelfAnimation: {fileID: 4288569446507331513, guid: c2e1bf2b76a8c6b4982c5489682b6b73, type: 3}

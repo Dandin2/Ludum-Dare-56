@@ -16,7 +16,7 @@ MonoBehaviour:
   SkillName: Vine Whip
   WindUpTurns: 0
   WindUpMessage: 
-  Damage: 4
+  Damage: 1
   NumToDamage: 0
   PercentToDamage: 100
   NumToExhaust: 0

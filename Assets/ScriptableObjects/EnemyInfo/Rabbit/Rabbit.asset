@@ -12,11 +12,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39b2559d12e3e8740a59914add2c6e4e, type: 3}
   m_Name: Rabbit
   m_EditorClassIdentifier: 
-  enemyName: 
-  type: 0
-  health: 0
-  myAttacks: []
+  enemyName: THE Rabbit
+  introTextQualifier: 
+  combatIntroText: Servant, fetch me my Spaceship gloves!
+  textTime: 3
+  type: 5
+  health: 300
+  myAttacks:
+  - {fileID: 11400000, guid: ce1c38dd6f88b7948ac35079eb1c0ce1, type: 2}
+  - {fileID: 11400000, guid: fd36187bee88d724086ff7dad594d57c, type: 2}
+  - {fileID: 11400000, guid: 791748409a082c046aaa37c17162b397, type: 2}
   defaultBlock: 0
-  weaknesses: []
-  strengths: []
+  weaknesses:
+  - type: 4
+    vulnPercent: 20
+  - type: 1
+    vulnPercent: 20
+  - type: 3
+    vulnPercent: 20
+  strengths:
+  - type: 0
+    resistPercent: 10
+  - type: 2
+    resistPercent: 10
   prefab: {fileID: 8987347976961116258, guid: 4a88295e0ad4d874b91f291118a0a202, type: 3}

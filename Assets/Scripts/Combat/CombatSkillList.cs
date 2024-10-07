@@ -31,17 +31,17 @@ public class CombatSkillList : MonoBehaviour
         BaseList.gameObject.SetActive(true);
         SpecialList.gameObject.SetActive(false);
 
-        AttackButton.Set(() => { CombatManager.Instance.AttackEnemy();  SetActive(false); CombatManager.Instance.TextDisplay.HideMessage(); },
-                         () => { CombatManager.Instance.TextDisplay.SetMessage("A basic attack that also restores some creatures.", true, null); },
-                         () => { CombatManager.Instance.TextDisplay.HideMessage(); });
+        //AttackButton.Set(() => { CombatManager.Instance.AttackEnemy();  SetActive(false); CombatManager.Instance.TextDisplay.HideMessage(); },
+        //                 () => { CombatManager.Instance.TextDisplay.SetMessage("A basic attack that also restores some creatures.", true, null); },
+        //                 () => { CombatManager.Instance.TextDisplay.HideMessage(); });
         SpecialButton.Set(() => { ShowMenu(false, true); CombatManager.Instance.TextDisplay.HideMessage(); },
                          () => { CombatManager.Instance.TextDisplay.SetMessage("Special moves using one type of creature.", true, null); },
                          () => { CombatManager.Instance.TextDisplay.HideMessage(); });
-        BlockButton.Set(() => { CombatManager.Instance.Block(); SetActive(false); CombatManager.Instance.TextDisplay.HideMessage(); },
-                         () => { CombatManager.Instance.TextDisplay.SetMessage("Reduce enemy attack damage and restore many creatures.", true, null); },
-                         () => { CombatManager.Instance.TextDisplay.HideMessage(); });
-        UltimateButton.Set(() => { CombatManager.Instance.Ultimate(); SetActive(false); CombatManager.Instance.TextDisplay.HideMessage(); },
-                         () => { CombatManager.Instance.TextDisplay.SetMessage("Unleash all your built up energy!  One time per combat.", true, null); },
+        //BlockButton.Set(() => { CombatManager.Instance.Block(); SetActive(false); CombatManager.Instance.TextDisplay.HideMessage(); },
+        //                 () => { CombatManager.Instance.TextDisplay.SetMessage("Reduce enemy attack damage and restore many creatures.", true, null); },
+        //                 () => { CombatManager.Instance.TextDisplay.HideMessage(); });
+        UltimateButton.Set(() => { if (UltimateButton.active) { CombatManager.Instance.AttackEnemy(); UltimateButton.manualActive = false; SetActive(false); } },
+                         () => { CombatManager.Instance.TextDisplay.SetMessage("Unleash your ultimate move! Stronger the more creatures you've restored.  One time per combat.", true, null); },
                          () => { CombatManager.Instance.TextDisplay.HideMessage(); });
 
         SetSpecialButtons();

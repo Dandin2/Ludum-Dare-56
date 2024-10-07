@@ -56,7 +56,7 @@ public class CombatEnemy : MonoBehaviour
 
     public void TakeDamage(int dmg)
     {
-        currentHP -= dmg;
+        currentHP -= (dmg - (int)(dmg * block * 0.01f));
         HealthBar.UpdateHealth(myInfo.health, currentHP, 0, () =>
         {
             if (currentHP <= 0)
@@ -78,7 +78,14 @@ public class CombatEnemy : MonoBehaviour
         float totalResistVuln = 0;
         foreach (MainEffect a in ssi.effects.Where(x => x.target == CombatTarget.Opponent))
         {
-            float damage = a.damage;
+            float damage = a.damage * CombatPlayer.Instance.BaseDamageMod();
+            float effectMod = 1;
+            foreach (CreatureEffectModification b in a.mods)
+            {
+                effectMod += CombatPlayer.Instance.GetCreatureQuantity(b.type) * b.modPerActiveCreatureType * 0.01f;
+            }
+            damage = damage * effectMod;
+
             foreach (Resistance r in myInfo.strengths.Where(x => x.type == a.elementType))
             {
                 damage = damage - (damage * r.resistPercent * 0.01f);
@@ -91,9 +98,9 @@ public class CombatEnemy : MonoBehaviour
                 totalResistVuln += v.vulnPercent;
             }
 
-            totalDamage += a.damage;
-            heal += a.heal;
-            block += a.block;
+            totalDamage = (int)damage;
+            heal += (int)(a.heal * effectMod);
+            block += (int)(a.block * effectMod);
         }
 
         if (totalDamage > 0)
@@ -101,7 +108,7 @@ public class CombatEnemy : MonoBehaviour
             TakeDamage(totalDamage);
             if (totalResistVuln >= 20)
                 CombatManager.Instance.TextDisplay.SetMessage("It's super effective!", false, null, 1);
-            else if(totalResistVuln <= -20)
+            else if (totalResistVuln <= -20)
                 CombatManager.Instance.TextDisplay.SetMessage("It's not very effective...", false, null, 1);
         }
         if (heal > 0)
@@ -177,8 +184,19 @@ public class CombatEnemy : MonoBehaviour
         if (chosen.SelfBlockAmount > 0)
             Block(chosen.SelfBlockAmount);
 
-        //maybe just do this always?  So there's some sort of visual indicator they're doing something?
-        GetComponentInChildren<Animator>().SetTrigger("Attack");
+        if (myInfo.type == EnemyType.Rabbit)
+        {
+            int rng = UnityEngine.Random.Range(0, 2);
+            if (rng == 1)
+                GetComponentInChildren<Animator>().SetTrigger("Attack");
+            else
+                GetComponentInChildren<Animator>().SetTrigger("Attack2");
+        }
+        else
+        {
+            //maybe just do this always?  So there's some sort of visual indicator they're doing something?
+            GetComponentInChildren<Animator>().SetTrigger("Attack");
+        }
         return chosen;
     }
 

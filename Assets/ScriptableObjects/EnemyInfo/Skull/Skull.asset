@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Skull
   m_EditorClassIdentifier: 
   enemyName: Floating Skull
+  introTextQualifier: 'A '
   combatIntroText: '"....."'
+  textTime: 1.5
   type: 2
   health: 100
   myAttacks:

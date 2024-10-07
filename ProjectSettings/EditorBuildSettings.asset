@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TitlePage.unity
     guid: 9e4254da921c6e64794a7ced21103263
+  - enabled: 1
+    path: Assets/Scenes/VictoryScene.unity
+    guid: bf76f954cc0ecc24991d11bd35358e63
   m_configObjects: {}
