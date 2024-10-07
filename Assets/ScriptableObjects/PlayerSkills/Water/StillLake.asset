@@ -15,7 +15,7 @@ MonoBehaviour:
   SkillName: Still Lake
   TextOnHover: 'Lv 1: Heal some of your low HP creatures to full, and raise all creatures''
     hygene.'
-  TextOnUse: You used Still Lake!
+  TextOnUse: Tiny creatures used Still Lake!
   requiredType: 1
   requiredAmount: 5
   effects: []

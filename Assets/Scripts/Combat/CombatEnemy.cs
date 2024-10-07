@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using static Unity.Burst.Intrinsics.X86;
 
 public class CombatEnemy : MonoBehaviour
 {
@@ -63,6 +64,50 @@ public class CombatEnemy : MonoBehaviour
             GetComponentInChildren<Animator>().SetBool("Alive", false);
     }
 
+    public void ReceiveEffect(SpecialSkillInfo ssi)
+    {
+        if (ssi.OnEnemiesAnimation != null)
+        {
+            GameObject go = Instantiate(ssi.OnEnemiesAnimation);
+            go.transform.parent = transform;
+            go.transform.SetLocalPosition(0, 0, -10);
+            go.GetComponent<OneTimeAnimation>()?.SetCompleteAction(() => { CombatManager.Instance.PlayerTurnDoneAnimating(); });
+        }
+        else
+            CombatManager.Instance.PlayerTurnDoneAnimating();
+
+        int totalDamage = 0;
+        int heal = 0;
+        int block = 0;
+        float totalResistVuln = 0;
+        foreach (MainEffect a in ssi.effects.Where(x => x.target == CombatTarget.Opponent))
+        {
+            float damage = a.damage;
+            foreach (Resistance r in myInfo.strengths.Where(x => x.type == a.elementType))
+            {
+                damage = damage - (damage * r.resistPercent * 0.01f);
+                totalResistVuln -= r.resistPercent;
+            }
+
+            foreach (Vulnerability v in myInfo.weaknesses.Where(x => x.type == a.elementType))
+            {
+                damage = damage + (damage * v.vulnPercent * 0.01f);
+                totalResistVuln += v.vulnPercent;
+            }
+
+            totalDamage += a.damage;
+            heal += a.heal;
+            block += a.block;
+        }
+
+        if (totalDamage > 0)
+            TakeDamage(totalDamage);
+        if (heal > 0)
+            Heal(heal);
+        if (block > 0)
+            Block(block);
+    }
+
     public void Heal(int hp)
     {
         currentHP = Math.Min(myInfo.health, currentHP + hp);
@@ -93,11 +138,18 @@ public class CombatEnemy : MonoBehaviour
         if (chosen == null)
             chosen = myInfo.myAttacks.Last();
 
+        if (chosen.OnSelfAnimation != null)
+        {
+            GameObject go = Instantiate(chosen.OnSelfAnimation);
+            go.transform.parent = transform;
+            go.transform.SetLocalPosition(0, 0, -10);
+        }
+
         return chosen;
     }
     public EnemyAttackInfo TakeTurn(EnemyAttackInfo chosen)
     {
-        block = myInfo.defaultBlock;       
+        block = myInfo.defaultBlock;
 
         if (chosen.OnSelfAnimation != null)
         {
@@ -136,3 +188,16 @@ public enum EnemyType
     Spaceship
 }
 
+[Serializable]
+public class Resistance
+{
+    public CreatureType type;
+    public float resistPercent;
+}
+
+[Serializable]
+public class Vulnerability
+{
+    public CreatureType type;
+    public float vulnPercent;
+}

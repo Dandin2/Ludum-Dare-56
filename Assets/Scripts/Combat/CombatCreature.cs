@@ -10,6 +10,9 @@ public class CombatCreature : MonoBehaviour
 
 
     public Color myColor;
+    public GameObject Preview;
+    public GameObject Exhaust;
+
     //Delete this when we get actual sprites
     public void SetType(CreatureType type)
     {
@@ -44,7 +47,26 @@ public class CombatCreature : MonoBehaviour
         myStats.health -= damage;
 
         if (GetComponent<SpriteRenderer>() != null)
-            StartCoroutine(FlashRed());
+        {
+            if (damage > 0)
+                StartCoroutine(FlashRed());
+            if (damage < 0)
+                StartCoroutine(FlashGreen());
+        }
+    }
+
+    public void ReceiveCreatureEffect(CreatureEffect ce)
+    {
+
+    }
+
+    public void SetPreview()
+    {
+        Preview.SetActive(true);
+    }
+    public void UnPreview()
+    {
+        Preview.SetActive(false);
     }
 
     private IEnumerator FlashRed()
@@ -57,17 +79,24 @@ public class CombatCreature : MonoBehaviour
             GetComponent<SpriteRenderer>().color = myColor;
         yield break;
     }
+    private IEnumerator FlashGreen()
+    {
+        GetComponent<SpriteRenderer>().color = new Color(0, 1, 0);
+        yield return new WaitForSeconds(0.6f);
+        if (myStats.health <= 0)
+            Destroy(gameObject);
+        else
+            GetComponent<SpriteRenderer>().color = myColor;
+        yield break;
+    }
 
     public void SetExhaust(bool isExhausted)
     {
+        Exhaust.SetActive(isExhausted);
         if (isExhausted == myStats.exhausted)
             return;
 
         myStats.exhausted = isExhausted;
-        if (isExhausted)
-            GetComponent<SpriteRenderer>().color -= new Color(0.3f, 0.3f, 0.3f);
-        else
-            GetComponent<SpriteRenderer>().color += new Color(0.3f, 0.3f, 0.3f);
     }
 }
 

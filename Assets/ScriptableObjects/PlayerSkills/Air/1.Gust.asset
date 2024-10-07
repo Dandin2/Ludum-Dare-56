@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SkillName: Gust
   TextOnHover: 'Lv.1: Deal Air damage. '
-  TextOnUse: You used Gust!
+  TextOnUse: Tiny creatures used Gust!
   requiredType: 3
   requiredAmount: 5
   effects:
@@ -25,5 +25,6 @@ MonoBehaviour:
     block: 0
     mods: []
   effectsOnCreatures: []
+  ultimateMeterChange: 0
   OnEnemiesAnimation: {fileID: 0}
   OnSelfAnimation: {fileID: 0}

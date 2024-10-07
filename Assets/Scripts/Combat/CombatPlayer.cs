@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static Unity.Burst.Intrinsics.X86;
 
 public class CombatPlayer : MonoBehaviour
 {
@@ -20,6 +21,11 @@ public class CombatPlayer : MonoBehaviour
     private bool firstLoad;
 
     private int activeParticles;
+
+    public float blockPercent;
+    public float ultimate;
+
+    private List<CombatCreature> preppedCreatures = new List<CombatCreature>();
 
     private void Awake()
     {
@@ -49,7 +55,7 @@ public class CombatPlayer : MonoBehaviour
 
     public void SetInitial()
     {
-        for (int i = 0; i < 80; i++)
+        for (int i = 0; i < 30; i++)
         {
             GameObject go = Instantiate(CreaturePrefab);
             CombatCreature cc = go.GetComponent<CombatCreature>();
@@ -106,7 +112,81 @@ public class CombatPlayer : MonoBehaviour
         }
     }
 
+    public void ReceivePlayerEffect(SpecialSkillInfo ssi)
+    {
+        //Exhaust creatures required to perform the effect
+        if(ssi.requiredAmount > 0)
+        {
+            GetRandomAmountOfType(ssi.requiredAmount, ssi.requiredType).ForEach(x => x.SetExhaust(true));
+        }
 
+        //Play any animation on self
+        if(ssi.OnSelfAnimation != null)
+        {
+            GameObject go = Instantiate(ssi.OnSelfAnimation);
+            go.transform.parent = transform;
+            go.transform.SetLocalPosition(0, 0, -10);
+            go.GetComponent<OneTimeAnimation>()?.SetCompleteAction(() => { CombatManager.Instance.PlayerTurnDoneAnimating(); });
+        }
+        else
+            CombatManager.Instance.PlayerTurnDoneAnimating();
+
+        //Find any effect that targets you and perform it.
+        foreach (MainEffect main in ssi.effects.Where(x => x.target == CombatTarget.Self))
+        {
+            blockPercent += main.block;
+            myCreatures.ForEach(x => x.TakeDamage(main.damage - main.heal));
+        }
+
+        //Find any effects that target your creatures and perform them
+        foreach(CreatureEffect ce in ssi.effectsOnCreatures)
+        {
+            GetRandomAmountOfType(ce.quantity, ce.type).ForEach(x => x.ReceiveCreatureEffect(ce));
+        }
+
+        ultimate += ssi.ultimateMeterChange;
+    }
+
+    public List<CombatCreature> GetRandomAmountOfType(int amount, CreatureType type)
+    {
+        List<CombatCreature> toExhaust = myCreatures;
+        if (type != CreatureType.All)
+            toExhaust = myCreatures.Where(x => x.myStats.myType == type).ToList();
+
+        if(amount < toExhaust.Count)
+        {
+            toExhaust = toExhaust.OrderBy(x => UnityEngine.Random.value).Take(amount).ToList();
+        }
+
+        return toExhaust;
+    }
+
+    public bool HasRequiredCreatures(int amount, CreatureType ct)
+    {
+        if (ct == CreatureType.All)
+            return myCreatures.Where(x => !x.myStats.exhausted).Count() >= amount;
+        else
+            return myCreatures.Where(x => !x.myStats.exhausted && x.myStats.myType == ct).Count() >= amount;
+    }
+
+    public void PreviewCreatures(int amount, CreatureType ct)
+    {
+        if (ct == CreatureType.All)
+            preppedCreatures = myCreatures.Where(x => !x.myStats.exhausted).Take(amount).ToList();
+        else
+            preppedCreatures = myCreatures.Where(x => !x.myStats.exhausted && x.myStats.myType == ct).Take(amount).ToList();
+
+        preppedCreatures.ForEach(x => x.SetPreview());
+    }
+
+    public void UnPreview()
+    {
+        if(preppedCreatures != null && preppedCreatures.Count > 0)
+        {
+            preppedCreatures.ForEach(x => x.UnPreview());
+            preppedCreatures.Clear();
+        }
+    }
 
 
 

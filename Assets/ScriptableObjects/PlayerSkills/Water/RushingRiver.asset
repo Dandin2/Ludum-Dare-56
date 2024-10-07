@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SkillName: Rushing River
   TextOnHover: 'Lv 2: Deal water damage, and raise Entertainment of your Water creatures.'
-  TextOnUse: You used Rushing River!
+  TextOnUse: Tiny creatures used Rushing River!
   requiredType: 1
   requiredAmount: 9
   effects:

@@ -800,6 +800,8 @@ MonoBehaviour:
   Highlight: {fileID: 21300000, guid: 236ce2adf7a62f24c84918631274b039, type: 3}
   Click: {fileID: 1307724887}
   HighlightGO: {fileID: 0}
+  SkillOnClick: {fileID: 0}
+  active: 1
 --- !u!1 &120023421
 GameObject:
   m_ObjectHideFlags: 0
@@ -856,6 +858,8 @@ MonoBehaviour:
   Highlight: {fileID: 0}
   Click: {fileID: 797890426}
   HighlightGO: {fileID: 1048917237}
+  SkillOnClick: {fileID: 11400000, guid: c23cdf93273f4bd4e9918777acf1caa2, type: 2}
+  active: 1
 --- !u!1 &125933455
 GameObject:
   m_ObjectHideFlags: 0
@@ -1001,6 +1005,8 @@ MonoBehaviour:
   Highlight: {fileID: 0}
   Click: {fileID: 557789162}
   HighlightGO: {fileID: 1279870914}
+  SkillOnClick: {fileID: 11400000, guid: 754c8e876c6e758439bea99e2b38a05c, type: 2}
+  active: 1
 --- !u!1 &162253502
 GameObject:
   m_ObjectHideFlags: 0
@@ -1133,10 +1139,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37ba2f559b4fd6340942a8e9229035e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Unlit: {fileID: 21300000, guid: ab0b6139079714946a5b2ac55a5833e2, type: 3}
+  Unlit: {fileID: 21300000, guid: 819bd31d0af5f65408dd19e5c58e989d, type: 3}
   Highlight: {fileID: 0}
   Click: {fileID: 786131353}
   HighlightGO: {fileID: 276727360}
+  SkillOnClick: {fileID: 11400000, guid: 348dade914b7d5b43a50883001f74660, type: 2}
+  active: 1
 --- !u!1 &193205264
 GameObject:
   m_ObjectHideFlags: 0
@@ -1728,13 +1736,17 @@ MonoBehaviour:
   BlockButton: {fileID: 1678601487}
   UltimateButton: {fileID: 743684814}
   SpecialList: {fileID: 803764776}
-  Air: {fileID: 0}
-  Fire: {fileID: 0}
-  Water: {fileID: 0}
-  Chef: {fileID: 0}
-  Airship: {fileID: 0}
-  Back: {fileID: 0}
-  AirList: {fileID: 0}
+  Air: {fileID: 460788885}
+  Fire: {fileID: 817875739}
+  Water: {fileID: 56336883}
+  Chef: {fileID: 1064277603}
+  Airship: {fileID: 1584718859}
+  Back: {fileID: 512999370}
+  AirList: {fileID: 1862447752}
+  AirshipList: {fileID: 1124894548}
+  ChefList: {fileID: 1328690161}
+  FireList: {fileID: 1473187035}
+  WaterList: {fileID: 1384174302}
 --- !u!223 &323706053
 Canvas:
   m_ObjectHideFlags: 0
@@ -1905,6 +1917,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CreaturePrefab: {fileID: 4455414253657078756, guid: d89636c7d55bae64ba31291239a37446, type: 3}
   psff: {fileID: 1576557}
+  blockPercent: 0
+  ultimate: 0
 --- !u!1 &358138002
 GameObject:
   m_ObjectHideFlags: 0
@@ -1961,6 +1975,8 @@ MonoBehaviour:
   Highlight: {fileID: 21300000, guid: 38baba6883a6e1346a49faea182ad44f, type: 3}
   Click: {fileID: 987675336}
   HighlightGO: {fileID: 0}
+  SkillOnClick: {fileID: 0}
+  active: 1
 --- !u!1 &371422137
 GameObject:
   m_ObjectHideFlags: 0
@@ -2017,6 +2033,8 @@ MonoBehaviour:
   Highlight: {fileID: 21300000, guid: 38baba6883a6e1346a49faea182ad44f, type: 3}
   Click: {fileID: 791560988}
   HighlightGO: {fileID: 0}
+  SkillOnClick: {fileID: 0}
+  active: 1
 --- !u!1 &390720957
 GameObject:
   m_ObjectHideFlags: 0
@@ -2073,6 +2091,8 @@ MonoBehaviour:
   Highlight: {fileID: 0}
   Click: {fileID: 452652002}
   HighlightGO: {fileID: 1200703131}
+  SkillOnClick: {fileID: 11400000, guid: 41e6bc60a4803d94591ce3e4afbd6833, type: 2}
+  active: 1
 --- !u!1 &412221191
 GameObject:
   m_ObjectHideFlags: 0
@@ -2298,6 +2318,8 @@ MonoBehaviour:
   Highlight: {fileID: 21300000, guid: f4982b6d9df877b44a270443c01aba73, type: 3}
   Click: {fileID: 1366360595}
   HighlightGO: {fileID: 0}
+  SkillOnClick: {fileID: 0}
+  active: 1
 --- !u!1 &431146096
 GameObject:
   m_ObjectHideFlags: 0
@@ -3345,6 +3367,8 @@ MonoBehaviour:
   Highlight: {fileID: 21300000, guid: ed22b212dcbadab49872f63f3a85ed75, type: 3}
   Click: {fileID: 1174237686}
   HighlightGO: {fileID: 0}
+  SkillOnClick: {fileID: 0}
+  active: 1
 --- !u!1 &480815383
 GameObject:
   m_ObjectHideFlags: 0
@@ -3659,6 +3683,8 @@ MonoBehaviour:
   Highlight: {fileID: 21300000, guid: 38baba6883a6e1346a49faea182ad44f, type: 3}
   Click: {fileID: 1825582326}
   HighlightGO: {fileID: 0}
+  SkillOnClick: {fileID: 0}
+  active: 1
 --- !u!1 &545890889
 GameObject:
   m_ObjectHideFlags: 0
@@ -4140,7 +4166,7 @@ Canvas:
   serializedVersion: 3
   m_RenderMode: 1
   m_Camera: {fileID: 2065388104}
-  m_PlaneDistance: 1
+  m_PlaneDistance: 10
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
@@ -4950,6 +4976,8 @@ MonoBehaviour:
   Highlight: {fileID: 21300000, guid: 9f88b795a05b167429edf3e7cb6a95a5, type: 3}
   Click: {fileID: 125933459}
   HighlightGO: {fileID: 0}
+  SkillOnClick: {fileID: 0}
+  active: 1
 --- !u!1 &745160234
 GameObject:
   m_ObjectHideFlags: 0
@@ -5190,7 +5218,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ab0b6139079714946a5b2ac55a5833e2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 819bd31d0af5f65408dd19e5c58e989d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5613,6 +5641,8 @@ MonoBehaviour:
   Highlight: {fileID: 0}
   Click: {fileID: 2007206602}
   HighlightGO: {fileID: 792436904}
+  SkillOnClick: {fileID: 11400000, guid: 231abb096de4f3347983dc95c08bd5c5, type: 2}
+  active: 1
 --- !u!1 &814605612
 GameObject:
   m_ObjectHideFlags: 0
@@ -5758,6 +5788,8 @@ MonoBehaviour:
   Highlight: {fileID: 21300000, guid: 2cd23e0a662461142b37d3594b97fc72, type: 3}
   Click: {fileID: 1939900308}
   HighlightGO: {fileID: 0}
+  SkillOnClick: {fileID: 0}
+  active: 1
 --- !u!1 &817909997
 GameObject:
   m_ObjectHideFlags: 0
@@ -5903,6 +5935,8 @@ MonoBehaviour:
   Highlight: {fileID: 0}
   Click: {fileID: 1789884085}
   HighlightGO: {fileID: 667364416}
+  SkillOnClick: {fileID: 11400000, guid: 7feade25875463e4a9b76535a2f1a66d, type: 2}
+  active: 1
 --- !u!1 &899660782
 GameObject:
   m_ObjectHideFlags: 0
@@ -6048,6 +6082,8 @@ MonoBehaviour:
   Highlight: {fileID: 0}
   Click: {fileID: 1845683703}
   HighlightGO: {fileID: 687293401}
+  SkillOnClick: {fileID: 11400000, guid: 16ee014d96988384f842d35cf7868e36, type: 2}
+  active: 1
 --- !u!1 &932265805
 GameObject:
   m_ObjectHideFlags: 0
@@ -6599,6 +6635,8 @@ MonoBehaviour:
   Highlight: {fileID: 0}
   Click: {fileID: 224614616}
   HighlightGO: {fileID: 2013331856}
+  SkillOnClick: {fileID: 11400000, guid: 1761395c58401a7468a35541ae9e7fde, type: 2}
+  active: 1
 --- !u!1 &1048917237
 GameObject:
   m_ObjectHideFlags: 0
@@ -6833,6 +6871,8 @@ MonoBehaviour:
   Highlight: {fileID: 21300000, guid: 332ae688e23857349877a3c8c3c3545d, type: 3}
   Click: {fileID: 1187145246}
   HighlightGO: {fileID: 0}
+  SkillOnClick: {fileID: 0}
+  active: 1
 --- !u!1 &1107545241
 GameObject:
   m_ObjectHideFlags: 0
@@ -6889,6 +6929,8 @@ MonoBehaviour:
   Highlight: {fileID: 0}
   Click: {fileID: 1288429031}
   HighlightGO: {fileID: 899660782}
+  SkillOnClick: {fileID: 11400000, guid: 3e38c1c790f77c84e9e1c4d187257ff3, type: 2}
+  active: 1
 --- !u!1 &1112162462
 GameObject:
   m_ObjectHideFlags: 0
@@ -6945,6 +6987,8 @@ MonoBehaviour:
   Highlight: {fileID: 21300000, guid: d8ce21f5d90e8bd47b68510651c4ce86, type: 3}
   Click: {fileID: 1893139328}
   HighlightGO: {fileID: 0}
+  SkillOnClick: {fileID: 0}
+  active: 1
 --- !u!1 &1124894548
 GameObject:
   m_ObjectHideFlags: 0
@@ -7250,6 +7294,8 @@ MonoBehaviour:
   Highlight: {fileID: 0}
   Click: {fileID: 1454506020}
   HighlightGO: {fileID: 557451428}
+  SkillOnClick: {fileID: 11400000, guid: fe1a9e906b16cd74fb9aba19cbb8463b, type: 2}
+  active: 1
 --- !u!1 &1166110100
 GameObject:
   m_ObjectHideFlags: 0
@@ -7286,6 +7332,7 @@ MonoBehaviour:
   - myEnemyType: 2
     myInfo: {fileID: 11400000, guid: 1d70a81387828814c9890b41fffa0c9b, type: 2}
   TextDisplay: {fileID: 601761309}
+  InactivePrefab: {fileID: 2287220994739170164, guid: b483e0ff3a4a9764494206ae6671b581, type: 3}
 --- !u!4 &1166110102
 Transform:
   m_ObjectHideFlags: 0
@@ -8789,7 +8836,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 819bd31d0af5f65408dd19e5c58e989d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ab0b6139079714946a5b2ac55a5833e2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -10278,6 +10325,8 @@ MonoBehaviour:
   Highlight: {fileID: 21300000, guid: 819fc81035bed874faf9e0f1dab45940, type: 3}
   Click: {fileID: 1570401679}
   HighlightGO: {fileID: 0}
+  SkillOnClick: {fileID: 0}
+  active: 1
 --- !u!1 &1635478347
 GameObject:
   m_ObjectHideFlags: 0
@@ -10423,6 +10472,8 @@ MonoBehaviour:
   Highlight: {fileID: 21300000, guid: 38baba6883a6e1346a49faea182ad44f, type: 3}
   Click: {fileID: 1166648541}
   HighlightGO: {fileID: 0}
+  SkillOnClick: {fileID: 0}
+  active: 1
 --- !u!1 &1653208366
 GameObject:
   m_ObjectHideFlags: 0
@@ -10733,6 +10784,8 @@ MonoBehaviour:
   Highlight: {fileID: 21300000, guid: 4410ead8922d5dd4096a07197bd50069, type: 3}
   Click: {fileID: 1874571934}
   HighlightGO: {fileID: 0}
+  SkillOnClick: {fileID: 0}
+  active: 1
 --- !u!1 &1753271304
 GameObject:
   m_ObjectHideFlags: 0
@@ -10789,6 +10842,8 @@ MonoBehaviour:
   Highlight: {fileID: 0}
   Click: {fileID: 1671221787}
   HighlightGO: {fileID: 208243473}
+  SkillOnClick: {fileID: 11400000, guid: 93a284c6db1e307469d2a6f99b3d6e05, type: 2}
+  active: 1
 --- !u!1 &1769572887
 GameObject:
   m_ObjectHideFlags: 0
@@ -10841,10 +10896,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37ba2f559b4fd6340942a8e9229035e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Unlit: {fileID: 21300000, guid: 819bd31d0af5f65408dd19e5c58e989d, type: 3}
+  Unlit: {fileID: 21300000, guid: ab0b6139079714946a5b2ac55a5833e2, type: 3}
   Highlight: {fileID: 0}
   Click: {fileID: 1320027824}
   HighlightGO: {fileID: 1175051720}
+  SkillOnClick: {fileID: 11400000, guid: 29021b9917a71cf44852c0acc768711a, type: 2}
+  active: 1
 --- !u!1 &1777974484
 GameObject:
   m_ObjectHideFlags: 0
@@ -10961,7 +11018,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -0.77}
-  m_SizeDelta: {x: 304.08, y: 42.27}
+  m_SizeDelta: {x: 410, y: 42.27}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1787111429
 MonoBehaviour:
@@ -11568,6 +11625,8 @@ MonoBehaviour:
   Highlight: {fileID: 0}
   Click: {fileID: 214727369}
   HighlightGO: {fileID: 1158730488}
+  SkillOnClick: {fileID: 11400000, guid: 8c4b0096e2b3df74fa8c5ac56e32e186, type: 2}
+  active: 1
 --- !u!1 &1862447752
 GameObject:
   m_ObjectHideFlags: 0
@@ -12583,6 +12642,8 @@ MonoBehaviour:
   Highlight: {fileID: 21300000, guid: 38baba6883a6e1346a49faea182ad44f, type: 3}
   Click: {fileID: 2019681236}
   HighlightGO: {fileID: 0}
+  SkillOnClick: {fileID: 0}
+  active: 1
 --- !u!1 &1939900306
 GameObject:
   m_ObjectHideFlags: 0
@@ -12728,6 +12789,8 @@ MonoBehaviour:
   Highlight: {fileID: 21300000, guid: 38baba6883a6e1346a49faea182ad44f, type: 3}
   Click: {fileID: 545890891}
   HighlightGO: {fileID: 0}
+  SkillOnClick: {fileID: 0}
+  active: 1
 --- !u!1 &1978903219
 GameObject:
   m_ObjectHideFlags: 0
@@ -17745,8 +17808,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 107}
-  m_SizeDelta: {x: 320, y: 55}
+  m_AnchoredPosition: {x: -50.25, y: 107}
+  m_SizeDelta: {x: 420, y: 55}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2012245755
 MonoBehaviour:
@@ -17797,7 +17860,6 @@ GameObject:
   - component: {fileID: 2013331857}
   - component: {fileID: 2013331860}
   - component: {fileID: 2013331859}
-  - component: {fileID: 2013331858}
   m_Layer: 2
   m_Name: Highlight
   m_TagString: Untagged
@@ -17825,18 +17887,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 230, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2013331858
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2013331856}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30d3d5c74335dd14aaf6bd946b6f31ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2013331859
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18281,6 +18331,8 @@ MonoBehaviour:
   Highlight: {fileID: 0}
   Click: {fileID: 1415496396}
   HighlightGO: {fileID: 1061218848}
+  SkillOnClick: {fileID: 11400000, guid: e634963891cc9bf43934d1d48e804fef, type: 2}
+  active: 1
 --- !u!1 &2100558909
 GameObject:
   m_ObjectHideFlags: 0
@@ -18337,6 +18389,8 @@ MonoBehaviour:
   Highlight: {fileID: 0}
   Click: {fileID: 784135466}
   HighlightGO: {fileID: 1635478347}
+  SkillOnClick: {fileID: 11400000, guid: a0eec0fcbdb6fc845a52adb9f61dea4a, type: 2}
+  active: 1
 --- !u!1 &2106190409
 GameObject:
   m_ObjectHideFlags: 0

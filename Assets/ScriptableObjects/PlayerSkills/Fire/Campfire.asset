@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SkillName: Campfire
   TextOnHover: 'Lv 1: Heal all creatures a small amount.'
-  TextOnUse: You used Campfire!
+  TextOnUse: Tiny creatures used Campfire!
   requiredType: 0
   requiredAmount: 5
   effects:

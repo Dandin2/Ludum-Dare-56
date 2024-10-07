@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SkillName: Ram
   TextOnHover: 'Lv 3: Deal large physical damage.'
-  TextOnUse: You used Ram!
+  TextOnUse: Tiny creatures used Ram!
   requiredType: 2
   requiredAmount: 12
   effects:
@@ -25,5 +25,6 @@ MonoBehaviour:
     block: 0
     mods: []
   effectsOnCreatures: []
+  ultimateMeterChange: 0
   OnEnemiesAnimation: {fileID: 0}
   OnSelfAnimation: {fileID: 0}

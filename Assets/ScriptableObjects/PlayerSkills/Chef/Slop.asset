@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SkillName: Slop
   TextOnHover: 'Lv 1: Heal all creatures a small amount, at the cost of some hygene.'
-  TextOnUse: You used Slop!
+  TextOnUse: Tiny creatures used Slop!
   requiredType: 4
   requiredAmount: 5
   effects:
@@ -27,9 +27,11 @@ MonoBehaviour:
   effectsOnCreatures:
   - type: 5
     quantity: 0
+    quantityPercent: 0
     turns: 0
     exhaust: 0
     ready: 0
+    heal: 0
     hungerChange: 0
     hygeneChange: -20
     happinessChange: 0

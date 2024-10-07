@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SkillName: Sirocco
   TextOnHover: 'Lv. 2 : Deal Air damage.  Your Fire creatures deal additional damage.'
-  TextOnUse: You used Sirocco!  Fire Creatures strengthened!
+  TextOnUse: Tiny creatures used Sirocco!  Fire Creatures strengthened!
   requiredType: 3
   requiredAmount: 9
   effects:
@@ -27,9 +27,11 @@ MonoBehaviour:
   effectsOnCreatures:
   - type: 0
     quantity: 99
+    quantityPercent: 0
     turns: 0
     exhaust: 0
     ready: 0
+    heal: 0
     hungerChange: 0
     hygeneChange: 0
     happinessChange: 0
@@ -37,5 +39,6 @@ MonoBehaviour:
     hpMod: 0
     blockMod: 0
     takeDamage: 0
+  ultimateMeterChange: 0
   OnEnemiesAnimation: {fileID: 0}
   OnSelfAnimation: {fileID: 0}
