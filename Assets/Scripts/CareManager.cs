@@ -63,6 +63,7 @@ public class CareManager : MonoBehaviour
     internal List<GameObject> ToysOwned = new List<GameObject>();
 
     internal Dictionary<int, GameObject> UiToGameObjectDictionary = new Dictionary<int, GameObject>();
+    internal Dictionary<int, GameObject> UiToUiGameObjectDictionary = new Dictionary<int, GameObject>();
     internal GameObject DraggingItem;
 
     private int currentHelpPage = 0;
@@ -204,7 +205,8 @@ public class CareManager : MonoBehaviour
         for (int i = 0; i < array.Length; i++)
         {
             UiToGameObjectDictionary.Remove(array[i].Key);
-            Destroy(FindObjectByInstanceID(array[i].Key));
+            Destroy(UiToUiGameObjectDictionary[array[i].Key]);
+            UiToUiGameObjectDictionary.Remove(array[i].Key);
         }
 
         foreach (var food in FoodOwned)
@@ -218,6 +220,7 @@ public class CareManager : MonoBehaviour
                                      $"Uses: {worldItem.NumberOfUses}\n" +
                                      $"{worldItem.Description}";
             UiToGameObjectDictionary.Add(foodUiInstance.GetInstanceID(), food);
+            UiToUiGameObjectDictionary.Add(foodUiInstance.GetInstanceID(), foodUiInstance);
         }
         foreach (var toy in ToysOwned)
         {
@@ -230,6 +233,7 @@ public class CareManager : MonoBehaviour
                                      $"Uses: {worldItem.NumberOfUses}\n" +
                                      $"{worldItem.Description}";
             UiToGameObjectDictionary.Add(toyUiInstance.GetInstanceID(), toy);
+            UiToUiGameObjectDictionary.Add(toyUiInstance.GetInstanceID(), toyUiInstance);
         }
     }
 

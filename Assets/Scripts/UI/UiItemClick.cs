@@ -54,6 +54,7 @@ public class UiItemClick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
                 manager.ItemPopupPanel.SetActive(false);
                 manager.SetMainCursor();
                 manager.UiToGameObjectDictionary.Remove(gameObject.GetInstanceID());
+                manager.UiToUiGameObjectDictionary.Remove(gameObject.GetInstanceID());
                 Destroy(this.gameObject);
             }
             else
