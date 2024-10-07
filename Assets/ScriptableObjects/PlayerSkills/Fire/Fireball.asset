@@ -15,7 +15,7 @@ MonoBehaviour:
   SkillName: Fireball
   TextOnHover: 'Lv 2: Deal fire damage to opponent, but lower your creatures happiness
     a tiny bit.'
-  TextOnUse: You used Fireball!
+  TextOnUse: Tiny creatures used Fireball!
   requiredType: 0
   requiredAmount: 9
   effects:
@@ -28,9 +28,11 @@ MonoBehaviour:
   effectsOnCreatures:
   - type: 5
     quantity: 9999
+    quantityPercent: 0
     turns: 0
     exhaust: 0
     ready: 0
+    heal: 0
     hungerChange: 0
     hygeneChange: 0
     happinessChange: -5

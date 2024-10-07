@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SkillName: Jumpsquall
   TextOnHover: 'Lv.3: Deal massive Air damage, but upset your Fire Creatures.'
-  TextOnUse: You used Jumpsquall!  Your Fire Creatures aren't too happy about it,
-    though...
+  TextOnUse: Tiny creatures used Jumpsquall!  Your Fire Creatures aren't too happy
+    about it, though...
   requiredType: 3
   requiredAmount: 12
   effects:
@@ -28,9 +28,11 @@ MonoBehaviour:
   effectsOnCreatures:
   - type: 0
     quantity: 999
+    quantityPercent: 0
     turns: 0
     exhaust: 0
     ready: 0
+    heal: 0
     hungerChange: 0
     hygeneChange: 0
     happinessChange: -20
@@ -38,5 +40,6 @@ MonoBehaviour:
     hpMod: 0
     blockMod: 0
     takeDamage: 0
+  ultimateMeterChange: 0
   OnEnemiesAnimation: {fileID: 0}
   OnSelfAnimation: {fileID: 0}

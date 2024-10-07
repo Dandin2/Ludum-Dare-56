@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SkillName: Cornucopia
   TextOnHover: 'Lv 3: Fill your Ultimate meter.'
-  TextOnUse: You used Cornucopia!
+  TextOnUse: Tiny creatures used Cornucopia!
   requiredType: 4
   requiredAmount: 12
   effects: []

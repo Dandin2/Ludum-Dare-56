@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SkillName: Lift
   TextOnHover: 'Lv.1: Block and deal additional damage next turn.'
-  TextOnUse: You used Lift!  Your strength and block increase temporarily.
+  TextOnUse: Tiny creatures used Lift!  Your strength and block increase temporarily.
   requiredType: 2
   requiredAmount: 5
   effects:
@@ -27,9 +27,11 @@ MonoBehaviour:
   effectsOnCreatures:
   - type: 5
     quantity: 99
+    quantityPercent: 0
     turns: 1
     exhaust: 0
     ready: 0
+    heal: 0
     hungerChange: 0
     hygeneChange: 0
     happinessChange: 0
@@ -37,5 +39,6 @@ MonoBehaviour:
     hpMod: 0
     blockMod: 0
     takeDamage: 0
+  ultimateMeterChange: 0
   OnEnemiesAnimation: {fileID: 0}
   OnSelfAnimation: {fileID: 0}

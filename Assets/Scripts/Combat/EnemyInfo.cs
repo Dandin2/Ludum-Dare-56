@@ -9,6 +9,8 @@ public class EnemyInfo : ScriptableObject
     public int health;
     public List<EnemyAttackInfo> myAttacks;
     public int defaultBlock;
+    public List<Vulnerability> weaknesses;
+    public List<Resistance> strengths;
     public GameObject prefab;
 }
 public class CreateEnemyInfo

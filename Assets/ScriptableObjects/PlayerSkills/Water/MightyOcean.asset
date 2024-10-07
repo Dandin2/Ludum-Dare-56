@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SkillName: Mighty Ocean
   TextOnHover: 'Lv 3: Deal large water damage and boost Ultimate meter.'
-  TextOnUse: You used Mighty Ocean!
+  TextOnUse: Tiny creatures used Mighty Ocean!
   requiredType: 1
   requiredAmount: 12
   effects:

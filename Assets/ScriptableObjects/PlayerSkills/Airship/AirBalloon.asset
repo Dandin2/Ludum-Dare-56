@@ -15,7 +15,7 @@ MonoBehaviour:
   SkillName: Air Balloon
   TextOnHover: 'Lv 2: Deal Physical damage.  Bonus Air damage for each active Air
     creature.'
-  TextOnUse: You used Air Balloon!
+  TextOnUse: Tiny creatures used Air Balloon!
   requiredType: 2
   requiredAmount: 9
   effects:
@@ -26,5 +26,6 @@ MonoBehaviour:
     block: 0
     mods: []
   effectsOnCreatures: []
+  ultimateMeterChange: 0
   OnEnemiesAnimation: {fileID: 0}
   OnSelfAnimation: {fileID: 0}

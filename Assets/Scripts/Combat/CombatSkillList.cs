@@ -20,7 +20,10 @@ public class CombatSkillList : MonoBehaviour
     public CombatButton Back;
 
     public GameObject AirList;
-    
+    public GameObject AirshipList;
+    public GameObject ChefList;
+    public GameObject FireList;
+    public GameObject WaterList;
 
 
     public void SetOptions()
@@ -31,7 +34,7 @@ public class CombatSkillList : MonoBehaviour
         AttackButton.Set(() => { CombatManager.Instance.AttackEnemy();  SetActive(false); CombatManager.Instance.TextDisplay.HideMessage(); },
                          () => { CombatManager.Instance.TextDisplay.SetMessage("A basic attack that also restores some creatures.", true, null); },
                          () => { CombatManager.Instance.TextDisplay.HideMessage(); });
-        SpecialButton.Set(() => { CombatManager.Instance.PerformSpecialMove(); SetActive(false); CombatManager.Instance.TextDisplay.HideMessage(); },
+        SpecialButton.Set(() => { ShowMenu(false, true); CombatManager.Instance.TextDisplay.HideMessage(); },
                          () => { CombatManager.Instance.TextDisplay.SetMessage("Special moves using one type of creature.", true, null); },
                          () => { CombatManager.Instance.TextDisplay.HideMessage(); });
         BlockButton.Set(() => { CombatManager.Instance.Block(); SetActive(false); CombatManager.Instance.TextDisplay.HideMessage(); },
@@ -46,22 +49,32 @@ public class CombatSkillList : MonoBehaviour
 
     public void SetSpecialButtons()
     {
-        Air.Set(() => {  SetActive(false); CombatManager.Instance.TextDisplay.HideMessage(); },
-                () => { CombatManager.Instance.TextDisplay.SetMessage("Air based abilities.  Require non-exhausted Air creatures to use.", true, null); },
+        Air.Set(() => { ShowMenu(false, false, CreatureType.Air);  CombatManager.Instance.TextDisplay.HideMessage(); },
+                () => { CombatManager.Instance.TextDisplay.SetMessage("Air based abilities.  Requires non-exhausted Air creatures.", true, null); },
                 () => { CombatManager.Instance.TextDisplay.HideMessage(); });
-        Fire.Set(() => { SetActive(false); CombatManager.Instance.TextDisplay.HideMessage(); },
-                () => { CombatManager.Instance.TextDisplay.SetMessage("Fire based abilities.  Require non-exhausted Fire creatures to use.", true, null); },
+        AirList.transform.Find("Ultimate Button").GetComponent<CombatButton>().Set(() => { ShowMenu(false, true); }, null, null);
+
+        Fire.Set(() => { ShowMenu(false, false, CreatureType.Fire); CombatManager.Instance.TextDisplay.HideMessage(); },
+                () => { CombatManager.Instance.TextDisplay.SetMessage("Fire based abilities.  Requirse non-exhausted Fire creatures.", true, null); },
                 () => { CombatManager.Instance.TextDisplay.HideMessage(); });
-        Water.Set(() => { SetActive(false); CombatManager.Instance.TextDisplay.HideMessage(); },
-                () => { CombatManager.Instance.TextDisplay.SetMessage("Water based abilities.  Require non-exhausted Water creatures to use.", true, null); },
+        FireList.transform.Find("Ultimate Button").GetComponent<CombatButton>().Set(() => { ShowMenu(false, true); }, null, null);
+
+        Water.Set(() => { ShowMenu(false, false, CreatureType.Water); CombatManager.Instance.TextDisplay.HideMessage(); },
+                () => { CombatManager.Instance.TextDisplay.SetMessage("Water based abilities.  Requires non-exhausted Water creatures.", true, null); },
                 () => { CombatManager.Instance.TextDisplay.HideMessage(); });
-        Chef.Set(() => { SetActive(false); CombatManager.Instance.TextDisplay.HideMessage(); },
-                () => { CombatManager.Instance.TextDisplay.SetMessage("Chef based abilities.  Require non-exhausted Chef creatures to use.", true, null); },
+        WaterList.transform.Find("Ultimate Button").GetComponent<CombatButton>().Set(() => { ShowMenu(false, true); }, null, null);
+
+        Chef.Set(() => { ShowMenu(false, false, CreatureType.Chef); CombatManager.Instance.TextDisplay.HideMessage(); },
+                () => { CombatManager.Instance.TextDisplay.SetMessage("Chef based abilities.  Requires non-exhausted Chef creatures.", true, null); },
                 () => { CombatManager.Instance.TextDisplay.HideMessage(); });
-        Airship.Set(() => { SetActive(false); CombatManager.Instance.TextDisplay.HideMessage(); },
-                () => { CombatManager.Instance.TextDisplay.SetMessage("Airship based abilities.  Require non-exhausted Airship creatures to use.", true, null); },
+        ChefList.transform.Find("Ultimate Button").GetComponent<CombatButton>().Set(() => { ShowMenu(false, true); }, null, null);
+
+        Airship.Set(() => { ShowMenu(false, false, CreatureType.Airship); CombatManager.Instance.TextDisplay.HideMessage(); },
+                () => { CombatManager.Instance.TextDisplay.SetMessage("Airship based abilities.  Requires non-exhausted Airship creatures.", true, null); },
                 () => { CombatManager.Instance.TextDisplay.HideMessage(); });
-        Back.Set(() => { SetActive(false); CombatManager.Instance.TextDisplay.HideMessage(); },
+        AirshipList.transform.Find("Ultimate Button").GetComponent<CombatButton>().Set(() => { ShowMenu(false, true); }, null, null);
+
+        Back.Set(() => { ShowMenu(true, false); CombatManager.Instance.TextDisplay.HideMessage(); },
                 () => { CombatManager.Instance.TextDisplay.SetMessage("Go back to previous menu.", true, null); },
                 () => { CombatManager.Instance.TextDisplay.HideMessage(); });
     }
@@ -69,20 +82,37 @@ public class CombatSkillList : MonoBehaviour
     public void SetActive(bool active)
     {
         gameObject.SetActive(active);
-        ShowMenu(true, false, false);
+        ShowMenu(true, false);
     }
 
-    public void ShowMenu(bool baseMenu, bool special, bool specialSpecific)
+    public void ShowMenu(bool baseMenu, bool special, CreatureType specificMagicType = CreatureType.All)
     {
         if (baseMenu)
         {
             BaseList.gameObject.SetActive(true);
             SpecialList.gameObject.SetActive(false);
+            SetMagicTypeListInactive(CreatureType.All);
         }
         else if(special)
         {
             BaseList.gameObject.SetActive(false);
             SpecialList.gameObject.SetActive(true);
+            SetMagicTypeListInactive(CreatureType.All);
         }
+        else if(specificMagicType != CreatureType.All)
+        {
+            BaseList.gameObject.SetActive(false);
+            SpecialList.gameObject.SetActive(false);
+            SetMagicTypeListInactive(specificMagicType);
+        }
+    }
+
+    public void SetMagicTypeListInactive(CreatureType typeToKeepActive)
+    {
+        AirList.SetActive(typeToKeepActive == CreatureType.Air);
+        AirshipList.SetActive(typeToKeepActive == CreatureType.Airship);
+        ChefList.SetActive(typeToKeepActive == CreatureType.Chef);
+        FireList.SetActive(typeToKeepActive == CreatureType.Fire);
+        WaterList.SetActive(typeToKeepActive == CreatureType.Water);
     }
 }

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SkillName: Feast
   TextOnHover: 'Lv 2: Ready, feed and entertain all non-chef Creatures.'
-  TextOnUse: You used feast!
+  TextOnUse: Tiny creatures used feast!
   requiredType: 4
   requiredAmount: 9
   effects:
@@ -27,9 +27,11 @@ MonoBehaviour:
   effectsOnCreatures:
   - type: 5
     quantity: 0
+    quantityPercent: 0
     turns: 0
     exhaust: 0
     ready: 1
+    heal: 0
     hungerChange: 25
     hygeneChange: 0
     happinessChange: 25
@@ -37,5 +39,6 @@ MonoBehaviour:
     hpMod: 0
     blockMod: 0
     takeDamage: 0
+  ultimateMeterChange: 0
   OnEnemiesAnimation: {fileID: 0}
   OnSelfAnimation: {fileID: 0}

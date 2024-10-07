@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,6 +14,63 @@ public class CombatButton : MonoBehaviour
 
     public SpecialSkillInfo SkillOnClick;
 
+    public bool active = true;
+    private GameObject inactive;
+
+    private void Awake()
+    {
+        //Set defaults
+        if (SkillOnClick != null && Click.clickAction == null)
+        {
+            Click.SetClickAction(() => { if (active) { CombatManager.Instance.PerformPlayerAction(SkillOnClick); } });
+        }
+        if (Click.hoverAction == null && Click.unHoverAction == null)
+        {
+            Click.SetHoverAction(() =>
+            {
+                if (SkillOnClick != null)
+                    CombatManager.Instance.SetAbilityHoverText(SkillOnClick);
+                if (active)
+                    SetHighlight(true);
+            });
+
+            Click.SetUnhoverAction(() =>
+            {
+                if (SkillOnClick != null)
+                {
+                    CombatManager.Instance.TextDisplay.HideMessage();
+                    CombatPlayer.Instance.UnPreview();
+                }
+                if (active)
+                    SetHighlight(false);
+            });
+        }
+    }
+
+    private void OnEnable()
+    {
+        if (SkillOnClick != null && !CombatPlayer.Instance.HasRequiredCreatures(SkillOnClick.requiredAmount, SkillOnClick.requiredType))
+            active = false;
+        else
+            active = true;
+
+        if (!active)
+        {
+            if (inactive == null)
+            {
+                inactive = Instantiate(CombatManager.Instance.InactivePrefab);
+                inactive.transform.SetParent(transform);
+                inactive.transform.SetLocalPosition(0, 0, -1);
+                inactive.transform.localScale = new Vector3(1, 1, 1);
+            }
+        }
+        else if(inactive != null)
+        {
+            Destroy(inactive);
+            inactive = null;
+        }
+    }
+
 
     public void Set(Action onClick, Action onHover, Action onUnHover)
     {
@@ -23,13 +81,13 @@ public class CombatButton : MonoBehaviour
 
     public void SetHighlight(bool highlight)
     {
-        if(Highlight == null)
+        if (Highlight == null)
         {
             HighlightGO.SetActive(highlight);
         }
         else
         {
-            if(highlight)
+            if (highlight)
                 GetComponentInChildren<Image>().sprite = Highlight;
             else
                 GetComponentInChildren<Image>().sprite = Unlit;

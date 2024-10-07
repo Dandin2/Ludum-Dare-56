@@ -12,6 +12,8 @@ public class CombatManager : MonoBehaviour
     public List<CombatEnemyInfo> Enemies;
     public CombatTextDisplay TextDisplay;
 
+    public GameObject InactivePrefab;
+
     private bool hasLoaded;
     private bool _isPlayerTurn;
     [HideInInspector]
@@ -78,7 +80,7 @@ public class CombatManager : MonoBehaviour
     public void EnemyTurnDoneAnimating()
     {
         doneAnimatingCount++;
-        if(doneAnimatingCount > 1)
+        if (doneAnimatingCount > 1)
         {
             doneAnimatingCount = 0;
             StartCoroutine(WaitThenDo(1, () => { StartPlayerTurn(); }));
@@ -88,7 +90,7 @@ public class CombatManager : MonoBehaviour
     public void PlayerTurnDoneAnimating()
     {
         doneAnimatingCount++;
-        if(doneAnimatingCount > 1)
+        if (doneAnimatingCount > 1)
         {
             doneAnimatingCount = 0;
             StartCoroutine(WaitThenDo(1, () => { StartEnemyTurn(); }));
@@ -107,10 +109,23 @@ public class CombatManager : MonoBehaviour
 
     }
 
-    public void PerformSpecialMove()
+    public void PerformPlayerAction(SpecialSkillInfo ssi)
     {
         isPlayerTurn = false;
+        doneAnimatingCount = 0;
+        CombatPlayer.Instance.ReceivePlayerEffect(ssi);
+        CombatEnemy.Instance.ReceiveEffect(ssi);
+    }
 
+    public void SetAbilityHoverText(SpecialSkillInfo ssi)
+    {
+        if (CombatPlayer.Instance.HasRequiredCreatures(ssi.requiredAmount, ssi.requiredType))
+        {
+            TextDisplay.SetMessage(ssi.TextOnHover, true, null);
+            CombatPlayer.Instance.PreviewCreatures(ssi.requiredAmount, ssi.requiredType);
+        }
+        else
+            TextDisplay.SetMessage($"Need more {ssi.requiredType.ToString()} creatures!", true, null);
     }
 
     public void Ultimate()

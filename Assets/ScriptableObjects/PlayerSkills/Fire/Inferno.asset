@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SkillName: Inferno
   TextOnHover: 'Lv 3: A large fire attack.  Soot and ash lower hygene of your creatures.'
-  TextOnUse: You used INFERNO!
+  TextOnUse: Tiny creatures used INFERNO!
   requiredType: 0
   requiredAmount: 12
   effects:
@@ -27,9 +27,11 @@ MonoBehaviour:
   effectsOnCreatures:
   - type: 5
     quantity: 0
+    quantityPercent: 0
     turns: 0
     exhaust: 0
     ready: 0
+    heal: 0
     hungerChange: 0
     hygeneChange: -10
     happinessChange: 0
