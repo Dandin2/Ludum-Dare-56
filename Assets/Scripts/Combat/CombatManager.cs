@@ -244,7 +244,8 @@ public class CombatManager : MonoBehaviour
         combatOver = true;
         TextDisplay.SetMessage("You lose.....", false, () =>
         {
-            Fader.FadeToBlack(2, () => { SceneManager.LoadScene(0); });
+            Fader.FadeToBlack(2, () => { WorldManager.instance.GoldAmount = 0; WorldManager.instance.toysInventory.Clear(); WorldManager.instance.foodInventory.Clear();
+                                         WorldManager.instance.level = 0; WorldManager.instance.activeCreatureStats.Clear(); SceneManager.LoadScene(0); });
         }, 4);
     }
 }
