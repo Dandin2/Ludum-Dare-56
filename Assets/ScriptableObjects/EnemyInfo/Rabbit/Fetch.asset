@@ -16,7 +16,7 @@ MonoBehaviour:
   SkillName: Fetch!
   WindUpTurns: 0
   WindUpMessage: 
-  Damage: 4
+  Damage: 3
   NumToDamage: 10
   PercentToDamage: 0
   NumToExhaust: 10

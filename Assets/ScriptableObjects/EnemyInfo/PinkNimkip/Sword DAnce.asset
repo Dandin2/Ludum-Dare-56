@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a732281c26b1b444afedfd5abdf6e13, type: 3}
   m_Name: Sword DAnce
   m_EditorClassIdentifier: 
-  ChanceToUseAttack: 50
+  ChanceToUseAttack: 20
   SkillName: Sword Dance
   WindUpTurns: 0
   WindUpMessage: 
