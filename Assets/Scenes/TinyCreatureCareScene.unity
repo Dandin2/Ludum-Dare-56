@@ -2617,6 +2617,7 @@ MonoBehaviour:
   LineRenderer: {fileID: 1903954357}
   linePosition: {fileID: 1842686928}
   UiCamera: {fileID: 519420031}
+  EnterBattleButton: {fileID: 2052039508}
   UiItemPrefab: {fileID: 2418691382729542717, guid: 8310ba947698747499664e46f686aa98, type: 3}
   UiShopItemPrefab: {fileID: 983450095641976633, guid: c22bbac161f80c643a599bb38c88f2d1, type: 3}
   grabOffset: {x: -15, y: 5}
@@ -8741,7 +8742,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5b1838873eb311f4fbb2a76379efe2ad, type: 2}
   - {fileID: 11400000, guid: 0589d3697760d824994ef265385e26b5, type: 2}
   level: 0
-  isTesting: 0
+  isTesting: 1
 --- !u!4 &1542651262
 Transform:
   m_ObjectHideFlags: 0

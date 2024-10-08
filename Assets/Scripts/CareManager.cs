@@ -35,6 +35,7 @@ public class CareManager : MonoBehaviour
     public LineRenderer LineRenderer; // Assign the LineRenderer in the Inspector
     public RectTransform linePosition; // Assign the position where the line renderer attaches to the creature panel in the Inspector.
     public Camera UiCamera; // Assign the camera rendering the UI
+    public GameObject EnterBattleButton; // Assign the camera rendering the UI
     public GameObject UiItemPrefab;
     public GameObject UiShopItemPrefab;
     public Vector2 grabOffset = new Vector2(-15, 5);
@@ -61,6 +62,7 @@ public class CareManager : MonoBehaviour
     internal List<GameObject> CreaturesOwned = new List<GameObject>();
     internal List<GameObject> FoodOwned = new List<GameObject>();
     internal List<GameObject> ToysOwned = new List<GameObject>();
+    internal List<GameObject> Eggs = new List<GameObject>();
 
     internal Dictionary<int, GameObject> UiToGameObjectDictionary = new Dictionary<int, GameObject>();
     internal Dictionary<int, GameObject> UiToUiGameObjectDictionary = new Dictionary<int, GameObject>();
@@ -157,6 +159,15 @@ public class CareManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Eggs.Any())
+        {
+            EnterBattleButton.GetComponent<Button>().interactable = false;
+        }
+        else
+        {
+            EnterBattleButton.GetComponent<Button>().interactable = true;
+        }
+
         if (Input.GetMouseButtonDown(0)) // 0 is for the left mouse button
         {
             if (isUsingScrubBrush)
@@ -504,7 +515,8 @@ public class CareManager : MonoBehaviour
     private void SpawnEgg(string type)
     {
         var eggScriptableObject = WorldManager.instance.EggBases.First(x => x.name == type+"Egg");
-        Instantiate(eggScriptableObject.EggPrefab, GetNextRandomPosition(), Quaternion.identity);
+        var go = Instantiate(eggScriptableObject.EggPrefab, GetNextRandomPosition(), Quaternion.identity);
+        Eggs.Add(go);
     }
 
 }

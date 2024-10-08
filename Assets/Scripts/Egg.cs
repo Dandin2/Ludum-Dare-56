@@ -42,6 +42,7 @@ public class Egg : MonoBehaviour
             creatureSpwaned = go.GetComponent<Creature>();
             creatureSpwaned.SetStats(null);
             manager.CreaturesOwned.Add(go);
+            manager.Eggs.Remove(gameObject);
             Destroy(gameObject, destructionTime);
         }
 

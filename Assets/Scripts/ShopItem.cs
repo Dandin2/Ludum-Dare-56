@@ -71,7 +71,8 @@ public class ShopItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             else if (ItemType == ItemType.Egg)
             {
                 var eggStats = WorldManager.instance.EggBases.First(x => x.name == ItemName);
-                Instantiate(eggStats.EggPrefab, manager.GetNextRandomPosition(), Quaternion.identity);
+                var go = Instantiate(eggStats.EggPrefab, manager.GetNextRandomPosition(), Quaternion.identity);
+                manager.Eggs.Add(go);
             }
             manager.SetupInventoryImages();
             manager.GoldAmountText.text = WorldManager.instance.GoldAmount.ToString();
